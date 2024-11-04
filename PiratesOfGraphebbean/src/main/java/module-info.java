@@ -5,5 +5,7 @@ module org.example.piratesofgraphebbean {
 
 
     opens org.example.piratesofgraphebbean to javafx.fxml;
+    opens Server to javafx.fxml;
     exports org.example.piratesofgraphebbean;
+    exports Server;
 }
