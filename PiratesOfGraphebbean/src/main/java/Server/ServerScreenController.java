@@ -6,38 +6,46 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ServerController {
+public class ServerScreenController {
     private Stage stage;
     private Scene scene;
     private Parent root;
 
-    private String name;
 
 
-    @FXML
-    private TextArea serverTextArea;
 
     @FXML
-    private TextField colocarNombre;
+    private TextArea txaConsolaServidor;
+
+    private Server servidor;
 
     @FXML
-    protected void onHelloButtonClick() {
-        serverTextArea.setWrapText(true);
-        serverTextArea.appendText("Estoy usando el servidor!");
+    public void initialize(){
+        servidor = new Server(this);
+        servidor.run();
     }
 
     @FXML
-    protected void changeAviable() {
-        colocarNombre.setDisable(!colocarNombre.isDisabled());
+    public void write(String texto){
+        txaConsolaServidor.appendText(texto);
     }
 
+
+
+
+
+
+
+
+
+
+
+/*
     @FXML
     protected void switchToSecondWindow(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Server/SecondWindow.fxml"));
@@ -55,5 +63,7 @@ public class ServerController {
         stage.setScene(scene);
         stage.show();
     }
+
+*/
 
 }

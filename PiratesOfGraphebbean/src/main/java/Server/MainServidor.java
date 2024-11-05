@@ -4,17 +4,14 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
-public class Main extends Application {
-
-
+public class MainServidor extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/Server/Server.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-        stage.setTitle("Hello!");
+        FXMLLoader fxmlLoader = new FXMLLoader(MainServidor.class.getResource("/Server/ServerScreen.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 509, 389);
+        stage.setTitle("Servidor");
         stage.setScene(scene);
         stage.show();
     }
