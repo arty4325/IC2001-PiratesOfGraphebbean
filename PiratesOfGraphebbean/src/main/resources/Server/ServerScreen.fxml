@@ -4,9 +4,9 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="515.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Server.ServerScreenController">
+<AnchorPane prefHeight="389.0" prefWidth="509.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Server.ServerScreenController">
    <children>
-      <ScrollPane layoutX="14.0" layoutY="14.0" prefHeight="373.0" prefWidth="488.0">
+      <ScrollPane layoutX="11.0" layoutY="8.0" prefHeight="373.0" prefWidth="488.0">
          <content>
             <TextArea fx:id="txaConsolaServidor" editable="false" prefHeight="371.0" prefWidth="485.0" />
          </content>

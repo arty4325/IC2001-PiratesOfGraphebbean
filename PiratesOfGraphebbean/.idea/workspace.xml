@@ -5,21 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4fad49e6-0c16-4e50-a4c6-3768dd8e4274" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Cliente/Cliente.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Cliente/ClienteScreenController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Cliente/MainCliente.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Server/Server.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Server/ThreadServidor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Cliente/ClienteScreen.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Server/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/MainServidor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Server/SecondWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/ServerConnectionsThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Server/ServerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/ServerScreenController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Server/SecondWindow.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Server/Server.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Server/ServerScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Server/ServerScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Server/ServerScreen.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,8 +129,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.419" />
-        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.419" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
       </set>
     </attachedChunks>
   </component>
@@ -162,7 +149,8 @@
       <workItem from="1730744611083" duration="3334000" />
       <workItem from="1730750503433" duration="139000" />
       <workItem from="1730831699035" duration="16787000" />
-      <workItem from="1730849403728" duration="345000" />
+      <workItem from="1730849403728" duration="911000" />
+      <workItem from="1730850713113" duration="324000" />
     </task>
     <servers />
   </component>
