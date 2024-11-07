@@ -24,10 +24,10 @@ public class Server {
     public void run(){
         try {
             servidor = new ServerSocket(50000);
-        } catch (IOException ex) {System.out.println("Error levantando el servidor");}
+        } catch (IOException ex) {System.out.println("Error levantando el servidor \n");}
 
-        pantallaServidor.write("Servidor levantado");
-        pantallaServidor.write("Esperando usuarios");
+        pantallaServidor.write("Servidor levantado \n");
+        pantallaServidor.write("Esperando usuarios \n");
         connectionsThread = new ServerConnectionsThread(this);
         connectionsThread.start();
         esperarConexiones(); //Se queda aquí hasta tener la cantidad necesaria de jugadores conectados y que pongan start o hagan toda la vara.

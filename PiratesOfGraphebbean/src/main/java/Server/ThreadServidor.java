@@ -37,14 +37,14 @@ public class ThreadServidor extends Thread{
     private void recibirNombreCliente(){
         try {
             nombreCliente = entradaDatos.readUTF();
-            servidor.writeInConsole("El jugador " + numeroCliente + " se llama "+ nombreCliente); //Lo muestra en el servidor.
+            servidor.writeInConsole("El jugador " + numeroCliente + " se llama "+ nombreCliente + "\n"); //Lo muestra en el servidor.
         } catch (IOException ex) {System.out.println("Error leyendo el nombre del cliente");}
     }
 
     private void recibirSiYaInicio(){
         try {
             startPresionado = entradaDatos.readBoolean();
-            servidor.writeInConsole(nombreCliente + " ya presiono iniciar"); //Lo muestra en el servidor.
+            servidor.writeInConsole(nombreCliente + " ya presiono iniciar" + "\n"); //Lo muestra en el servidor.
         } catch (IOException ex) {System.out.println("Error leyendo si ya presiono el botón");}
     }
 

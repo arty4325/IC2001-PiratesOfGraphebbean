@@ -25,10 +25,13 @@ public class ServerScreenController {
     private Server servidor;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         servidor = new Server(this);
-        servidor.run();
+        Thread serverThread = new Thread(() -> servidor.run());
+        serverThread.setDaemon(true);
+        serverThread.start();
     }
+
 
     @FXML
     public void write(String texto){

@@ -17,14 +17,14 @@ public class ServerConnectionsThread extends Thread{
     public void run(){
         while (isRunning && server.getConectados() <4) {
             try {
-                server.writeInConsole("Esperando cliente ... ");
+                server.writeInConsole("Esperando cliente ...\n");
                 Socket socket = server.getServidor().accept();
                 server.conectarPersona(); //suma 1 a conectados.
                 ThreadServidor ts = new ThreadServidor(socket, server, server.getConectados());
                 ts.start();
                 server.anadirAThreadsServidor(ts);
 
-                server.writeInConsole("Cliente conectado");
+                server.writeInConsole("Cliente conectado\n");
 
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
