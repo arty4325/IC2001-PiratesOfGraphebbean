@@ -1,5 +1,12 @@
 package Cliente;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.ObjectInputStream;
@@ -14,6 +21,8 @@ public class Cliente {
     private ObjectOutputStream salidaObjetos;
     private Socket socket; //Socket del cliente.
     private String nombreCliente;
+    private boolean canStart = false;
+
 
     public Cliente(ClienteScreenController pantallaCliente) {
         this.pantallaCliente = pantallaCliente;
@@ -22,7 +31,7 @@ public class Cliente {
     public void run() {
         try {
             conectar();
-            escucharMensajes();
+            escucharMensajes(new ActionEvent());
         } catch (Exception ex) {
             System.out.println("Error conectando al servidor");
         }
@@ -54,18 +63,25 @@ public class Cliente {
     }
 
     // Algunas cosas que tienen que llegar del cliente van a venir por aqui:
-    private void escucharMensajes() {
+    private void escucharMensajes(ActionEvent event) {
         new Thread(() -> {
             try {
                 while (true) {
                     String mensaje = entradaDatos.readUTF();
-                    if(mensaje == "START"){
-                        System.out.println("Todas las partidas inician");
+                    System.out.println(mensaje);
+                    if(mensaje.equals("START")){
+                        // aqui tengo que decirle a la aplicacion que tiene que moverse al siguiente stage
+                        canStart = true;
                     }
                 }
             } catch (Exception ex) {
                 System.out.println("Error recibiendo mensaje del servidor");
+                ex.printStackTrace();
             }
         }).start();
+    }
+
+    public boolean getCanStart() {
+        return canStart;
     }
 }

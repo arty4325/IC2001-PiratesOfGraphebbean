@@ -5,10 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4fad49e6-0c16-4e50-a4c6-3768dd8e4274" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Cliente/MainGameController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Cliente/MainWindow.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/Cliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Server/ThreadServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/ThreadServidor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/ClienteScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/ClienteScreenController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/MainCliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/MainCliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Cliente/ClienteScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Cliente/ClienteScreen.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +156,7 @@
       <workItem from="1731029507068" duration="318000" />
       <workItem from="1731099917659" duration="31000" />
       <workItem from="1731130225065" duration="413000" />
-      <workItem from="1731172770777" duration="4175000" />
+      <workItem from="1731172770777" duration="10640000" />
     </task>
     <servers />
   </component>

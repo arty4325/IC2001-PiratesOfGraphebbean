@@ -9,7 +9,9 @@
    <children>
       <TextField fx:id="txfNombre" layoutX="210.0" layoutY="46.0" />
       <Text layoutX="210.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Inserta tu nombre:" />
-      <Button fx:id="btnIniciar" disable="true" layoutX="288.0" layoutY="100.0" mnemonicParsing="false" onAction="#onBtnIniciarClick" text="INICIAR" />
+      <Button fx:id="btnIniciar" disable="true" layoutX="293.0" layoutY="100.0" mnemonicParsing="false" onAction="#onBtnIniciarClick" prefHeight="26.0" prefWidth="66.0" text="INICIAR" />
       <Button fx:id="btnNombre" layoutX="210.0" layoutY="100.0" mnemonicParsing="false" onAction="#onBtnNombreClick" text="NOMBRE" />
+      <Button fx:id="btnNombre1" layoutX="211.0" layoutY="163.0" mnemonicParsing="false" onAction="#moveMain" text="COMENZAR LA PARTIDA" />
+      <Text fx:id="infoGame" layoutX="158.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="269.60003662109375" />
    </children>
 </AnchorPane>
