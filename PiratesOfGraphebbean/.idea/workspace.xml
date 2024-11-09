@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4fad49e6-0c16-4e50-a4c6-3768dd8e4274" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/Cliente.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Server/ServerConnectionsThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/ServerConnectionsThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Server/ServerScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/ServerScreenController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Server/ThreadServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/ThreadServidor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,6 +51,8 @@
     "Application.MainCliente.executor": "Run",
     "Application.MainServidor.executor": "Run",
     "Application.PrimerUsuario.executor": "Run",
+    "Application.SegundoUsuario.executor": "Run",
+    "Application.TercerUsuario.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
@@ -68,29 +69,10 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.MainCliente">
-    <configuration name="HelloApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.example.piratesofgraphebbean.HelloApplication" />
-      <module name="PiratesOfGraphebbean" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.piratesofgraphebbean.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MainCliente" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Application.SegundoUsuario">
+    <configuration name="CuartoUsuario" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Cliente.MainCliente" />
       <module name="PiratesOfGraphebbean" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="Cliente.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -109,23 +91,36 @@
       </method>
     </configuration>
     <configuration name="PrimerUsuario" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="org.example.piratesofgraphebbean.HelloApplication" />
+      <option name="MAIN_CLASS_NAME" value="Cliente.MainCliente" />
+      <module name="PiratesOfGraphebbean" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SegundoUsuario" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Cliente.MainCliente" />
+      <module name="PiratesOfGraphebbean" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TercerUsuario" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="Cliente.MainCliente" />
       <module name="PiratesOfGraphebbean" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
+      <item itemvalue="Application.SegundoUsuario" />
       <item itemvalue="Application.PrimerUsuario" />
-      <item itemvalue="Application.MainCliente" />
-      <item itemvalue="Application.HelloApplication" />
+      <item itemvalue="Application.TercerUsuario" />
+      <item itemvalue="Application.CuartoUsuario" />
       <item itemvalue="Application.MainServidor" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MainCliente" />
         <item itemvalue="Application.MainServidor" />
-        <item itemvalue="Application.HelloApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -154,7 +149,11 @@
       <workItem from="1730831699035" duration="16787000" />
       <workItem from="1730849403728" duration="911000" />
       <workItem from="1730850713113" duration="324000" />
-      <workItem from="1730943720171" duration="925000" />
+      <workItem from="1730943720171" duration="1583000" />
+      <workItem from="1731029507068" duration="318000" />
+      <workItem from="1731099917659" duration="31000" />
+      <workItem from="1731130225065" duration="413000" />
+      <workItem from="1731172770777" duration="4175000" />
     </task>
     <servers />
   </component>

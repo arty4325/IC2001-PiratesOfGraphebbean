@@ -48,6 +48,17 @@ public class ThreadServidor extends Thread{
         } catch (IOException ex) {System.out.println("Error leyendo si ya presiono el botón");}
     }
 
+    public void mensajeComenzar(String mensaje) {
+        try {
+            salidaDatos.writeUTF(mensaje);
+            salidaDatos.flush(); // Asegura que el mensaje se envíe de inmediato
+        } catch (IOException ex) {
+            System.out.println("Error enviando mensaje al cliente " + nombreCliente);
+        }
+    }
+
+
+
 
     public boolean isStartPresionado() {
         return startPresionado;

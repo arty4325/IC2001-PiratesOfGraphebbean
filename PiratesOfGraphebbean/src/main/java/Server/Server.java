@@ -38,7 +38,7 @@ public class Server {
     }
 
     private void esperarConexiones(){ //esperar que todos inicien.
-        while(conectados<2){
+        while(conectados < 2){
             try {Thread.sleep(500);} catch (InterruptedException ex) {}
         } //esperar a que al menos hayan 2 conectados
 
@@ -50,6 +50,8 @@ public class Server {
                 }
             }
             if (!algunoNoHaPresionado) {
+                // Aqui es donde debo de jugar (Abrir la ventana inicial de gaming)
+                comenzarPartida("START");
                 break;
             }
         }
@@ -74,4 +76,11 @@ public class Server {
     public void conectarPersona(){
         conectados +=1;
     }
+
+    public void comenzarPartida(String mensaje) {
+        for (ThreadServidor threadServidor : threadsServidor) {
+            threadServidor.mensajeComenzar(mensaje);
+        }
+    }
+
 }
