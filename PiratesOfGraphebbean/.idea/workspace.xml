@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4fad49e6-0c16-4e50-a4c6-3768dd8e4274" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/MainCliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/MainCliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/MapaDelMar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/MapaDelMar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/MainGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/MainGameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Cliente/ClienteScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Cliente/ClienteScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Cliente/MainWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Cliente/MainWindow.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +67,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.SegundoUsuario">
+  <component name="RunManager" selected="Application.PrimerUsuario">
     <configuration name="CuartoUsuario" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Cliente.MainCliente" />
       <module name="PiratesOfGraphebbean" />
@@ -158,7 +154,7 @@
       <workItem from="1731172770777" duration="10640000" />
       <workItem from="1731363817313" duration="273000" />
       <workItem from="1731364235778" duration="613000" />
-      <workItem from="1731542602422" duration="6459000" />
+      <workItem from="1731542602422" duration="7139000" />
     </task>
     <servers />
   </component>

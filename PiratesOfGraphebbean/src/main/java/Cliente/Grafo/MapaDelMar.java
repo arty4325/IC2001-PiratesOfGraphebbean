@@ -1,19 +1,24 @@
 package Cliente.Grafo;
 
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class MapaDelMar {
+    private GridPane gridPane;
     private int[][] matrizAdyacencia;
     private int[][] matrizTipos;
     private boolean[] matrizDestruccion;
 
-    public MapaDelMar(int numIslas) {
+    public MapaDelMar(GridPane gridPane ,int numIslas) {
         /**
          * Se crea una matriz vacia
          */
+        this.gridPane = gridPane;
         matrizAdyacencia = new int[numIslas][numIslas];
         matrizTipos = new int[numIslas][numIslas];
         matrizDestruccion = new boolean[numIslas];
@@ -25,6 +30,17 @@ public class MapaDelMar {
             matrizDestruccion[i] = false;
         }
     }
+
+    // Método para inicializar el GridPane con los elementos de la matriz de tipos
+    public void inicializarGrid() {
+        for (int row = 0; row < matrizTipos.length; row++) {
+            for (int col = 0; col < matrizTipos[row].length; col++) {
+                Label label = new Label(String.valueOf(matrizTipos[row][col]));
+                gridPane.add(label, col, row);
+            }
+        }
+    }
+
 
 
     public void conectarIslas(int isla1, int isla2) {
