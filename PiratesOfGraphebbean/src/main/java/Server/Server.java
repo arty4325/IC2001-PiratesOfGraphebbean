@@ -43,6 +43,7 @@ public class Server {
         } //esperar a que al menos hayan 2 conectados
 
         while(true) { //esperar que todos los conectados presionen start
+            try {Thread.sleep(500);} catch (InterruptedException ex) {}
             boolean algunoNoHaPresionado = false;
             for (ThreadServidor threadServidor : threadsServidor) {
                 if (!threadServidor.isStartPresionado()) {
@@ -50,6 +51,7 @@ public class Server {
                 }
             }
             if (!algunoNoHaPresionado) {
+                connectionsThread.apagar();
                 // Aqui es donde debo de jugar (Abrir la ventana inicial de gaming)
                 comenzarPartida("START");
                 break;

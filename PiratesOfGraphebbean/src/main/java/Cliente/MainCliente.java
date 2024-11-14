@@ -10,7 +10,7 @@ public class MainCliente extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainCliente.class.getResource("/Cliente/ClienteScreen.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 562, 464);
+        Scene scene = new Scene(fxmlLoader.load(), 1400, 750);
         stage.setTitle("Cliente");
         stage.setScene(scene);
         stage.show();
