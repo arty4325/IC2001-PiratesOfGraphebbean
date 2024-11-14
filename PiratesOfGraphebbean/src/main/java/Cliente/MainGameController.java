@@ -13,13 +13,15 @@ public class MainGameController {
     private Parent root;
 
     private String userName;
+    private Cliente cliente;
     private MapaDelMar mapaDelMar;
 
     @FXML
     private GridPane PantallaJugador;
 
-    public void setUserData(String _name){ // De una ves en esta funcion voy a crear el grafo
-        this.userName = _name;
+    public void setUserData(Cliente _cliente){ // De una ves en esta funcion voy a crear el grafo
+        this.userName = _cliente.getNombreCliente();
+        this.cliente = _cliente;
         mapaDelMar = new MapaDelMar(PantallaJugador, 20);
         mapaDelMar.asignarTipoIsla(1, 2);
         mapaDelMar.inicializarGrid();

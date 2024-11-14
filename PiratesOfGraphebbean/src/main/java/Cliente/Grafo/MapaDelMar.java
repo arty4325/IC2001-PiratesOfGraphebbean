@@ -12,6 +12,10 @@ public class MapaDelMar {
     private GridPane gridPane;
     private int[][] matrizAdyacencia;
     private int[][] matrizTipos;
+    /**
+     * TODO
+     * Permitir que se pueda agregar, destruir y restaurar cualquier coordenada de isla
+     */
     private boolean[] matrizDestruccion;
 
     public MapaDelMar(GridPane gridPane ,int numIslas) {
@@ -51,6 +55,10 @@ public class MapaDelMar {
         matrizAdyacencia[isla2][isla1] = 1;
     }
 
+    /**
+     * TODO
+     * Permitir que se pueda agregar, destruir y restaurar cualquier coordenada de isla
+     */
     public void asignarTipoIsla(int isla, int tipo) {
         matrizTipos[isla][isla] = tipo;
     }

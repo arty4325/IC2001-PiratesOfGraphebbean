@@ -63,7 +63,7 @@ public class ClienteScreenController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Cliente/MainWindow.fxml"));
             Parent root = loader.load();
             MainGameController controller = loader.getController();
-            controller.setUserData(txfNombre.getText());
+            controller.setUserData(cliente);
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);

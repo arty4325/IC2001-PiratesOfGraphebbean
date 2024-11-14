@@ -81,6 +81,10 @@ public class Cliente {
         }).start();
     }
 
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
     public boolean getCanStart() {
         return canStart;
     }
