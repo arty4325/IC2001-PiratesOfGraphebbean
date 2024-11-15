@@ -1,5 +1,6 @@
 package Cliente;
 
+import Modelos.CasesEnCliente;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -7,14 +8,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 
 public class Cliente {
     private ClienteScreenController pantallaCliente;
+    private MainGameController pantallaMain;
     private DataInputStream entradaDatos;
     private DataOutputStream salidaDatos;
     private ObjectInputStream entradaObjetos;
@@ -31,10 +30,15 @@ public class Cliente {
     public void run() {
         try {
             conectar();
-            escucharMensajes(new ActionEvent());
-        } catch (Exception ex) {
-            System.out.println("Error conectando al servidor");
-        }
+        } catch (Exception ex) {System.out.println("Error conectando al servidor");}
+
+        try {
+            esperarStart();
+        } catch (Exception ex) {System.out.println("Error conectando al servidor");}
+
+        new Thread(() -> {
+            juegoEmpieza();
+        }).start();
     }
 
     public void conectar() throws Exception {
@@ -43,6 +47,7 @@ public class Cliente {
         salidaDatos = new DataOutputStream(socket.getOutputStream());
         salidaObjetos = new ObjectOutputStream(socket.getOutputStream());
         entradaObjetos = new ObjectInputStream(socket.getInputStream());
+        System.out.println("test2");
     }
 
     public void mandarNombreAServer(String nombre) {
@@ -63,22 +68,49 @@ public class Cliente {
     }
 
     // Algunas cosas que tienen que llegar del cliente van a venir por aqui:
-    private void escucharMensajes(ActionEvent event) {
-        new Thread(() -> {
+    private void esperarStart() {
             try {
-                while (true) {
-                    String mensaje = entradaDatos.readUTF();
-                    System.out.println(mensaje);
-                    if(mensaje.equals("START")){
-                        // aqui tengo que decirle a la aplicacion que tiene que moverse al siguiente stage
-                        canStart = true;
-                    }
+                String mensaje = entradaDatos.readUTF();
+                System.out.println(mensaje);
+                if (mensaje.equals("START")) {
+                    // aqui tengo que decirle a la aplicacion que tiene que moverse al siguiente stage
+                    canStart = true;
                 }
             } catch (Exception ex) {
                 System.out.println("Error recibiendo mensaje del servidor");
                 ex.printStackTrace();
             }
-        }).start();
+    }
+
+    private void juegoEmpieza(){
+        CasesEnCliente evento = CasesEnCliente.NADA;
+        while(true){
+            try {
+                evento = (CasesEnCliente) entradaObjetos.readObject();
+            } catch (Exception ex) {System.out.println("Error con entrada de evento en threadCliente");}
+            switch(evento){
+                case RECIBIRMENSAJE:
+                    try {
+                        recibirMensaje();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso recibirMensaje en ThreadCliente");}
+                case RECIBIRACCION:
+                    try {
+                        recibirAccion();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso recibirAccion en ThreadCliente");}
+            }
+        }
+    }
+
+    private void recibirMensaje() throws Exception{
+        String mensaje = entradaDatos.readUTF();
+        pantallaMain.getTxaChat().appendText(mensaje + "\n");
+    }
+
+    private void recibirAccion() throws Exception{
+        String mensaje = entradaDatos.readUTF();
+        //TODO
     }
 
     public String getNombreCliente() {
@@ -87,5 +119,9 @@ public class Cliente {
 
     public boolean getCanStart() {
         return canStart;
+    }
+
+    public void setGameController(MainGameController pantallaMain) {
+        this.pantallaMain = pantallaMain;
     }
 }

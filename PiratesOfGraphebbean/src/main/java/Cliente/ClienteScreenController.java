@@ -35,8 +35,11 @@ public class ClienteScreenController {
 
     @FXML
     public void initialize(){ //es como el constructor por decir asi
+        System.out.println("caca");
         cliente = new Cliente(this);
-        cliente.run();
+        new Thread(() -> {
+            cliente.run();
+        }).start();
     }
 
 
@@ -64,6 +67,7 @@ public class ClienteScreenController {
             Parent root = loader.load();
             MainGameController controller = loader.getController();
             controller.setUserData(cliente);
+            cliente.setGameController(controller);
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             stage.setScene(scene);

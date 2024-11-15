@@ -71,10 +71,10 @@
             <Font size="48.0" />
          </font>
       </Text>
-      <TextArea layoutX="242.0" layoutY="587.0" prefHeight="99.0" prefWidth="480.0" />
-      <TextArea layoutX="772.0" layoutY="587.0" prefHeight="133.0" prefWidth="480.0" />
+      <TextArea fx:id="txaChat" editable="false" layoutX="242.0" layoutY="587.0" prefHeight="99.0" prefWidth="480.0" />
+      <TextArea editable="false" layoutX="772.0" layoutY="587.0" prefHeight="133.0" prefWidth="480.0" />
       <TextField layoutX="242.0" layoutY="695.0" prefHeight="25.0" prefWidth="381.0" />
-      <Button layoutX="679.0" layoutY="695.0" mnemonicParsing="false" text="Send" />
+      <Button fx:id="btnSend" layoutX="679.0" layoutY="695.0" mnemonicParsing="false" onAction="#onBtnSendClick" text="Send" />
       <Label layoutX="248.0" layoutY="60.0" prefHeight="17.0" prefWidth="13.0" text="0" />
       <Label layoutX="271.0" layoutY="60.0" prefHeight="17.0" prefWidth="13.0" text="1" />
       <Label layoutX="297.0" layoutY="60.0" prefHeight="17.0" prefWidth="13.0" text="2" />
