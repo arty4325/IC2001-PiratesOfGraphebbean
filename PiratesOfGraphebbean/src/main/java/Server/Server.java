@@ -33,7 +33,7 @@ public class Server {
         esperarConexiones(); //Se queda aquí hasta tener la cantidad necesaria de jugadores conectados y que pongan start o hagan toda la vara.
 
         //Cuando ya pasa aquí, es que ya todos presionaron start, entonces ya puede comenzar el juego
-
+        ponerContrincantes();
 
     }
 
@@ -82,6 +82,16 @@ public class Server {
     public void comenzarPartida(String mensaje) {
         for (ThreadServidor threadServidor : threadsServidor) {
             threadServidor.mensajeComenzar(mensaje);
+        }
+    }
+
+    private void ponerContrincantes(){
+        for (ThreadServidor cliente : threadsServidor) {
+            for (ThreadServidor enemigo : threadsServidor) {
+                if(cliente != enemigo){
+                    cliente.getContrincantes().add(enemigo);
+                }
+            }
         }
     }
 

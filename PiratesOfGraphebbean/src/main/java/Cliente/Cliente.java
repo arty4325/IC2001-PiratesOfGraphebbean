@@ -1,6 +1,7 @@
 package Cliente;
 
 import Modelos.CasesEnCliente;
+import Modelos.CasesEnThreadServidor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -35,7 +36,7 @@ public class Cliente {
         try {
             esperarStart();
         } catch (Exception ex) {System.out.println("Error conectando al servidor");}
-
+        System.out.println("ya todos presionaron listo");
         new Thread(() -> {
             juegoEmpieza();
         }).start();
@@ -47,16 +48,19 @@ public class Cliente {
         salidaDatos = new DataOutputStream(socket.getOutputStream());
         salidaObjetos = new ObjectOutputStream(socket.getOutputStream());
         entradaObjetos = new ObjectInputStream(socket.getInputStream());
-        System.out.println("test2");
     }
 
-    public void mandarNombreAServer(String nombre) {
+    public boolean mandarNombreAServer(String nombre) {
+        if(nombre.trim().equals("")){
+            return false;
+        }
         try {
             this.nombreCliente = nombre;
             salidaDatos.writeUTF(nombre);
         } catch (Exception ex) {
             System.out.println("Error mandando el nombre");
         }
+        return true;
     }
 
     public void mandarIniciarAServer() {
@@ -73,8 +77,11 @@ public class Cliente {
                 String mensaje = entradaDatos.readUTF();
                 System.out.println(mensaje);
                 if (mensaje.equals("START")) {
+
                     // aqui tengo que decirle a la aplicacion que tiene que moverse al siguiente stage
                     canStart = true;
+                    System.out.println("test pantalla");
+                    pantallaCliente.moveMain();
                 }
             } catch (Exception ex) {
                 System.out.println("Error recibiendo mensaje del servidor");
@@ -82,24 +89,39 @@ public class Cliente {
             }
     }
 
-    private void juegoEmpieza(){
+    private void juegoEmpieza() {
         CasesEnCliente evento = CasesEnCliente.NADA;
-        while(true){
+        while (true) {
             try {
                 evento = (CasesEnCliente) entradaObjetos.readObject();
-            } catch (Exception ex) {System.out.println("Error con entrada de evento en threadCliente");}
-            switch(evento){
+            } catch (Exception ex) {
+                System.out.println("Error con entrada de evento en threadCliente");
+            }
+            switch (evento) {
                 case RECIBIRMENSAJE:
                     try {
                         recibirMensaje();
                         break;
-                    } catch (Exception ex) {System.out.println("Error con caso recibirMensaje en ThreadCliente");}
+                    } catch (Exception ex) {
+                        System.out.println("Error con caso recibirMensaje en ThreadCliente");
+                    }
                 case RECIBIRACCION:
                     try {
                         recibirAccion();
                         break;
-                    } catch (Exception ex) {System.out.println("Error con caso recibirAccion en ThreadCliente");}
+                    } catch (Exception ex) {
+                        System.out.println("Error con caso recibirAccion en ThreadCliente");
+                    }
             }
+        }
+    }
+
+    public void mandarMensaje(String mensaje){
+        try {
+            salidaObjetos.writeObject(CasesEnThreadServidor.MANDARMENSAJE);
+            salidaDatos.writeUTF(mensaje);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -110,7 +132,7 @@ public class Cliente {
 
     private void recibirAccion() throws Exception{
         String mensaje = entradaDatos.readUTF();
-        //TODO
+        pantallaMain.getTxaAcciones().appendText(mensaje + "\n");
     }
 
     public String getNombreCliente() {
