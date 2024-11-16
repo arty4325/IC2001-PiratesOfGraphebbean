@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -27,6 +28,12 @@ public class MainGameController {
     @FXML
     private TextArea txaChat;
 
+    @FXML
+    private TextField txfMensaje;
+
+    @FXML
+    private TextArea txaAcciones;
+
     public void setUserData(Cliente _cliente){ // De una ves en esta funcion voy a crear el grafo
         this.userName = _cliente.getNombreCliente();
         this.cliente = _cliente;
@@ -37,11 +44,16 @@ public class MainGameController {
 
     @FXML
     protected void onBtnSendClick(){
-        cliente.mandarIniciarAServer();
-
+        String mensaje = cliente.getNombreCliente() + ": " + txfMensaje.getText();
+        cliente.mandarMensaje(mensaje);
+        txfMensaje.clear();
     }
 
     public TextArea getTxaChat() {
         return txaChat;
+    }
+
+    public TextArea getTxaAcciones(){
+        return txaAcciones;
     }
 }

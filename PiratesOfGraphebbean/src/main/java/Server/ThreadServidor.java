@@ -1,7 +1,11 @@
 package Server;
 
+import Modelos.CasesEnCliente;
+import Modelos.CasesEnThreadServidor;
+
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ThreadServidor extends Thread{
     public Socket socket;
@@ -13,6 +17,7 @@ public class ThreadServidor extends Thread{
     private String nombreCliente;
     private int numeroCliente; //numConexion
     private boolean startPresionado;
+    private ArrayList<ThreadServidor> contrincantes;
 
     ThreadServidor(Socket socket, Server servidor, int numeroCliente){
         this.socket = socket;
@@ -26,12 +31,13 @@ public class ThreadServidor extends Thread{
             salidaObjetos = new ObjectOutputStream(socket.getOutputStream());
             entradaObjetos = new ObjectInputStream(socket.getInputStream());
         } catch (IOException ex) { System.out.println("Error en entrada/salida de datos");}
+        this.contrincantes = new ArrayList<ThreadServidor>();
     }
 
     public void run(){
         recibirNombreCliente();
         recibirSiYaInicio();
-        //Aqui ya iria la funcion con todos los cases.
+        juegoEmpieza();
     }
 
     private void recibirNombreCliente(){
@@ -44,7 +50,7 @@ public class ThreadServidor extends Thread{
     private void recibirSiYaInicio(){
         try {
             startPresionado = entradaDatos.readBoolean();
-            servidor.writeInConsole(nombreCliente + " ya presiono iniciar" + "\n"); //Lo muestra en el servidor.
+            servidor.writeInConsole(nombreCliente + " ya está listo" + "\n"); //Lo muestra en el servidor.
         } catch (IOException ex) {System.out.println("Error leyendo si ya presiono el botón");}
     }
 
@@ -57,10 +63,44 @@ public class ThreadServidor extends Thread{
         }
     }
 
+    private void juegoEmpieza(){
+        CasesEnThreadServidor evento = CasesEnThreadServidor.NADA;
+        while(true){
+            try {
+                evento = (CasesEnThreadServidor) entradaObjetos.readObject();
+            } catch (Exception ex) {System.out.println("Error con entrada de evento en threadCliente");}
+            switch(evento){
+                case MANDARMENSAJE:
+                    try {
+                        mandarMensaje();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso recibirMensaje en ThreadCliente");}
+                case MANDARACCION:
+                    try {
 
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso recibirAccion en ThreadCliente");}
+            }
+        }
+    }
 
+    private void mandarMensaje() throws Exception{
+        String mensaje = entradaDatos.readUTF();
+        salidaObjetos.writeObject(CasesEnCliente.RECIBIRMENSAJE);
+        salidaDatos.writeUTF(mensaje);
+        for(ThreadServidor contrincante : contrincantes){
+            contrincante.salidaObjetos.writeObject((CasesEnCliente.RECIBIRMENSAJE));
+            contrincante.salidaDatos.writeUTF(mensaje);
+        }
+    }
+
+    //GETTERS Y SETTERS:
 
     public boolean isStartPresionado() {
         return startPresionado;
+    }
+
+    public ArrayList<ThreadServidor> getContrincantes() {
+        return contrincantes;
     }
 }
