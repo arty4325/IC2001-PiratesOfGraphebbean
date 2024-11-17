@@ -29,7 +29,7 @@ public class ClienteScreenController {
     private Cliente cliente;
 
     @FXML
-    public void initialize(){ //es como el constructor por decir asi
+    public void initialize(){ //es como el constructor por decir asi/\
         cliente = new Cliente(this);
         new Thread(() -> {
             cliente.run();

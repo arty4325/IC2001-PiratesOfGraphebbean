@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -201,5 +202,12 @@
       <Label layoutX="748.0" layoutY="502.0" text="17" />
       <Label layoutX="748.0" layoutY="525.0" text="18" />
       <Label layoutX="748.0" layoutY="553.0" text="19" />
+      <Text layoutX="21.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Colocar Items" />
+      <ComboBox fx:id="itemComboBox" layoutX="18.0" layoutY="121.0" prefWidth="150.0" />
+      <TextField fx:id="coordX" layoutX="19.0" layoutY="171.0" />
+      <TextField fx:id="coordY" layoutX="19.0" layoutY="219.0" />
+      <Text layoutX="21.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Coordenada x" />
+      <Text layoutX="21.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Coordenada y" />
+      <Button fx:id="procesarColocar" layoutX="21.0" layoutY="260.0" mnemonicParsing="false" onAction="#btnProcessData" text="Procesar" />
     </children>
 </AnchorPane>
