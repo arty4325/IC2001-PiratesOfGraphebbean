@@ -1,8 +1,10 @@
 package Cliente;
 
 import Cliente.Grafo.MapaDelMar;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,6 +14,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import javax.mail.Store;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,18 +54,7 @@ public class MainGameController {
 
 
 
-    private void addToLista(int val) {
-        switch (val) {
-            case 1:
-                itemComboBox.getItems().add("Tienda");
-                break;
-            case 4:
-                itemComboBox.getItems().add("Mercado");
-                break;
-            default:
-                System.out.println("Error");
-        }
-    }
+
 
     private int getNumberFromString(String item) {
         System.out.println(item);
@@ -76,12 +69,19 @@ public class MainGameController {
         return number;
     }
 
+    public void loadAccordion(List<String> items) {
+        for(int i = 0; i < items.size(); i++) {
+            itemComboBox.getItems().add(items.get(i));
+        }
+        items.clear();
+    }
+
 
 
     public void setUserData(Cliente _cliente){ // De una ves en esta funcion voy a crear el grafo
         // Como esto se corre cuando se inicializa la aplicacion, aqui vamos a poner los items principales de la pantalla
-        addToLista(1);
-        addToLista(4);
+        itemComboBox.getItems().add("Tienda");
+        itemComboBox.getItems().add("Mercado");
         this.userName = _cliente.getNombreCliente();
         this.cliente = _cliente;
         mapaDelMar = new MapaDelMar(PantallaJugador, 20);
@@ -94,6 +94,44 @@ public class MainGameController {
         String mensaje = cliente.getNombreCliente() + ": " + txfMensaje.getText();
         cliente.mandarMensaje(mensaje);
         txfMensaje.clear();
+    }
+
+    @FXML
+    protected void btnGoStore(){
+        Platform.runLater(() -> { //para asegurar que corra en el thread de JavaFX application, sino se cae.
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Cliente/StoreScreen.fxml"));
+                Parent root = loader.load();
+                StoreController controller = loader.getController();
+                controller.setGameController(cliente);
+                //cliente.setGameController(controller);
+                stage = MainCliente.getPrimaryStage();
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace(); // Log or handle the exception appropriately
+            }
+        });
+    }
+
+    @FXML
+    protected void btnGoMain(){
+        Platform.runLater(() -> { //para asegurar que corra en el thread de JavaFX application, sino se cae.
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Cliente/StoreScreen.fxml"));
+                Parent root = loader.load();
+                MainGameController controller = loader.getController();
+                controller.setUserData(cliente);
+                cliente.setGameController(controller);
+                stage = MainCliente.getPrimaryStage();
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace(); // Log or handle the exception appropriately
+            }
+        });
     }
 
     @FXML
