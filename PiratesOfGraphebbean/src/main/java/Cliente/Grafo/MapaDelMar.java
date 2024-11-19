@@ -1,5 +1,6 @@
 package Cliente.Grafo;
 
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
@@ -16,7 +17,7 @@ public class MapaDelMar {
      * TODO
      * Permitir que se pueda agregar, destruir y restaurar cualquier coordenada de isla
      */
-    private boolean[] matrizDestruccion;
+    private boolean[][] matrizDestruccion;
 
     public MapaDelMar(GridPane gridPane ,int numIslas) {
         /**
@@ -25,18 +26,35 @@ public class MapaDelMar {
         this.gridPane = gridPane;
         matrizAdyacencia = new int[numIslas][numIslas];
         matrizTipos = new int[numIslas][numIslas];
-        matrizDestruccion = new boolean[numIslas];
+        matrizDestruccion = new boolean[numIslas][numIslas];
 
         for (int i = 0; i < numIslas; i++) {
             for (int j = 0; j < numIslas; j++) {
                 matrizTipos[i][j] = TipoIsla.VACIA;
+                matrizDestruccion[i][j] = false;
             }
-            matrizDestruccion[i] = false;
         }
     }
 
     // Método para inicializar el GridPane con los elementos de la matriz de tipos
+    public void limpiarCasillas() {
+        for (int row = 0; row < matrizTipos.length; row++) {
+            for (int col = 0; col < matrizTipos[row].length; col++) {
+                for (Node node : gridPane.getChildren()) {
+                    if (GridPane.getRowIndex(node) != null && GridPane.getColumnIndex(node) != null) {
+                        int rowIndex = GridPane.getRowIndex(node);
+                        int colIndex = GridPane.getColumnIndex(node);
+                        if (rowIndex == row && colIndex == col && node instanceof Label) {
+                            ((Label) node).setText("");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public void inicializarGrid() {
+        limpiarCasillas();
         for (int row = 0; row < matrizTipos.length; row++) {
             for (int col = 0; col < matrizTipos[row].length; col++) {
                 Label label = new Label(String.valueOf(matrizTipos[row][col]));
@@ -47,28 +65,28 @@ public class MapaDelMar {
 
 
 
-    public void conectarIslas(int isla1, int isla2) {
+    public void conectarIslas(int isla1x, int isla1y, int isla2x, int isla2y) {
         /**
          * Se hace una estructura que permite hacer la coneccion entre dos islas
          */
-        matrizAdyacencia[isla1][isla2] = 1;
-        matrizAdyacencia[isla2][isla1] = 1;
+        matrizAdyacencia[isla1x][isla1y] = 1;
+        matrizAdyacencia[isla2x][isla2y] = 1;
     }
 
     /**
      * TODO
      * Permitir que se pueda agregar, destruir y restaurar cualquier coordenada de isla
      */
-    public void asignarTipoIsla(int isla, int tipo) {
-        matrizTipos[isla][isla] = tipo;
+    public void asignarTipoIsla(int coordx, int coordy, int tipo) {
+        matrizTipos[coordx][coordy] = tipo;
     }
 
-    public void destruirIsla(int isla) {
-        matrizDestruccion[isla] = true;
+    public void destruirIsla(int coordx, int coordy) {
+        matrizDestruccion[coordx][coordy] = true;
     }
 
-    public void restaurarIsla(int isla) {
-        matrizDestruccion[isla] = false;
+    public void restaurarIsla(int coordx, int coordy) {
+        matrizDestruccion[coordx][coordy] = false;
     }
 
 
@@ -139,50 +157,40 @@ public class MapaDelMar {
         }
     }
 
-    public Set<Integer> obtenerConexionesExternas(int islaInicial) {
-        int tipo = matrizTipos[islaInicial][islaInicial];
-        Set<Integer> bloque = new HashSet<>();
+    public Set<Integer> obtenerConexionesExternas(int coordx, int coordy) {
+        int tipo = matrizTipos[coordx][coordy];
+        Set<String> bloque = new HashSet<>();
         Set<Integer> conexionesExternas = new HashSet<>();
-        boolean[] visitado = new boolean[matrizTipos.length];
-
-        // Si la isla está destruida, no procesamos
-        if (matrizDestruccion[islaInicial]) {
-            return conexionesExternas;  // Vacio si isla destruida
+        boolean[][] visitado = new boolean[matrizTipos.length][matrizTipos.length];
+        if (matrizDestruccion[coordx][coordy]) {
+            return conexionesExternas;
         }
-
-        explorarBloque(islaInicial, tipo, visitado, bloque);
-
-        for (int isla : bloque) {
-            for (int j = 0; j < matrizAdyacencia[isla].length; j++) {
-                if (matrizAdyacencia[isla][j] == 1 && !bloque.contains(j) && !matrizDestruccion[j]) {
+        explorarBloque(coordx, coordy, tipo, visitado, bloque);
+        for (String coordenada : bloque) {
+            String[] partes = coordenada.split(",");
+            int x = Integer.parseInt(partes[0]);
+            int y = Integer.parseInt(partes[1]);
+            for (int j = 0; j < matrizAdyacencia[x].length; j++) {
+                if (matrizAdyacencia[x][j] == 1 && !bloque.contains(j + "," + y) && !matrizDestruccion[j][y]) {
                     conexionesExternas.add(j);
                 }
             }
         }
-
         return conexionesExternas;
     }
 
-    private void explorarBloque(int isla, int tipo, boolean[] visitado, Set<Integer> bloque) {
-        if (visitado[isla] || matrizTipos[isla][isla] != tipo || matrizDestruccion[isla]) {
-            return;  // SI ISLA DESTRUDIA No se explora
+    private void explorarBloque(int coordx, int coordy, int tipo, boolean[][] visitado, Set<String> bloque) {
+        if (visitado[coordx][coordy] || matrizTipos[coordx][coordy] != tipo || matrizDestruccion[coordx][coordy]) {
+            return;
         }
-
-        visitado[isla] = true;
-        bloque.add(isla);
-
-        for (int j = 0; j < matrizAdyacencia[isla].length; j++) {
-            if (matrizAdyacencia[isla][j] == 1 && !visitado[j] && !matrizDestruccion[j]) {
-                explorarBloque(j, tipo, visitado, bloque);
+        visitado[coordx][coordy] = true;
+        bloque.add(coordx + "," + coordy);
+        for (int i = 0; i < matrizAdyacencia.length; i++) {
+            if (matrizAdyacencia[coordx][i] == 1 && !visitado[i][coordy] && !matrizDestruccion[i][coordy]) {
+                explorarBloque(i, coordy, tipo, visitado, bloque);
             }
         }
     }
-
-
-
-
-
-
 
 
 }
