@@ -13,13 +13,13 @@ public class MapaDelMar {
     private GridPane gridPane;
     private int[][] matrizAdyacencia;
     private int[][] matrizTipos;
-    /**
-     * TODO
-     * Permitir que se pueda agregar, destruir y restaurar cualquier coordenada de isla
-     */
     private boolean[][] matrizDestruccion;
 
-    public MapaDelMar(GridPane gridPane ,int numIslas) {
+    public int[][] getMatrizTipos() {
+        return matrizTipos;
+    }
+
+    public MapaDelMar(GridPane gridPane, int numIslas) {
         /**
          * Se crea una matriz vacia
          */
@@ -35,6 +35,8 @@ public class MapaDelMar {
             }
         }
     }
+
+
 
     // Método para inicializar el GridPane con los elementos de la matriz de tipos
     public void limpiarCasillas() {
@@ -53,10 +55,23 @@ public class MapaDelMar {
         }
     }
 
+
     public void inicializarGrid() {
         limpiarCasillas();
         for (int row = 0; row < matrizTipos.length; row++) {
             for (int col = 0; col < matrizTipos[row].length; col++) {
+                Label label = new Label(String.valueOf(matrizTipos[row][col]));
+                gridPane.add(label, col, row);
+            }
+        }
+    }
+
+    public void recrearGrid(GridPane pantallaJugador) {
+        this.gridPane = pantallaJugador;
+        //limpiarCasillas();
+        for (int row = 0; row < matrizTipos.length; row++) {
+            for (int col = 0; col < matrizTipos[row].length; col++) {
+                System.out.print(matrizTipos[row][col] + " ");
                 Label label = new Label(String.valueOf(matrizTipos[row][col]));
                 gridPane.add(label, col, row);
             }
@@ -88,6 +103,8 @@ public class MapaDelMar {
     public void restaurarIsla(int coordx, int coordy) {
         matrizDestruccion[coordx][coordy] = false;
     }
+
+
 
 
 

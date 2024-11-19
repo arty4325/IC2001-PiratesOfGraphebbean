@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import javax.mail.Store;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainGameController {
@@ -60,7 +61,7 @@ public class MainGameController {
         System.out.println(item);
         int number = switch (item) {
             case "Tienda" -> 1;
-            case "Mercado" -> 4;
+            case "Energia" -> 4;
             default -> {
                 System.out.println("Ítem no reconocido: " + item);
                 yield -1;
@@ -76,17 +77,31 @@ public class MainGameController {
         items.clear();
     }
 
-
+    private void loadDataComboBox() {
+        for(int i = 0; i < cliente.getListaItems().size(); i++) {
+            itemComboBox.getItems().add(cliente.getListaItems().get(i));
+        }
+    }
 
     public void setUserData(Cliente _cliente){ // De una ves en esta funcion voy a crear el grafo
         // Como esto se corre cuando se inicializa la aplicacion, aqui vamos a poner los items principales de la pantalla
-        itemComboBox.getItems().add("Tienda");
-        itemComboBox.getItems().add("Mercado");
         this.userName = _cliente.getNombreCliente();
         this.cliente = _cliente;
+        loadDataComboBox();
         mapaDelMar = new MapaDelMar(PantallaJugador, 20);
-        mapaDelMar.asignarTipoIsla(1, 5, 2);
         mapaDelMar.inicializarGrid();
+    }
+
+    public void backFromStore(Cliente _cliente, MapaDelMar _mapaDelMar){
+        this.cliente = _cliente;
+        loadDataComboBox();
+        this.mapaDelMar = _mapaDelMar;
+        for(int i = 0; i < mapaDelMar.getMatrizTipos().length; i++){
+            System.out.println(Arrays.toString(mapaDelMar.getMatrizTipos()[i]));
+        }
+        mapaDelMar.inicializarGrid();
+        mapaDelMar.recrearGrid(PantallaJugador);
+        //mapaDelMar.inicializarGrid();
     }
 
     @FXML
@@ -103,7 +118,7 @@ public class MainGameController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Cliente/StoreScreen.fxml"));
                 Parent root = loader.load();
                 StoreController controller = loader.getController();
-                controller.setGameController(cliente);
+                controller.setGameController(cliente, mapaDelMar);
                 //cliente.setGameController(controller);
                 stage = MainCliente.getPrimaryStage();
                 scene = new Scene(root);
@@ -115,24 +130,6 @@ public class MainGameController {
         });
     }
 
-    @FXML
-    protected void btnGoMain(){
-        Platform.runLater(() -> { //para asegurar que corra en el thread de JavaFX application, sino se cae.
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Cliente/StoreScreen.fxml"));
-                Parent root = loader.load();
-                MainGameController controller = loader.getController();
-                controller.setUserData(cliente);
-                cliente.setGameController(controller);
-                stage = MainCliente.getPrimaryStage();
-                scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace(); // Log or handle the exception appropriately
-            }
-        });
-    }
 
     @FXML
     protected void btnProcessData(ActionEvent event){
@@ -143,11 +140,13 @@ public class MainGameController {
         // PROCESA
         // 1. Tengo que ver si lo puedo colocar donde se quiere:
 
+
         mapaDelMar.asignarTipoIsla(coordXInt, coordYInt, selectedInt);
         mapaDelMar.inicializarGrid();
 
 
         itemComboBox.getItems().remove(selectedItem);
+        cliente.getListaItems().remove(selectedItem);
     }
 
     public TextArea getTxaChat() {

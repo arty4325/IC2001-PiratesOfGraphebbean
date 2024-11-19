@@ -11,6 +11,8 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Cliente {
     private ClienteScreenController pantallaCliente;
@@ -22,13 +24,21 @@ public class Cliente {
     private Socket socket; //Socket del cliente.
     private String nombreCliente;
     private boolean canStart = false;
+    // Aqui voy a tener una lista de items que van a estar en pantalla
+    private List<String> listaItems = new ArrayList<String>();
 
 
     public Cliente(ClienteScreenController pantallaCliente) {
         this.pantallaCliente = pantallaCliente;
     }
 
+    public List<String> getListaItems() {
+        return listaItems;
+    }
+
     public void run() {
+        listaItems.add("Tienda");
+        listaItems.add("Energia");
         try {
             conectar();
         } catch (Exception ex) {System.out.println("Error conectando al servidor");}

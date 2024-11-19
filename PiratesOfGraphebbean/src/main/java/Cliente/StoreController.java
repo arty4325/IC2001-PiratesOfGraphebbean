@@ -1,5 +1,6 @@
 package Cliente;
 
+import Cliente.Grafo.MapaDelMar;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,12 +17,14 @@ public class StoreController {
     private Scene scene;
     private Parent root;
     private Cliente cliente;
+    private MapaDelMar mapaDelMar;
     private List<String> listaItems = new ArrayList<String>();
 
 
-    public void setGameController(Cliente _cliente){ // De una ves en esta funcion voy a crear el grafo
+    public void setGameController(Cliente _cliente, MapaDelMar mapaDelMar){ // De una ves en esta funcion voy a crear el grafo
         // Como esto se corre cuando se inicializa la aplicacion, aqui vamos a poner los items principales de la pantalla
         this.cliente = _cliente;
+        this.mapaDelMar = mapaDelMar;
 
     }
 
@@ -34,7 +37,7 @@ public class StoreController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Cliente/MainWindow.fxml"));
                 Parent root = loader.load();
                 MainGameController controller = loader.getController();
-                controller.setUserData(cliente);
+                controller.backFromStore(this.cliente, this.mapaDelMar);
                 controller.loadAccordion(listaItems);
                 //cliente.setGameController(controller);
                 stage = MainCliente.getPrimaryStage();
