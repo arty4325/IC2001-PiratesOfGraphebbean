@@ -3,6 +3,9 @@ package Cliente.Grafo;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -127,6 +130,7 @@ public class MapaDelMar {
                 case TipoIsla.FABRICA -> System.out.println("Fábrica");
                 case TipoIsla.TEMPLO -> System.out.println("Templo");
                 case TipoIsla.MERCADO -> System.out.println("Mercado");
+                case TipoIsla.CONECTOR -> System.out.println("Conector");
                 default -> System.out.println("Vacía");
             }
         }

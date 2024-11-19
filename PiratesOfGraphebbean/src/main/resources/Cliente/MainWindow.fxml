@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Cliente.MainGameController">
+<AnchorPane fx:id="anchorPane" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Cliente.MainGameController">
     <children>
         <GridPane fx:id="PantallaJugador" gridLinesVisible="true" layoutX="242.0" layoutY="90.0" prefHeight="480.0" prefWidth="480.0">
             <columnConstraints>
@@ -29,8 +29,8 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="25.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="25.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="25.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="28.0" minWidth="3.0" prefWidth="24.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="47.0" minWidth="10.0" prefWidth="26.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="25.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="25.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="25.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="25.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="25.0" />
@@ -202,13 +202,19 @@
         <Label layoutX="748.0" layoutY="502.0" text="17" />
         <Label layoutX="748.0" layoutY="525.0" text="18" />
         <Label layoutX="748.0" layoutY="553.0" text="19" />
-        <Text layoutX="21.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Colocar Items" />
-        <ComboBox fx:id="itemComboBox" layoutX="18.0" layoutY="121.0" prefWidth="150.0" />
-        <TextField fx:id="coordX" layoutX="19.0" layoutY="171.0" />
-        <TextField fx:id="coordY" layoutX="19.0" layoutY="219.0" />
-        <Text layoutX="21.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Coordenada x" />
-        <Text layoutX="21.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Coordenada y" />
-        <Button fx:id="procesarColocar" layoutX="21.0" layoutY="260.0" mnemonicParsing="false" onAction="#btnProcessData" text="Procesar" />
-      <Button fx:id="procesarColocar1" layoutX="19.0" layoutY="65.0" mnemonicParsing="false" onAction="#btnGoStore" text="Tienda" />
+        <Text layoutX="19.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Colocar Items" />
+        <ComboBox fx:id="itemComboBox" layoutX="16.0" layoutY="78.0" prefWidth="150.0" />
+        <Text layoutX="19.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Coordenada x" />
+        <Text layoutX="18.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Coordenada y" />
+        <Button fx:id="procesarColocar" layoutX="18.0" layoutY="210.0" mnemonicParsing="false" onAction="#btnProcessData" text="Procesar" />
+      <Button fx:id="procesarColocar1" layoutX="64.0" layoutY="20.0" mnemonicParsing="false" onAction="#btnGoStore" text="Tienda" />
+      <Button fx:id="procesarColocar2" layoutX="15.0" layoutY="363.0" mnemonicParsing="false" onAction="#testLineDraw" text="Conectar" />
+      <Text layoutX="19.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conectar Items" />
+      <ComboBox fx:id="conectorComboBox" layoutX="17.0" layoutY="283.0" prefWidth="150.0" />
+      <ComboBox fx:id="placeItemComboBox" layoutX="16.0" layoutY="333.0" prefWidth="150.0" />
+      <Text layoutX="19.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conector" />
+      <Text layoutX="17.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item" />
+      <TextField fx:id="coordX" layoutX="16.0" layoutY="130.0" />
+      <TextField fx:id="coordY" layoutX="16.0" layoutY="179.0" />
     </children>
 </AnchorPane>

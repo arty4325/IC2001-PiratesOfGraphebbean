@@ -28,32 +28,22 @@ public class StoreController {
 
     }
 
-
-    @FXML
-    protected void btnGoGame(){
-        System.out.println("Todas las partidas inician");
-        Platform.runLater(() -> { //para asegurar que corra en el thread de JavaFX application, sino se cae.
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Cliente/MainWindow.fxml"));
-                Parent root = loader.load();
-                MainGameController controller = loader.getController();
-                controller.backFromStore(this.cliente, this.mapaDelMar);
-                controller.loadAccordion(listaItems);
-                //cliente.setGameController(controller);
-                stage = MainCliente.getPrimaryStage();
-                scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace(); // Log or handle the exception appropriately
-            }
-        });
-    }
-
     @FXML
     protected void btnAddEnergy(){
         // Primero hacemos una lista, despues en el boton de volver a la funcion llamamos ahi algo que actualice la lista
-        listaItems.add("Tienda");
+        cliente.getListaItems().add("Energia");
+    }
+
+    @FXML
+    protected void btnAddStore(){
+        // Primero hacemos una lista, despues en el boton de volver a la funcion llamamos ahi algo que actualice la lista
+        cliente.getListaItems().add("Tienda");
+    }
+
+    @FXML
+    protected void btnAddConector(){
+        // Primero hacemos una lista, despues en el boton de volver a la funcion llamamos ahi algo que actualice la lista
+        cliente.getListaItems().add("Conector");
     }
 
 
