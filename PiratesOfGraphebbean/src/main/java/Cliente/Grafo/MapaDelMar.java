@@ -3,6 +3,9 @@ package Cliente.Grafo;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Polygon;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,13 +16,13 @@ public class MapaDelMar {
     private GridPane gridPane;
     private int[][] matrizAdyacencia;
     private int[][] matrizTipos;
-    /**
-     * TODO
-     * Permitir que se pueda agregar, destruir y restaurar cualquier coordenada de isla
-     */
     private boolean[][] matrizDestruccion;
 
-    public MapaDelMar(GridPane gridPane ,int numIslas) {
+    public int[][] getMatrizTipos() {
+        return matrizTipos;
+    }
+
+    public MapaDelMar(GridPane gridPane, int numIslas) {
         /**
          * Se crea una matriz vacia
          */
@@ -35,6 +38,8 @@ public class MapaDelMar {
             }
         }
     }
+
+
 
     // Método para inicializar el GridPane con los elementos de la matriz de tipos
     public void limpiarCasillas() {
@@ -53,10 +58,23 @@ public class MapaDelMar {
         }
     }
 
+
     public void inicializarGrid() {
         limpiarCasillas();
         for (int row = 0; row < matrizTipos.length; row++) {
             for (int col = 0; col < matrizTipos[row].length; col++) {
+                Label label = new Label(String.valueOf(matrizTipos[row][col]));
+                gridPane.add(label, col, row);
+            }
+        }
+    }
+
+    public void recrearGrid(GridPane pantallaJugador) {
+        this.gridPane = pantallaJugador;
+        //limpiarCasillas();
+        for (int row = 0; row < matrizTipos.length; row++) {
+            for (int col = 0; col < matrizTipos[row].length; col++) {
+                System.out.print(matrizTipos[row][col] + " ");
                 Label label = new Label(String.valueOf(matrizTipos[row][col]));
                 gridPane.add(label, col, row);
             }
@@ -91,6 +109,8 @@ public class MapaDelMar {
 
 
 
+
+
     public void mostrarAdyacencias() {
         System.out.println("Matriz de Adyacencia:");
         for (int i = 0; i < matrizAdyacencia.length; i++) {
@@ -110,6 +130,7 @@ public class MapaDelMar {
                 case TipoIsla.FABRICA -> System.out.println("Fábrica");
                 case TipoIsla.TEMPLO -> System.out.println("Templo");
                 case TipoIsla.MERCADO -> System.out.println("Mercado");
+                case TipoIsla.CONECTOR -> System.out.println("Conector");
                 default -> System.out.println("Vacía");
             }
         }

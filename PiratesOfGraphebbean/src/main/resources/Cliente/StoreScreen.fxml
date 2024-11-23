@@ -5,14 +5,20 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Cliente.StoreController">
+<AnchorPane prefHeight="450.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Cliente.StoreController">
    <children>
-      <Text layoutX="629.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tienda">
+      <Text layoutX="479.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tienda">
          <font>
             <Font size="48.0" />
          </font>
       </Text>
-      <Button layoutX="1271.0" layoutY="648.0" mnemonicParsing="false" onAction="#btnGoGame" text="Go Back" />
-      <Button layoutX="134.0" layoutY="128.0" mnemonicParsing="false" onAction="#btnAddEnergy" text="Test Compra" />
+      <Button layoutX="738.0" layoutY="150.0" mnemonicParsing="false" onAction="#btnAddEnergy" text="Energia" />
+      <Text layoutX="794.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Items">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Button layoutX="738.0" layoutY="200.0" mnemonicParsing="false" onAction="#btnAddStore" text="Tienda" />
+      <Button layoutX="881.0" layoutY="150.0" mnemonicParsing="false" onAction="#btnAddConector" text="Conector" />
    </children>
 </AnchorPane>

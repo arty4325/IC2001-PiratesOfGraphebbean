@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4fad49e6-0c16-4e50-a4c6-3768dd8e4274" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Cliente/StoreController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Cliente/StoreScreen.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/MapaDelMar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/MapaDelMar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/TipoIsla.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/TipoIsla.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/MainGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/MainGameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/StoreController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/Cliente/MainWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Cliente/MainWindow.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Cliente/StoreScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Cliente/StoreScreen.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +22,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Class" />
         <option value="FxmlFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -166,7 +167,9 @@
       <workItem from="1731774628430" duration="1839000" />
       <workItem from="1731817733998" duration="7189000" />
       <workItem from="1731899655457" duration="1224000" />
-      <workItem from="1731960866531" duration="8370000" />
+      <workItem from="1731960866531" duration="8712000" />
+      <workItem from="1731979516954" duration="20734000" />
+      <workItem from="1732047788319" duration="9837000" />
     </task>
     <servers />
   </component>
