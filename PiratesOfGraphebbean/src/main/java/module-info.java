@@ -2,7 +2,7 @@ module org.example.piratesofgraphebbean {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
-    requires mail;
+//    requires mail; TODO DESCOMENTAR ESTO
 
 
     opens org.example.piratesofgraphebbean to javafx.fxml;

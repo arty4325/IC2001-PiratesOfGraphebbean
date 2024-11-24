@@ -19,7 +19,7 @@ import javafx.scene.shape.Line;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import javax.mail.Store;
+//import javax.mail.Store; TODO DESCOMENTAR ESTO
 import java.io.IOException;
 import java.util.*;
 
@@ -31,6 +31,8 @@ public class MainGameController {
     private String userName;
     private Cliente cliente;
     private MapaDelMar mapaDelMar;
+
+    private StoreController storeActual;
 
     static final HashMap<String, List<Integer>> hashPosItems = new HashMap<String, List<Integer>>();
 
@@ -96,6 +98,7 @@ public class MainGameController {
     }
 
     private void loadDataComboBox() {
+        itemComboBox.getItems().clear();
         for(int i = 0; i < cliente.getListaItems().size(); i++) {
             itemComboBox.getItems().add(cliente.getListaItems().get(i));
         }
@@ -166,6 +169,15 @@ public class MainGameController {
         mapaDelMar.recrearGrid(PantallaJugador);
     }
 
+    public void updateGUIDespuesDeOfertaOCompra(){
+        if(storeActual != null){
+            Platform.runLater(() -> storeActual.actualizarComponentesCbx());
+            Platform.runLater(() -> storeActual.actualizarDinero());
+        } else {
+            Platform.runLater(() ->loadDataComboBox());
+        }
+    }
+
     @FXML
     protected void onBtnSendClick(){
         String mensaje = cliente.getNombreCliente() + ": " + txfMensaje.getText();
@@ -180,6 +192,7 @@ public class MainGameController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Cliente/StoreScreen.fxml"));
                 Parent root = loader.load();
                 StoreController controller = loader.getController();
+                storeActual = controller;
                 controller.setGameController(cliente, mapaDelMar);
                 Stage popupStage = new Stage();
                 popupStage.setTitle("Store");
@@ -192,6 +205,7 @@ public class MainGameController {
                     System.out.println("El pop-up ha sido cerrado.");
                     itemComboBox.getItems().clear();
                     loadDataComboBox();
+                    storeActual = null;
                 });
                 popupStage.show();
             } catch (IOException e) {
@@ -212,7 +226,6 @@ public class MainGameController {
 
         mapaDelMar.asignarTipoIsla(coordYInt, coordXInt, selectedInt);
         mapaDelMar.inicializarGrid();
-
         itemComboBox.getItems().remove(selectedItem);
         cliente.getListaItems().remove(selectedItem);
         // Yo deberia de tomar esto, y guardarlo en algo que me permita saber que item esta en que coordenada?

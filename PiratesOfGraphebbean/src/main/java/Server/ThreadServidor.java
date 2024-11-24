@@ -18,6 +18,7 @@ public class ThreadServidor extends Thread{
     private int numeroCliente; //numConexion
     private boolean startPresionado;
     private ArrayList<ThreadServidor> contrincantes;
+    private Object objeto;
 
     ThreadServidor(Socket socket, Server servidor, int numeroCliente){
         this.socket = socket;
@@ -68,18 +69,33 @@ public class ThreadServidor extends Thread{
         while(true){
             try {
                 evento = (CasesEnThreadServidor) entradaObjetos.readObject();
-            } catch (Exception ex) {System.out.println("Error con entrada de evento en threadCliente");}
+            } catch (Exception ex) {System.out.println("Error con entrada de evento en ThreadServidor");}
             switch(evento){
                 case MANDARMENSAJE:
                     try {
                         mandarMensaje();
                         break;
-                    } catch (Exception ex) {System.out.println("Error con caso recibirMensaje en ThreadCliente");}
+                    } catch (Exception ex) {System.out.println("Error con caso recibirMensaje en ThreadServidor");}
                 case MANDARACCION:
                     try {
-
+                        mandarAccion();
                         break;
-                    } catch (Exception ex) {System.out.println("Error con caso recibirAccion en ThreadCliente");}
+                    } catch (Exception ex) {System.out.println("Error con caso recibirAccion en ThreadServidor");}
+                case DEVOLVERNOMBRESOPONENTES:
+                    try {
+                        devolverNombresOponentes();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso devolverNombresOponentes en ThreadServidor");}
+                case PROPONERVENTA:
+                    try {
+                        proponerVenta();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso proponerVenta en ThreadServidor");}
+                case PONERENOBJETO:
+                    try {
+                        objeto = entradaObjetos.readObject();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso PONERENOBJETO en ThreadServidor");}
             }
         }
     }
@@ -94,6 +110,57 @@ public class ThreadServidor extends Thread{
         }
     }
 
+    private void mandarAccion() throws Exception{
+        String mensaje = entradaDatos.readUTF();
+        salidaObjetos.writeObject(CasesEnCliente.RECIBIRACCION);
+        salidaDatos.writeUTF(mensaje);
+        for(ThreadServidor contrincante : contrincantes){
+            contrincante.salidaObjetos.writeObject((CasesEnCliente.RECIBIRACCION));
+            contrincante.salidaDatos.writeUTF(mensaje);
+        }
+    }
+
+    private void devolverNombresOponentes() throws Exception{
+        ArrayList<String> nombres = new ArrayList<String>();
+        for(ThreadServidor contrincante : contrincantes){
+            nombres.add(contrincante.getNombreCliente());
+        }
+        salidaObjetos.writeObject(nombres);
+    }
+
+    private void proponerVenta() throws Exception{
+        String selectedItem = entradaDatos.readUTF();
+        String selectedPlayer = entradaDatos.readUTF();
+        int precio = entradaDatos.readInt();
+        ThreadServidor ts = getEnemigoConNombre(selectedPlayer);
+        ts.getSalidaObjetos().writeObject(CasesEnCliente.RECIBIROFERTA);
+        ts.getSalidaDatos().writeUTF(nombreCliente);
+        ts.getSalidaDatos().writeUTF(selectedItem);
+        ts.getSalidaDatos().writeInt(precio);
+        while(ts.getObjeto() == null){
+            sleep(500);
+        }
+        Boolean acepto = (Boolean)ts.getObjeto();
+        ts.setObjeto(null);
+
+        if(acepto){
+            salidaObjetos.writeObject(CasesEnCliente.OFERTAACEPTADA);
+            salidaDatos.writeUTF(selectedItem);
+            salidaDatos.writeInt(precio);
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
     //GETTERS Y SETTERS:
 
     public boolean isStartPresionado() {
@@ -102,5 +169,42 @@ public class ThreadServidor extends Thread{
 
     public ArrayList<ThreadServidor> getContrincantes() {
         return contrincantes;
+    }
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public ThreadServidor getEnemigoConNombre(String nombre){
+        for (ThreadServidor contrincante : contrincantes) {
+            if(contrincante.getNombreCliente().equals(nombre)){
+                return contrincante;
+            }
+        }
+        return null;
+    }
+
+    public DataInputStream getEntradaDatos() {
+        return entradaDatos;
+    }
+
+    public DataOutputStream getSalidaDatos() {
+        return salidaDatos;
+    }
+
+    public ObjectInputStream getEntradaObjetos() {
+        return entradaObjetos;
+    }
+
+    public ObjectOutputStream getSalidaObjetos() {
+        return salidaObjetos;
+    }
+
+    public Object getObjeto() {
+        return objeto;
+    }
+
+    public void setObjeto(Object objeto) {
+        this.objeto = objeto;
     }
 }

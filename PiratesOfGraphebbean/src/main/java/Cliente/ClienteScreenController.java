@@ -59,10 +59,11 @@ public class ClienteScreenController {
                     cliente.setGameController(controller);
                     stage = MainCliente.getPrimaryStage();
                     scene = new Scene(root);
+                    stage.setTitle(cliente.getNombreCliente());
                     stage.setScene(scene);
                     stage.show();
                 } catch (IOException e) {
-                    e.printStackTrace(); // Log or handle the exception appropriately
+                    e.printStackTrace();
                 }
             });
     }

@@ -5,5 +5,7 @@ import java.io.Serializable;
 public enum CasesEnCliente implements Serializable {
     NADA,
     RECIBIRMENSAJE,
-    RECIBIRACCION
+    RECIBIRACCION,
+    RECIBIROFERTA,
+    OFERTAACEPTADA
 }
