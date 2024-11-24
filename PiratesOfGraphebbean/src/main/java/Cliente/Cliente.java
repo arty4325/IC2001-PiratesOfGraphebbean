@@ -2,17 +2,21 @@ package Cliente;
 
 import Modelos.CasesEnCliente;
 import Modelos.CasesEnThreadServidor;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Cliente {
     private ClienteScreenController pantallaCliente;
@@ -24,12 +28,15 @@ public class Cliente {
     private Socket socket; //Socket del cliente.
     private String nombreCliente;
     private boolean canStart = false;
+    private ArrayList<String> nombresOponentes;
     // Aqui voy a tener una lista de items que van a estar en pantalla
     private List<String> listaItems = new ArrayList<String>();
+    private int dinero;
 
 
     public Cliente(ClienteScreenController pantallaCliente) {
         this.pantallaCliente = pantallaCliente;
+        dinero = 4000;
     }
 
     public List<String> getListaItems() {
@@ -45,8 +52,13 @@ public class Cliente {
 
         try {
             esperarStart();
-        } catch (Exception ex) {System.out.println("Error conectando al servidor");}
+        } catch (Exception ex) {System.out.println("Error esperando a start");}
         System.out.println("ya todos presionaron listo");
+
+        try{
+            conseguirNombresOponentes();
+        } catch (Exception ex) {System.out.println("Error consiguiendo nombre de oponentes");}
+
         new Thread(() -> {
             juegoEmpieza();
         }).start();
@@ -99,6 +111,11 @@ public class Cliente {
             }
     }
 
+    private void conseguirNombresOponentes() throws Exception {
+        salidaObjetos.writeObject(CasesEnThreadServidor.DEVOLVERNOMBRESOPONENTES);
+        nombresOponentes = (ArrayList<String>)entradaObjetos.readObject();
+    }
+
     private void juegoEmpieza() {
         CasesEnCliente evento = CasesEnCliente.NADA;
         while (true) {
@@ -112,16 +129,22 @@ public class Cliente {
                     try {
                         recibirMensaje();
                         break;
-                    } catch (Exception ex) {
-                        System.out.println("Error con caso recibirMensaje en ThreadCliente");
-                    }
+                    } catch (Exception ex) {System.out.println("Error con caso recibirMensaje en Cliente");}
                 case RECIBIRACCION:
                     try {
                         recibirAccion();
                         break;
-                    } catch (Exception ex) {
-                        System.out.println("Error con caso recibirAccion en ThreadCliente");
-                    }
+                    } catch (Exception ex) {System.out.println("Error con caso recibirAccion en Cliente");}
+                case RECIBIROFERTA:
+                    try {
+                        recibirOferta();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso recibirOferta en Cliente");}
+                case OFERTAACEPTADA:
+                    try {
+                        ofertaAceptada();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso ofertaAceptada en Cliente");}
             }
         }
     }
@@ -145,6 +168,104 @@ public class Cliente {
         pantallaMain.getTxaAcciones().appendText(mensaje + "\n");
     }
 
+    private void recibirOferta() throws Exception{
+        String jugadorProponiendo = entradaDatos.readUTF();
+        String itemPropuesto = entradaDatos.readUTF();
+        int precio = entradaDatos.readInt();
+        System.out.println("llega aqui");
+
+//        ButtonType yesButton = new ButtonType("Sí");
+//        ButtonType noButton = new ButtonType("No");
+//        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, jugadorProponiendo + " te propone " + itemPropuesto + " por el precio de " + precio + ". Aceptas?", yesButton, noButton);
+//        alert.setTitle("Confirmación");
+//        alert.getButtonTypes().setAll(yesButton, noButton);
+//        Optional<ButtonType> result = alert.showAndWait();
+//
+//        if (result.isPresent() && result.get() == yesButton) {
+//            System.out.println("lo quiso");
+//            if(tengoDineroSuficiente(precio)){
+//                salidaObjetos.writeObject(CasesEnThreadServidor.PONERENOBJETO);
+//                salidaObjetos.writeObject(true);
+//                bajarDinero(precio);
+//                listaItems.add(itemPropuesto);
+//                System.out.println(nombreCliente + " " +  dinero);
+//            } else{
+//                salidaObjetos.writeObject(CasesEnThreadServidor.PONERENOBJETO);
+//                salidaObjetos.writeObject(false);
+//            }
+//        } else {
+//            System.out.println("no lo quiso");
+//            salidaObjetos.writeObject(CasesEnThreadServidor.PONERENOBJETO);
+//            salidaObjetos.writeObject(false);
+//        }
+
+
+
+        Platform.runLater(() -> {
+            try {
+                ButtonType yesButton = new ButtonType("Sí");
+                ButtonType noButton = new ButtonType("No");
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, jugadorProponiendo + " te propone " + itemPropuesto + " por el precio de " + precio + ". ¿Aceptas?", yesButton, noButton);
+                alert.setTitle("Confirmación");
+
+                Optional<ButtonType> result = alert.showAndWait();
+
+                if (result.isPresent() && result.get() == yesButton) {
+                    System.out.println("lo quiso");
+                    if(tengoDineroSuficiente(precio)){
+                        salidaObjetos.writeObject(CasesEnThreadServidor.PONERENOBJETO);
+                        salidaObjetos.writeObject(true);
+                        bajarDinero(precio);
+                        listaItems.add(itemPropuesto);
+                        System.out.println(nombreCliente + " " +  dinero);
+                        pantallaMain.updateGUIDespuesDeOfertaOCompra();
+                    } else{
+                        salidaObjetos.writeObject(CasesEnThreadServidor.PONERENOBJETO);
+                        salidaObjetos.writeObject(false);
+                    }
+                } else {
+                    System.out.println("no lo quiso");
+                    salidaObjetos.writeObject(CasesEnThreadServidor.PONERENOBJETO);
+                    salidaObjetos.writeObject(false);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void ofertaAceptada() throws Exception{
+        String item = entradaDatos.readUTF();
+        listaItems.remove(item);
+        subirDinero(entradaDatos.readInt());
+        System.out.println(nombreCliente + " " +  dinero);
+        pantallaMain.updateGUIDespuesDeOfertaOCompra();
+    }
+
+
+
+
+    public boolean tengoDineroSuficiente(int precio){
+        return dinero - precio >= 0; //si la resta da más o igual que 0, puede comprar.
+    }
+
+    public void bajarDinero(int precio){
+        dinero -= precio;
+    }
+
+    public void subirDinero(int precio){
+        dinero += precio;
+    }
+
+
+
+
+
+
+
+
+
     public String getNombreCliente() {
         return nombreCliente;
     }
@@ -155,5 +276,29 @@ public class Cliente {
 
     public void setGameController(MainGameController pantallaMain) {
         this.pantallaMain = pantallaMain;
+    }
+
+    public ArrayList<String> getNombresOponentes() {
+        return nombresOponentes;
+    }
+
+    public int getDinero() {
+        return dinero;
+    }
+
+    public DataInputStream getEntradaDatos() {
+        return entradaDatos;
+    }
+
+    public DataOutputStream getSalidaDatos() {
+        return salidaDatos;
+    }
+
+    public ObjectInputStream getEntradaObjetos() {
+        return entradaObjetos;
+    }
+
+    public ObjectOutputStream getSalidaObjetos() {
+        return salidaObjetos;
     }
 }

@@ -13,12 +13,21 @@ public class Server {
     private ArrayList<ThreadServidor> threadsServidor;
     private int conectados;
 
+    private static Server singleton;
 
-    public Server(ServerScreenController pantallaServidor){
+    private Server(ServerScreenController pantallaServidor){
         this.pantallaServidor = pantallaServidor;
         this.clientes = new ArrayList<Socket>();
         this.threadsServidor= new ArrayList<ThreadServidor>();
         this.conectados = 0;
+    }
+
+    public static Server getInstance(ServerScreenController pantallaServidor) {
+        if (singleton == null) {
+            singleton = new Server(pantallaServidor);
+        }
+
+        return singleton;
     }
 
     public void run(){

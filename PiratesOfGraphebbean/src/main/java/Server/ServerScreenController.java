@@ -26,7 +26,7 @@ public class ServerScreenController {
 
     @FXML
     public void initialize() {
-        servidor = new Server(this);
+        servidor = Server.getInstance(this);
         Thread serverThread = new Thread(() -> servidor.run());
         serverThread.setDaemon(true);
         serverThread.start();
