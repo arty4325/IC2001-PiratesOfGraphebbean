@@ -6,17 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4fad49e6-0c16-4e50-a4c6-3768dd8e4274" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/Cliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/ClienteScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/ClienteScreenController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/MapaDelMar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/MapaDelMar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/MainGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/MainGameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/StoreController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Modelos/CasesEnCliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Modelos/CasesEnCliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Modelos/CasesEnThreadServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Modelos/CasesEnThreadServidor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Server/ServerScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/ServerScreenController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Server/ThreadServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/ThreadServidor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Cliente/StoreScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Cliente/StoreScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Cliente/MainWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Cliente/MainWindow.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,10 +55,11 @@
     "Application.SegundoUsuario.executor": "Run",
     "Application.TercerUsuario.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "Ale",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/artur/Desktop/ITCR/POO/Proyectos/POO_P1_ParqueosCallejeros/ParqueosCallejeros",
+    "last_opened_file_path": "C:/Users/artur/AppData/Local/SceneBuilder/SceneBuilder.exe",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -79,7 +72,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.SegundoUsuario">
+  <component name="RunManager" selected="Application.PrimerUsuario">
     <configuration name="CuartoUsuario" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Cliente.MainCliente" />
       <module name="PiratesOfGraphebbean" />
@@ -137,8 +130,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
       </set>
     </attachedChunks>
   </component>
@@ -176,6 +169,7 @@
       <workItem from="1731960866531" duration="8712000" />
       <workItem from="1731979516954" duration="20734000" />
       <workItem from="1732047788319" duration="9837000" />
+      <workItem from="1732432480378" duration="8515000" />
     </task>
     <servers />
   </component>
