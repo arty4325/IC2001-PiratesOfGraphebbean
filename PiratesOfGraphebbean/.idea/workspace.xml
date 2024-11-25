@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4fad49e6-0c16-4e50-a4c6-3768dd8e4274" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/MapaDelMar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/MapaDelMar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/MainGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/MainGameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/Cliente/MainWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Cliente/MainWindow.fxml" afterDir="false" />
     </list>
@@ -72,7 +71,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.PrimerUsuario">
+  <component name="RunManager" selected="Application.SegundoUsuario">
     <configuration name="CuartoUsuario" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Cliente.MainCliente" />
       <module name="PiratesOfGraphebbean" />
@@ -169,7 +168,7 @@
       <workItem from="1731960866531" duration="8712000" />
       <workItem from="1731979516954" duration="20734000" />
       <workItem from="1732047788319" duration="9837000" />
-      <workItem from="1732432480378" duration="8515000" />
+      <workItem from="1732432480378" duration="11761000" />
     </task>
     <servers />
   </component>

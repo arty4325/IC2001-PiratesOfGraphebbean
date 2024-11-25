@@ -144,6 +144,14 @@ public class MainGameController {
         anchorPane.getChildren().add(line);
     }
 
+    public void recibeGrafoEnemigo(String grafo) {
+        // Dibujar en pantalla
+    }
+
+    @FXML
+    protected void onBtnVerEnemyClick() {
+        System.out.println("TEST");
+    }
 
     public void testLineDraw() {
         String selectedConnector = conectorComboBox.getValue();

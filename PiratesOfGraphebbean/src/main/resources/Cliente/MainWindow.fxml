@@ -217,5 +217,7 @@
       <Text layoutX="17.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item" />
       <Spinner fx:id="coordX" layoutX="16.0" layoutY="130.0" prefHeight="25.0" prefWidth="150.0" />
       <Spinner fx:id="coordY" layoutX="16.0" layoutY="179.0" prefHeight="25.0" prefWidth="150.0" />
+      <ComboBox fx:id="cbxVerEnemy" layoutX="1268.0" layoutY="91.0" prefHeight="25.0" prefWidth="120.0" />
+      <Button fx:id="btnVerEnemy" layoutX="1352.0" layoutY="121.0" mnemonicParsing="false" onAction="#onBtnVerEnemyClick" text="Ver" />
     </children>
 </AnchorPane>
