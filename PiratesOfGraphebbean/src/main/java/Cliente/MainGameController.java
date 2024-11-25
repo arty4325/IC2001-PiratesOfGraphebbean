@@ -8,10 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -64,23 +61,27 @@ public class MainGameController {
     private ComboBox<String> placeItemComboBox;
 
     @FXML
-    private TextField coordX;
+    private Spinner<Integer> coordX;
 
     @FXML
-    private TextField coordY;
+    private Spinner<Integer> coordY;
+
+    @FXML
+    private TextField coordX1;
+
+    @FXML
+    private TextField coordY1;
 
     private List<int[][]> coordenadas = new ArrayList<>();
     private List<List<Integer>> coordenadasConector = new ArrayList<>();
 
-    public static void colocarEnHash(String text, List<Integer> pos){
-        hashPosItems.put(text, pos);
-    }
 
-    private int getNumberFromString(String item) {
+
+    private static int getNumberFromString(String item) {
         System.out.println(item);
         int number = switch (item) {
-            case "Tienda" -> 1;
-            case "Energia" -> 4;
+            case "Tienda" -> 4;
+            case "Energia" -> 1;
             case "Conector" -> 5;
             default -> {
                 System.out.println("Ítem no reconocido: " + item);
@@ -89,6 +90,11 @@ public class MainGameController {
         };
         return number;
     }
+
+    public static void colocarEnHash(String text, List<Integer> pos){
+        hashPosItems.put(text, pos);
+    }
+
 
     public void loadAccordion(List<String> items) {
         for(int i = 0; i < items.size(); i++) {
@@ -109,8 +115,15 @@ public class MainGameController {
         this.userName = _cliente.getNombreCliente();
         this.cliente = _cliente;
         loadDataComboBox();
+        setSpinners();
         mapaDelMar = new MapaDelMar(PantallaJugador, 20);
         mapaDelMar.inicializarGrid();
+    }
+
+    private void setSpinners(){
+        //sbxPrecioComponente.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(100, 3000, 100, 100));
+        coordX.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 19, 1, 1));
+        coordY.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 19, 1, 1));
     }
 
     private void dibujarLinea(AnchorPane anchorPane, double x1, double y1, double x2, double y2) {
@@ -131,6 +144,14 @@ public class MainGameController {
         anchorPane.getChildren().add(line);
     }
 
+    public void recibeGrafoEnemigo(String grafo) {
+        // Dibujar en pantalla
+    }
+
+    @FXML
+    protected void onBtnVerEnemyClick() {
+        System.out.println("TEST");
+    }
 
     public void testLineDraw() {
         String selectedConnector = conectorComboBox.getValue();
@@ -219,33 +240,44 @@ public class MainGameController {
     protected void btnProcessData(ActionEvent event){
         String selectedItem = itemComboBox.getValue();
         int selectedInt = getNumberFromString(selectedItem);
+        /**
         int coordXInt = Integer.parseInt(coordX.getText());
         int coordYInt = Integer.parseInt(coordY.getText());
+         */
+        int coordXInt = coordX.getValue();
+        int coordYInt = coordY.getValue();
         // PROCESA
         // 1. Tengo que ver si lo puedo colocar donde se quiere:
+        // Este verificador debe de tomar todos los bloques del evento en cuenta
+        if(mapaDelMar.estaDisponibleItem(coordXInt, coordYInt, selectedInt)) {
 
-        mapaDelMar.asignarTipoIsla(coordYInt, coordXInt, selectedInt);
-        mapaDelMar.inicializarGrid();
-        itemComboBox.getItems().remove(selectedItem);
-        cliente.getListaItems().remove(selectedItem);
-        // Yo deberia de tomar esto, y guardarlo en algo que me permita saber que item esta en que coordenada?
+            mapaDelMar.asignarTipoIsla(coordYInt, coordXInt, selectedInt); // En este item se agrega la logica para cubrir todos los bloques
+            // TENGO QUE VER COMO LLEVO UN REGISTRO DE ESTO
+            mapaDelMar.inicializarGrid();
+            itemComboBox.getItems().remove(selectedItem);
+            cliente.getListaItems().remove(selectedItem);
+            // Yo deberia de tomar esto, y guardarlo en algo que me permita saber que item esta en que coordenada?
 
-        if(Objects.equals(selectedItem, "Conector")){
-            List<Integer> coordenadasConect = new ArrayList<>();
-            coordenadasConect.add(coordXInt);
-            coordenadasConect.add(coordYInt);
-            String itemComboBox = coordX.getText() + "," + coordY.getText();
-            coordenadasConector.add(coordenadasConect);
-            conectorComboBox.getItems().add(itemComboBox);
-            // Se deberia de procesar este combobox :)
+            if (Objects.equals(selectedItem, "Conector")) {
+                List<Integer> coordenadasConect = new ArrayList<>();
+                coordenadasConect.add(coordXInt);
+                coordenadasConect.add(coordYInt);
+                String itemComboBox = coordX.getValue().toString() + "," + coordY.getValue().toString();
+                coordenadasConector.add(coordenadasConect);
+                conectorComboBox.getItems().add(itemComboBox);
+                // Se deberia de procesar este combobox :)
+            } else {
+                // El item es algo que puede ser conectado
+                // Hay que hacer el hash que guarda la informacion de conexcion
+                placeItemComboBox.getItems().add(selectedItem);
+                List<Integer> coordItem = new ArrayList<>();
+                coordItem.add(coordXInt);
+                coordItem.add(coordYInt);
+                colocarEnHash(selectedItem, coordItem);
+            }
         } else {
-            // El item es algo que puede ser conectado
-            // Hay que hacer el hash que guarda la informacion de conexcion
-            placeItemComboBox.getItems().add(selectedItem);
-            List<Integer> coordItem = new ArrayList<>();
-            coordItem.add(coordXInt);
-            coordItem.add(coordYInt);
-            colocarEnHash(selectedItem, coordItem);
+            // Debe de haber un laben en pantalla en donde le muestro el error
+            System.out.println("Hay algun bloque ocupado.");
         }
     }
 

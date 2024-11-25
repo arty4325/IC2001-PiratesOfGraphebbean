@@ -39,6 +39,40 @@ public class MapaDelMar {
         }
     }
 
+    public boolean estaDisponible(int x, int y){
+        if(matrizTipos[x][y] == 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean estaDisponibleItem(int x, int y, int val){
+        // Aqui tiene que estar disponible todos los cuadros en donde se quiere colocar el item
+        // fuente de energia 2x2
+        // fabricas 1x2 o 2x1 (Evaluar luego)
+        // templo 1x2 0 2x1
+        // Mercado 1x2 o 2x1
+        // conector 1x1
+        // PARA EFECTOS DE PRUEBAS POR AHORA TEMPLO NO ESTA ROTADO
+        if(val == 1){
+            boolean ret = (estaDisponible(x, y) && estaDisponible(x + 1, y) && estaDisponible(x , y + 1) && estaDisponible(x + 1, y + 1));
+            return ret;
+        } else if(val == 2){
+            // Por ahora lo vamos a tomar como la pos horizontal (Pronto incluimos la rotacion)
+            boolean ret = (estaDisponible(x, y) && estaDisponible(x + 1, y));
+            return ret;
+        } else if (val == 4){
+            boolean ret = (estaDisponible(x, y) && estaDisponible(x + 1, y));
+            return ret;
+        } else if(val == 5){
+            boolean ret = estaDisponible(x, y);
+            return ret;
+        }
+        return false;
+
+    }
+
 
 
     // Método para inicializar el GridPane con los elementos de la matriz de tipos
@@ -96,7 +130,20 @@ public class MapaDelMar {
      * Permitir que se pueda agregar, destruir y restaurar cualquier coordenada de isla
      */
     public void asignarTipoIsla(int coordx, int coordy, int tipo) {
-        matrizTipos[coordx][coordy] = tipo;
+        if(tipo == 1){
+            matrizTipos[coordx][coordy] = tipo;
+            matrizTipos[coordx + 1][coordy] = tipo;
+            matrizTipos[coordx][coordy + 1] = tipo;
+            matrizTipos[coordx + 1][coordy + 1] = tipo;
+        } else if(tipo == 2){
+            matrizTipos[coordx][coordy] = tipo;
+            matrizTipos[coordx + 1][coordy] = tipo;
+        } else if(tipo == 4){
+            matrizTipos[coordx][coordy] = tipo;
+            matrizTipos[coordx + 1][coordy] = tipo;
+        } else if(tipo == 5){
+            matrizTipos[coordx][coordy] = tipo;
+        }
     }
 
     public void destruirIsla(int coordx, int coordy) {
