@@ -1,5 +1,7 @@
 package Cliente.Grafo;
 
+import Modelos.CasesEnCliente;
+import Modelos.TiposAtaque;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -164,6 +166,12 @@ public class MapaDelMar {
 
     public void restaurarIsla(int coordx, int coordy) {
         matrizDestruccion[coordx][coordy] = false;
+    }
+
+    public TiposAtaque atacarIsla(int x, int y){
+        // Nunca se debe de retornar null
+        //return CasesEnCliente.NADA; // El caso de nothing
+        return null;
     }
 
 

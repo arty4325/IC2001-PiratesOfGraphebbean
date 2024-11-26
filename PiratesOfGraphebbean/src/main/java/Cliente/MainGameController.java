@@ -85,6 +85,7 @@ public class MainGameController {
 
     private List<int[][]> coordenadas = new ArrayList<>();
     private List<List<Integer>> coordenadasConector = new ArrayList<>();
+    private List<String> itemsInScreen = new ArrayList<>();
 
 
 
@@ -385,6 +386,7 @@ public class MainGameController {
                 conectorComboBox.getItems().add(itemComboBox);
                 // Ahora, debo de registrar en el grafo que existe una liga
             } else {
+                itemsInScreen.add(selectedItem);
                 // El item es algo que puede ser conectado
                 // Hay que hacer el hash que guarda la informacion de conexcion
                 placeItemComboBox.getItems().add(selectedItem);
@@ -401,6 +403,16 @@ public class MainGameController {
             System.out.println("Hay algun bloque ocupado.");
         }
     }
+
+    /**
+     * La funcion de ataque devuelva un enum
+     * ¿Que casos?
+     * -> Que ataco a una fuente de energia (Me la da) (En cualquier casilla)
+     * -> Que ataque a un remolino (Se debe de ejecutar la funcion que envia ataques)
+     * -> No le di a nada (Tengo que dejar marcado que el me disparo ahi)
+     * -> Si le di a algo (No puede estar dentro de lo especificado) (Se debe de tramitar bien el item como eliminado en el grafo)
+     * -> y eso
+     */
 
     public TextArea getTxaChat() {
         return txaChat;
