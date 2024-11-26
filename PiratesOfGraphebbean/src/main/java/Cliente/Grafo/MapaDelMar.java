@@ -1,5 +1,7 @@
 package Cliente.Grafo;
 
+import Modelos.CasesEnCliente;
+import Modelos.TiposAtaque;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -7,14 +9,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 
 public class MapaDelMar {
     private GridPane gridPane;
     private int[][] matrizAdyacencia;
+    private List<List<Integer>> listaAdyacencia = new ArrayList<>();
     private int[][] matrizTipos;
     private boolean[][] matrizDestruccion;
 
@@ -40,8 +41,12 @@ public class MapaDelMar {
     }
 
     public boolean estaDisponible(int x, int y){
-        if(matrizTipos[x][y] == 0){
-            return true;
+        if(x < 20 && y < 20) {
+            if (matrizTipos[x][y] == 0) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
@@ -72,6 +77,8 @@ public class MapaDelMar {
         return false;
 
     }
+
+
 
 
 
@@ -123,6 +130,13 @@ public class MapaDelMar {
          */
         matrizAdyacencia[isla1x][isla1y] = 1;
         matrizAdyacencia[isla2x][isla2y] = 1;
+        List<Integer> conection = new ArrayList<>();
+        conection.add(isla1x);
+        conection.add(isla1y);
+        conection.add(isla2x);
+        conection.add(isla2y);
+        listaAdyacencia.add(conection);
+
     }
 
     /**
@@ -154,6 +168,12 @@ public class MapaDelMar {
         matrizDestruccion[coordx][coordy] = false;
     }
 
+    public TiposAtaque atacarIsla(int x, int y){
+        // Nunca se debe de retornar null
+        //return CasesEnCliente.NADA; // El caso de nothing
+        return null;
+    }
+
 
 
 
@@ -183,46 +203,204 @@ public class MapaDelMar {
         }
     }
 
-    // Lo usamos para poder enviar esto por el servidor :)
+    // Serialización
     public String serializar() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Adyacencia:");
-        for (int i = 0; i < matrizAdyacencia.length; i++) {
-            for (int j = 0; j < matrizAdyacencia[i].length; j++) {
-                sb.append(matrizAdyacencia[i][j]);
-                if (j < matrizAdyacencia[i].length - 1) {
-                    sb.append(",");
-                }
-            }
-            sb.append(";");
-        }
-        sb.append("Tipos:");
-        for (int i = 0; i < matrizTipos.length; i++) {
-            sb.append(matrizTipos[i][i]);
-            if (i < matrizTipos.length - 1) {
-                sb.append(",");
-            }
-        }
+
+        // Serializar listaAdyacencia
+        sb.append(serializeListaAdyacencia()).append("t=&");
+
+        // Serializar matrizTipos
+        sb.append(serializeMatrix(matrizTipos)).append("t=&");
+
+        // Serializar matrizDestruccion
+        sb.append(serializeBooleanMatrix(matrizDestruccion));
 
         return sb.toString();
     }
 
-    // Esto lo uso para obtener la matriz que me llega del servidor :)
+    // Deserialización: Reconstruimos las estructuras desde el string
     public void deserializar(String data) {
-        String[] partes = data.split("Tipos:");
-        String adyacenciaPart = partes[0].replace("Adyacencia:", "");
-        String tiposPart = partes[1];
-        String[] filasAdyacencia = adyacenciaPart.split(";");
-        for (int i = 0; i < filasAdyacencia.length; i++) {
-            String[] valores = filasAdyacencia[i].split(",");
-            for (int j = 0; j < valores.length; j++) {
-                matrizAdyacencia[i][j] = Integer.parseInt(valores[j]);
+        String[] parts = data.split("\\|");
+        this.listaAdyacencia = deserializeListaAdyacencia(parts[0]);
+        this.matrizTipos = deserializeMatrix(parts[1]);
+        this.matrizDestruccion = deserializeBooleanMatrix(parts[2]);
+        // Perfecto, ya tengo la informacion
+
+    }
+
+    private String serializeListaAdyacencia() {
+        StringBuilder sb = new StringBuilder();
+        for (List<Integer> connection : listaAdyacencia) {
+            for (int val : connection) {
+                sb.append(val).append(",");
+            }
+            sb.deleteCharAt(sb.length() - 1); // Eliminar última coma
+            sb.append(";");
+        }
+        sb.deleteCharAt(sb.length() - 1); // Eliminar último punto y coma
+        return sb.toString();
+    }
+
+    public List<List<Integer>> deserializeListaAdyacencia(String data) {
+        List<List<Integer>> lista = new ArrayList<>();
+        String[] connections = data.split(";");
+        for (String connection : connections) {
+            String[] values = connection.split(",");
+            List<Integer> conectionList = new ArrayList<>();
+            for (String value : values) {
+                conectionList.add(Integer.parseInt(value));
+            }
+            lista.add(conectionList);
+        }
+        return lista;
+    }
+
+    private String serializeMatrix(int[][] matrix) {
+        StringBuilder sb = new StringBuilder();
+        for (int[] row : matrix) {
+            for (int val : row) {
+                sb.append(val).append(",");
+            }
+            sb.deleteCharAt(sb.length() - 1);
+            sb.append(";");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        return sb.toString();
+    }
+
+    public int[][] deserializeMatrix(String data) {
+        final int rows = 20;
+        final int cols = 20;
+        String[] rowStrings = data.split(";");
+        int[][] matrix = new int[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            if (i < rowStrings.length) {
+                String[] values = rowStrings[i].split(",");
+
+                for (int j = 0; j < cols; j++) {
+                    if (j < values.length) {
+                        matrix[i][j] = Integer.parseInt(values[j].trim());
+                    } else {
+                        matrix[i][j] = 0;
+                    }
+                }
+            } else {
+                for (int j = 0; j < cols; j++) {
+                    matrix[i][j] = 0;
+                }
             }
         }
-        String[] tipos = tiposPart.split(",");
-        for (int i = 0; i < tipos.length; i++) {
-            matrizTipos[i][i] = Integer.parseInt(tipos[i]);
+
+        return matrix;
+    }
+
+
+    private String serializeBooleanMatrix(boolean[][] matrix) {
+        StringBuilder sb = new StringBuilder();
+        for (boolean[] row : matrix) {
+            for (boolean val : row) {
+                sb.append(val ? "1" : "0").append(",");
+            }
+            sb.deleteCharAt(sb.length() - 1); // Eliminar última coma
+            sb.append(";");
         }
+        sb.deleteCharAt(sb.length() - 1); // Eliminar último punto y coma
+        return sb.toString();
+    }
+
+    public boolean[][] deserializeBooleanMatrix(String data) {
+        String[] rows = data.split(";");
+        boolean[][] matrix = new boolean[rows.length][];
+        for (int i = 0; i < rows.length; i++) {
+            String[] values = rows[i].split(",");
+            matrix[i] = new boolean[values.length];
+            for (int j = 0; j < values.length; j++) {
+                matrix[i][j] = values[j].equals("1");
+            }
+        }
+        return matrix;
+    }
+
+    // Método para obtener todas las conexiones entre dos coordenadas específicas
+    public List<List<Integer>> obtenerConexiones(int x1, int y1, int x2, int y2) {
+        List<List<Integer>> conexiones = new ArrayList<>();
+        for (List<Integer> conection : listaAdyacencia) {
+            int isla1x = conection.get(0);
+            int isla1y = conection.get(1);
+            int isla2x = conection.get(2);
+            int isla2y = conection.get(3);
+
+            // Comprobamos si la conexión corresponde a las coordenadas (x1, y1) y (x2, y2)
+            if ((isla1x == x1 && isla1y == y1 && isla2x == x2 && isla2y == y2) ||
+                    (isla1x == x2 && isla1y == y2 && isla2x == x1 && isla2y == y1)) {
+                conexiones.add(conection);
+            }
+        }
+        return conexiones;
+    }
+
+    public static List<List<Integer>> obtenerConexionesFuente( List<List<Integer>> listaAdyacencia, int[][] matrizTipos) {
+        List<List<Integer>> coordenadasConexas = new ArrayList<>();
+        for (List<Integer> conexion : listaAdyacencia) {
+            int x1 = conexion.get(0);
+            int y1 = conexion.get(1);
+            int x2 = conexion.get(2);
+            int y2 = conexion.get(3);
+            if (matrizTipos[y1][x1] == 1 || matrizTipos[y2][x2] == 1) {
+                coordenadasConexas.add(List.of(x1, y1));
+                coordenadasConexas.add(List.of(x2, y2));
+            }
+        }
+
+        return coordenadasConexas;
+    }
+
+    // Método principal que encuentra todos los nodos conexos a un nodo con valor 1
+    public static List<List<Integer>> obtenerConexFuente(List<List<Integer>> listaAdyacencia, int[][] matrizTipos) {
+        List<List<Integer>> coordenadasConexas = new ArrayList<>();
+        Set<String> visitados = new HashSet<>();
+        Map<String, List<String>> grafo = construirGrafo(listaAdyacencia);
+        for (int y = 0; y < matrizTipos.length; y++) {
+            for (int x = 0; x < matrizTipos[0].length; x++) {
+                if (matrizTipos[y][x] == 1) {
+                    String nodoInicial = x + "," + y;
+                    if (!visitados.contains(nodoInicial)) {
+                        buscarConexiones(nodoInicial, grafo, visitados, coordenadasConexas);
+                    }
+                }
+            }
+        }
+
+        return coordenadasConexas;
+    }
+
+    // Método para realizar la búsqueda en profundidad (DFS)
+    private static void buscarConexiones(String nodo, Map<String, List<String>> grafo, Set<String> visitados, List<List<Integer>> resultado) {
+        if (visitados.contains(nodo)) return;
+        visitados.add(nodo);
+        String[] partes = nodo.split(",");
+        int x = Integer.parseInt(partes[0]);
+        int y = Integer.parseInt(partes[1]);
+        resultado.add(List.of(x, y));
+        if (grafo.containsKey(nodo)) {
+            for (String vecino : grafo.get(nodo)) {
+                buscarConexiones(vecino, grafo, visitados, resultado); // Llamada recursiva
+            }
+        }
+    }
+    private static Map<String, List<String>> construirGrafo(List<List<Integer>> listaAdyacencia) {
+        Map<String, List<String>> grafo = new HashMap<>();
+
+        for (List<Integer> conexion : listaAdyacencia) {
+            String nodo1 = conexion.get(0) + "," + conexion.get(1); // Coordenada 1
+            String nodo2 = conexion.get(2) + "," + conexion.get(3); // Coordenada 2
+            grafo.computeIfAbsent(nodo1, k -> new ArrayList<>()).add(nodo2);
+            grafo.computeIfAbsent(nodo2, k -> new ArrayList<>()).add(nodo1);
+        }
+
+        return grafo;
     }
 
     public Set<Integer> obtenerConexionesExternas(int coordx, int coordy) {

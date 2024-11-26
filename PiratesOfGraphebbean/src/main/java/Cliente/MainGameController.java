@@ -10,6 +10,9 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -18,8 +21,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 //import javax.mail.Store; TODO DESCOMENTAR ESTO
+import java.awt.*;
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 public class MainGameController {
     private Stage stage;
@@ -33,6 +38,8 @@ public class MainGameController {
     private StoreController storeActual;
 
     static final HashMap<String, List<Integer>> hashPosItems = new HashMap<String, List<Integer>>();
+
+    static final HashMap<List<Integer>, List<List<Integer>>> hashAllCoords = new HashMap<List<Integer>, List<List<Integer>>>();
 
     @FXML
     private AnchorPane anchorPane;
@@ -78,6 +85,7 @@ public class MainGameController {
 
     private List<int[][]> coordenadas = new ArrayList<>();
     private List<List<Integer>> coordenadasConector = new ArrayList<>();
+    private List<String> itemsInScreen = new ArrayList<>();
 
 
 
@@ -98,6 +106,66 @@ public class MainGameController {
     public static void colocarEnHash(String text, List<Integer> pos){
         hashPosItems.put(text, pos);
     }
+
+    public static void colocarTodasCoordsHash(int x, int y, int val){
+        List<Integer> key = new ArrayList<>();
+        key.add(x);
+        key.add(y);
+        // Ahora aqui es en donde yo voy a comenzar a usar el hash para guardar las coordenadas;
+        List<List<Integer>> allKeys = new ArrayList<>();
+        // Ahora si aqui vienen los casos
+        // FALTA PONER LOS CASOS QUE AUN NO ESTAN
+        if(val == 1){
+            List<Integer> firstCoord = new ArrayList<>();
+            List<Integer> secondCoord = new ArrayList<>();
+            List<Integer> thirdCoord = new ArrayList<>();
+            List<Integer> fourthCoord = new ArrayList<>();
+            firstCoord.add(x);
+            firstCoord.add(y);
+
+            secondCoord.add(x + 1);
+            secondCoord.add(y);
+
+            thirdCoord.add(x);
+            thirdCoord.add(y + 1);
+
+            fourthCoord.add(x + 1);
+            fourthCoord.add(y + 1);
+
+            allKeys.add(firstCoord);
+            allKeys.add(secondCoord);
+            allKeys.add(thirdCoord);
+            allKeys.add(fourthCoord);
+            hashAllCoords.put(key, allKeys);
+        } else if (val == 2 || val == 4){
+            List<Integer> firstCoord = new ArrayList<>();
+            List<Integer> secondCoord = new ArrayList<>();
+
+            firstCoord.add(x);
+            firstCoord.add(y);
+
+            secondCoord.add(x + 1);
+            secondCoord.add(y);
+
+            allKeys.add(firstCoord);
+            allKeys.add(secondCoord);
+            hashAllCoords.put(key, allKeys);
+        }
+
+    }
+
+
+    public static List<List<Integer>> obtenerCoordsPorLlave(int x, int y) {
+        List<Integer> key = new ArrayList<>();
+        key.add(x);
+        key.add(y);
+        if (hashAllCoords.containsKey(key)) {
+            return hashAllCoords.get(key);
+        } else {
+            return null;
+        }
+    }
+
 
 
     public void loadAccordion(List<String> items) {
@@ -158,6 +226,40 @@ public class MainGameController {
     public void recibeGrafoEnemigo(String grafo) {
         // Dibujar en pantalla
         System.out.println(grafo);
+        String[] partes = grafo.split("t=&");
+        // Tengo el grafo ahora tengo que procesarlo
+        List<List<Integer>> listaAdyacencia = new ArrayList<>();
+        int[][] matrizTipos;
+        boolean[][] matrizDestruccion;
+
+        System.out.println(partes[0]);
+        System.out.println(partes[1]);
+        System.out.println(partes[2]);
+
+        listaAdyacencia = mapaDelMar.deserializeListaAdyacencia(partes[0]);
+        matrizTipos = mapaDelMar.deserializeMatrix(partes[1]);
+        matrizDestruccion = mapaDelMar.deserializeBooleanMatrix(partes[2]);
+
+        System.out.println(listaAdyacencia);
+        //System.out.println(matrizTipos.toString());
+        System.out.println(Arrays.deepToString(matrizTipos));
+        System.out.println(Arrays.deepToString(matrizDestruccion));
+
+        /**
+        for(int i = 0; i < listaAdyacencia.size(); i++) {
+            System.out.println(matrizTipos[listaAdyacencia.get(i).get(1)][listaAdyacencia.get(i).get(0)]);
+            System.out.println(matrizTipos[listaAdyacencia.get(i).get(3)][listaAdyacencia.get(i).get(2)]);
+        }
+
+        for(int i = 0; i < listaAdyacencia.size(); i++) {
+            System.out.println(matrizTipos[listaAdyacencia.get(i).get(0)][listaAdyacencia.get(i).get(1)]);
+            System.out.println(matrizTipos[listaAdyacencia.get(i).get(2)][listaAdyacencia.get(i).get(3)]);
+        }
+         */
+        List<List<Integer>> conexionesFuente = new ArrayList<>();
+        conexionesFuente = mapaDelMar.obtenerConexFuente(listaAdyacencia, matrizTipos);
+        System.out.println(conexionesFuente);
+
     }
 
     @FXML
@@ -184,7 +286,7 @@ public class MainGameController {
                 System.out.println(selectedItem);
                 List<Integer> listaCoordenadasItem  = hashPosItems.get(selectedItem);
                 drawLine(anchorPane, x, y, listaCoordenadasItem.get(0), listaCoordenadasItem.get(1));
-
+                mapaDelMar.conectarIslas(x, y, listaCoordenadasItem.get(0), listaCoordenadasItem.get(1)); // Por ahora solo conecto el item papa
             } catch (NumberFormatException e) {
                 System.out.println("Error: formato inválido en selectedConnector.");
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -282,8 +384,9 @@ public class MainGameController {
                 String itemComboBox = coordX.getValue().toString() + "," + coordY.getValue().toString();
                 coordenadasConector.add(coordenadasConect);
                 conectorComboBox.getItems().add(itemComboBox);
-                // Se deberia de procesar este combobox :)
+                // Ahora, debo de registrar en el grafo que existe una liga
             } else {
+                itemsInScreen.add(selectedItem);
                 // El item es algo que puede ser conectado
                 // Hay que hacer el hash que guarda la informacion de conexcion
                 placeItemComboBox.getItems().add(selectedItem);
@@ -291,12 +394,25 @@ public class MainGameController {
                 coordItem.add(coordXInt);
                 coordItem.add(coordYInt);
                 colocarEnHash(selectedItem, coordItem);
+                // Voy a hacer otro hash que sea, coordInciialx, coordinicialy, (todo el resto de coordenadas)
+                colocarTodasCoordsHash(coordXInt, coordYInt, selectedInt); // Ya aqui deberian de estar todas las coordenadas de cada item
+                // Ahora tengo que asignar todos los cuadros en mapaDelMar
             }
         } else {
             // Debe de haber un laben en pantalla en donde le muestro el error
             System.out.println("Hay algun bloque ocupado.");
         }
     }
+
+    /**
+     * La funcion de ataque devuelva un enum
+     * ¿Que casos?
+     * -> Que ataco a una fuente de energia (Me la da) (En cualquier casilla)
+     * -> Que ataque a un remolino (Se debe de ejecutar la funcion que envia ataques)
+     * -> No le di a nada (Tengo que dejar marcado que el me disparo ahi)
+     * -> Si le di a algo (No puede estar dentro de lo especificado) (Se debe de tramitar bien el item como eliminado en el grafo)
+     * -> y eso
+     */
 
     public TextArea getTxaChat() {
         return txaChat;

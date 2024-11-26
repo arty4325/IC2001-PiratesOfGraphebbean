@@ -151,7 +151,7 @@ public class Cliente {
                         salidaObjetos.writeObject(pantallaMain.getMapaDelMar().serializar());
                         //TODO, revisar que si sea eso
                         break;
-                    } catch (Exception ex) {System.out.println("Error con caso devolverGrafo en Cliente");}
+                    } catch (Exception ex) {System.out.println("Error con caso devolverGrafo en Cliente" + ex);}
                 case SETGRAFOENEMIGO:
                     try {
                         setGrafoEnemigo();
