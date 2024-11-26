@@ -214,6 +214,8 @@ public class MainGameController {
         setSpinners();
         mapaDelMar = new MapaDelMar(PantallaJugador, 20);
         mapaDelMar.inicializarGrid();
+        new Thread(() -> cronoMina()).start();
+        new Thread(() -> cronoComodin()).start();
     }
 
     private void loadEnemigosCbx(){
