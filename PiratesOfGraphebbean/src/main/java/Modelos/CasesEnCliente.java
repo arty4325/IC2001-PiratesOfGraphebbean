@@ -7,5 +7,7 @@ public enum CasesEnCliente implements Serializable {
     RECIBIRMENSAJE,
     RECIBIRACCION,
     RECIBIROFERTA,
-    OFERTAACEPTADA
+    OFERTAACEPTADA,
+    DEVOLVERGRAFO,
+    SETGRAFOENEMIGO
 }

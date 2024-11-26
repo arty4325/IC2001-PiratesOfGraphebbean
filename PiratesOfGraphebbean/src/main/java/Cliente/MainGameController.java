@@ -1,6 +1,7 @@
 package Cliente;
 
 import Cliente.Grafo.MapaDelMar;
+import Modelos.CasesEnThreadServidor;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -67,6 +68,9 @@ public class MainGameController {
     private Spinner<Integer> coordY;
 
     @FXML
+    private ComboBox<String> cbxVerEnemy;
+
+    @FXML
     private TextField coordX1;
 
     @FXML
@@ -115,9 +119,16 @@ public class MainGameController {
         this.userName = _cliente.getNombreCliente();
         this.cliente = _cliente;
         loadDataComboBox();
+        loadEnemigosCbx();
         setSpinners();
         mapaDelMar = new MapaDelMar(PantallaJugador, 20);
         mapaDelMar.inicializarGrid();
+    }
+
+    private void loadEnemigosCbx(){
+        for (String oponente : cliente.getNombresOponentes()) {
+            cbxVerEnemy.getItems().add(oponente);
+        }
     }
 
     private void setSpinners(){
@@ -146,11 +157,17 @@ public class MainGameController {
 
     public void recibeGrafoEnemigo(String grafo) {
         // Dibujar en pantalla
+        System.out.println(grafo);
     }
 
     @FXML
     protected void onBtnVerEnemyClick() {
-        System.out.println("TEST");
+        String nombreEnemigo = cbxVerEnemy.getValue();
+        if(nombreEnemigo==null){return;}
+        try {
+            cliente.getSalidaObjetos().writeObject(CasesEnThreadServidor.CONSEGUIRGRAFOENEMIGO);
+            cliente.getSalidaDatos().writeUTF(nombreEnemigo);
+        } catch (Exception e) {System.out.println("Error consiguiendo grafo enemigo");}
     }
 
     public void testLineDraw() {
@@ -287,5 +304,9 @@ public class MainGameController {
 
     public TextArea getTxaAcciones(){
         return txaAcciones;
+    }
+
+    public MapaDelMar getMapaDelMar() {
+        return mapaDelMar;
     }
 }

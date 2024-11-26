@@ -96,6 +96,11 @@ public class ThreadServidor extends Thread{
                         objeto = entradaObjetos.readObject();
                         break;
                     } catch (Exception ex) {System.out.println("Error con caso PONERENOBJETO en ThreadServidor");}
+                case CONSEGUIRGRAFOENEMIGO:
+                    try {
+                        conseguirGrafoEnemigo();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso CONSEGUIRGRAFOENEMIGO en ThreadServidor");}
             }
         }
     }
@@ -152,6 +157,18 @@ public class ThreadServidor extends Thread{
     }
 
 
+    private void conseguirGrafoEnemigo() throws Exception{
+        String selectedPlayer = entradaDatos.readUTF();
+        ThreadServidor ts = getEnemigoConNombre(selectedPlayer);
+        ts.getSalidaObjetos().writeObject(CasesEnCliente.DEVOLVERGRAFO);
+        while(ts.getObjeto() == null){
+            sleep(500);
+        }
+        String grafoEnemigo = (String)ts.getObjeto();
+        ts.setObjeto(null);
+        salidaObjetos.writeObject(CasesEnCliente.SETGRAFOENEMIGO);
+        salidaDatos.writeUTF(grafoEnemigo);
+    }
 
 
 
