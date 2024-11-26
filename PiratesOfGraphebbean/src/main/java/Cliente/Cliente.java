@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,12 +32,23 @@ public class Cliente {
     private ArrayList<String> nombresOponentes;
     // Aqui voy a tener una lista de items que van a estar en pantalla
     private List<String> listaItems = new ArrayList<String>();
+    private int acero;
     private int dinero;
+    private int canon;
+    private int canonMult;
+    private int bomba;
+    private int canonBR;
+
 
 
     public Cliente(ClienteScreenController pantallaCliente) {
         this.pantallaCliente = pantallaCliente;
-        dinero = 4000;
+        dinero = 100000;
+        acero = 0;
+        canon = 0;
+        canonMult = 0;
+        bomba = 0;
+        canonBR = 0;
     }
 
     public List<String> getListaItems() {

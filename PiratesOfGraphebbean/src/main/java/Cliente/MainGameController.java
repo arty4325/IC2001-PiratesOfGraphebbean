@@ -41,52 +41,62 @@ public class MainGameController {
 
     static final HashMap<List<Integer>, List<List<Integer>>> hashAllCoords = new HashMap<List<Integer>, List<List<Integer>>>();
 
-    @FXML
-    private AnchorPane anchorPane;
+    @FXML private AnchorPane anchorPane;
 
-    @FXML
-    private Button btnSend;
+    @FXML private Button btnSend;
 
-    @FXML
-    private GridPane PantallaJugador;
+    @FXML private GridPane PantallaJugador;
 
-    @FXML
-    private TextArea txaChat;
+    @FXML private TextArea txaChat;
 
-    @FXML
-    private TextField txfMensaje;
+    @FXML private TextField txfMensaje;
 
-    @FXML
-    private TextArea txaAcciones;
+    @FXML private TextArea txaAcciones;
 
-    @FXML
-    private ComboBox<String> itemComboBox;
+    @FXML private ComboBox<String> itemComboBox;
 
-    @FXML
-    private ComboBox<String> conectorComboBox;
+    @FXML private ComboBox<String> conectorComboBox;
 
-    @FXML
-    private ComboBox<String> placeItemComboBox;
+    @FXML private ComboBox<String> placeItemComboBox;
 
-    @FXML
-    private Spinner<Integer> coordX;
+    @FXML private Spinner<Integer> coordX;
 
-    @FXML
-    private Spinner<Integer> coordY;
+    @FXML private Spinner<Integer> coordY;
 
-    @FXML
-    private ComboBox<String> cbxVerEnemy;
+    @FXML private ComboBox<String> cbxVerEnemy;
 
-    @FXML
-    private TextField coordX1;
+    @FXML private TextField coordX1;
 
-    @FXML
-    private TextField coordY1;
+    @FXML private TextField coordY1;
+
+    @FXML private Spinner<Integer> sbxC_X;      @FXML private Spinner<Integer> sbxC_Y;
+
+    @FXML private Spinner<Integer> sbxCM_X;      @FXML private Spinner<Integer> sbxCM_Y;
+
+    @FXML private Spinner<Integer> sbxBomb1_X;      @FXML private Spinner<Integer> sbxBomb1_Y;
+    @FXML private Spinner<Integer> sbxBomb2_X;      @FXML private Spinner<Integer> sbxBomb2_Y;
+    @FXML private Spinner<Integer> sbxBomb3_X;      @FXML private Spinner<Integer> sbxBomb3_Y;
+
+    @FXML private Spinner<Integer> sbxCBR1_X;   @FXML private Spinner<Integer> sbxCBR1_Y;
+    @FXML private Spinner<Integer> sbxCBR2_X;   @FXML private Spinner<Integer> sbxCBR2_Y;
+    @FXML private Spinner<Integer> sbxCBR3_X;   @FXML private Spinner<Integer> sbxCBR3_Y;
+    @FXML private Spinner<Integer> sbxCBR4_X;   @FXML private Spinner<Integer> sbxCBR4_Y;
+    @FXML private Spinner<Integer> sbxCBR5_X;   @FXML private Spinner<Integer> sbxCBR5_Y;
+    @FXML private Spinner<Integer> sbxCBR6_X;   @FXML private Spinner<Integer> sbxCBR6_Y;
+    @FXML private Spinner<Integer> sbxCBR7_X;   @FXML private Spinner<Integer> sbxCBR7_Y;
+    @FXML private Spinner<Integer> sbxCBR8_X;   @FXML private Spinner<Integer> sbxCBR8_Y;
+    @FXML private Spinner<Integer> sbxCBR9_X;   @FXML private Spinner<Integer> sbxCBR9_Y;
+    @FXML private Spinner<Integer> sbxCBR10_X;  @FXML private Spinner<Integer> sbxCBR10_Y;
+
+
 
     private List<int[][]> coordenadas = new ArrayList<>();
     private List<List<Integer>> coordenadasConector = new ArrayList<>();
     private List<String> itemsInScreen = new ArrayList<>();
-
+    private Spinner<Integer>[] spinnersC;
+    private Spinner<Integer>[] spinnersCM;
+    private Spinner<Integer>[][] spinnersBomb;
+    private Spinner<Integer>[][] spinnersCBR;
 
 
     private static int getNumberFromString(String item) {
@@ -186,6 +196,7 @@ public class MainGameController {
         // Como esto se corre cuando se inicializa la aplicacion, aqui vamos a poner los items principales de la pantalla
         this.userName = _cliente.getNombreCliente();
         this.cliente = _cliente;
+        agruparSpinnersAtaque();
         loadDataComboBox();
         loadEnemigosCbx();
         setSpinners();
@@ -203,6 +214,49 @@ public class MainGameController {
         //sbxPrecioComponente.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(100, 3000, 100, 100));
         coordX.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 19, 1, 1));
         coordY.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 19, 1, 1));
+        for (Spinner<Integer> spinner : spinnersC) {
+            spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 19, 0, 1));
+        }
+
+        for (Spinner<Integer> spinner : spinnersCM) {
+            spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 19, 0, 1));
+        }
+
+        for (Spinner<Integer>[] row : spinnersBomb) {
+            for (Spinner<Integer> spinner : row) {
+                spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 19, 0, 1));
+            }
+        }
+
+        for (Spinner<Integer>[] row : spinnersCBR) {
+            for (Spinner<Integer> spinner : row) {
+                spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 19, 0, 1));
+            }
+        }
+    }
+
+    private void agruparSpinnersAtaque(){
+        spinnersC = new Spinner[] { sbxC_X, sbxC_Y };
+        spinnersCM = new Spinner[] { sbxCM_X, sbxCM_Y };
+
+        spinnersBomb = new Spinner[][] {
+                { sbxBomb1_X, sbxBomb1_Y },
+                { sbxBomb2_X, sbxBomb2_Y },
+                { sbxBomb3_X, sbxBomb3_Y }
+        };
+
+        spinnersCBR = new Spinner[][] {
+                { sbxCBR1_X, sbxCBR1_Y },
+                { sbxCBR2_X, sbxCBR2_Y },
+                { sbxCBR3_X, sbxCBR3_Y },
+                { sbxCBR4_X, sbxCBR4_Y },
+                { sbxCBR5_X, sbxCBR5_Y },
+                { sbxCBR6_X, sbxCBR6_Y },
+                { sbxCBR7_X, sbxCBR7_Y },
+                { sbxCBR8_X, sbxCBR8_Y },
+                { sbxCBR9_X, sbxCBR9_Y },
+                { sbxCBR10_X, sbxCBR10_Y }
+        };
     }
 
     private void dibujarLinea(AnchorPane anchorPane, double x1, double y1, double x2, double y2) {
@@ -325,8 +379,9 @@ public class MainGameController {
         txfMensaje.clear();
     }
 
-    @FXML
-    protected void btnGoStore() {
+    @FXML protected void btnGoStore() {
+        if(!itemsInScreen.contains("Tienda")){return;}
+
         Platform.runLater(() -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/Cliente/StoreScreen.fxml"));
@@ -413,6 +468,71 @@ public class MainGameController {
      * -> Si le di a algo (No puede estar dentro de lo especificado) (Se debe de tramitar bien el item como eliminado en el grafo)
      * -> y eso
      */
+
+    protected void onBtnCClick(){
+        String nombreEnemigo = cbxVerEnemy.getValue();
+        if(nombreEnemigo==null){return;}
+
+        try {
+            int[] coords = new int[2];
+            for (int i = 0; i < coords.length; i++) {
+                coords[i] = spinnersC[i].getValue();
+            }
+            cliente.getSalidaObjetos().writeObject(CasesEnThreadServidor.ATACARCANON);
+            cliente.getSalidaDatos().writeUTF(nombreEnemigo);
+            cliente.getSalidaObjetos().writeObject(coords);
+        } catch (Exception e) {System.out.println("Error atacando con cañon");}
+    }
+
+    protected void onBtnCMClick(){
+        String nombreEnemigo = cbxVerEnemy.getValue();
+        if(nombreEnemigo==null){return;}
+
+        try {
+            int[] coords = new int[2];
+            for (int i = 0; i < coords.length; i++) {
+                coords[i] = spinnersCM[i].getValue();
+            }
+            cliente.getSalidaObjetos().writeObject(CasesEnThreadServidor.ATACARCANONMULT);
+            cliente.getSalidaDatos().writeUTF(nombreEnemigo);
+            cliente.getSalidaObjetos().writeObject(coords);
+        } catch (Exception e) {System.out.println("Error atacando con cañon múltiple");}
+    }
+
+    protected void onBtnBombClick(){
+        String nombreEnemigo = cbxVerEnemy.getValue();
+        if(nombreEnemigo==null){return;}
+
+        try {
+            int[][] coords = new int[3][2];
+            for (int i = 0; i < coords.length; i++) {
+                for (int j = 0; j < 2; j++) {
+                    coords[i][j] = spinnersBomb[i][j].getValue();
+                }
+            }
+            cliente.getSalidaObjetos().writeObject(CasesEnThreadServidor.ATACARBOMBA);
+            cliente.getSalidaDatos().writeUTF(nombreEnemigo);
+            cliente.getSalidaObjetos().writeObject(coords);
+        } catch (Exception e) {System.out.println("Error atacando con bomba");}
+    }
+
+    protected void onBtnCBRClick(){
+        String nombreEnemigo = cbxVerEnemy.getValue();
+        if(nombreEnemigo==null){return;}
+
+        try {
+            int[][] coords = new int[10][2];
+            for (int i = 0; i < coords.length; i++) {
+                for (int j = 0; j < 2; j++) {
+                    coords[i][j] = spinnersCBR[i][j].getValue();
+                }
+            }
+            cliente.getSalidaObjetos().writeObject(CasesEnThreadServidor.ATACARCBR);
+            cliente.getSalidaDatos().writeUTF(nombreEnemigo);
+            cliente.getSalidaObjetos().writeObject(coords);
+        } catch (Exception e) {System.out.println("Error atacando con Cañón de Barba Roja");}
+    }
+
 
     public TextArea getTxaChat() {
         return txaChat;
