@@ -10,10 +10,11 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Cliente.MainGameController">
+<AnchorPane fx:id="anchorPane" prefHeight="750.0" prefWidth="1648.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Cliente.MainGameController">
     <children>
         <GridPane fx:id="PantallaJugador" gridLinesVisible="true" layoutX="242.0" layoutY="90.0" prefHeight="480.0" prefWidth="480.0">
             <columnConstraints>
@@ -218,6 +219,59 @@
       <Spinner fx:id="coordX" layoutX="16.0" layoutY="130.0" prefHeight="25.0" prefWidth="150.0" />
       <Spinner fx:id="coordY" layoutX="16.0" layoutY="179.0" prefHeight="25.0" prefWidth="150.0" />
       <ComboBox fx:id="cbxVerEnemy" layoutX="1268.0" layoutY="91.0" prefHeight="25.0" prefWidth="120.0" />
-      <Button fx:id="btnVerEnemy" layoutX="1352.0" layoutY="121.0" mnemonicParsing="false" onAction="#onBtnVerEnemyClick" text="Ver" />
+      <Button fx:id="btnVerEnemy" layoutX="1405.0" layoutY="91.0" mnemonicParsing="false" onAction="#onBtnVerEnemyClick" text="Ver" />
+      <Spinner fx:id="sbxCBR1_X" layoutX="1266.0" layoutY="375.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxCBR1_Y" layoutX="1324.0" layoutY="375.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxCBR2_X" layoutX="1266.0" layoutY="408.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxCBR2_Y" layoutX="1324.0" layoutY="408.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxCBR3_X" layoutX="1266.0" layoutY="441.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxCBR3_Y" layoutX="1324.0" layoutY="443.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxCBR4_X" layoutX="1266.0" layoutY="474.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxCBR4_Y" layoutX="1324.0" layoutY="474.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxCBR5_X" layoutX="1266.0" layoutY="507.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxCBR5_Y" layoutX="1324.0" layoutY="507.0" prefHeight="25.0" prefWidth="52.0" />
+      <Button fx:id="btnCBR" layoutX="1390.0" layoutY="375.0" mnemonicParsing="false" onAction="#onBtnCBRClick" prefHeight="17.0" prefWidth="120.0" text="Cañón Barba Roja" />
+      <Spinner fx:id="sbxBomb1_Y" layoutX="1325.0" layoutY="256.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxBomb2_Y" layoutX="1325.0" layoutY="289.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxBomb3_Y" layoutX="1325.0" layoutY="322.0" prefHeight="25.0" prefWidth="52.0" />
+      <Button fx:id="btnBomb" layoutX="1390.0" layoutY="256.0" mnemonicParsing="false" onAction="#onBtnBombClick" prefHeight="25.0" prefWidth="120.0" text="Bomba" />
+      <Spinner fx:id="sbxCM_Y" layoutX="1324.0" layoutY="211.0" prefHeight="25.0" prefWidth="52.0" />
+      <Button fx:id="btnCM" layoutX="1390.0" layoutY="211.0" mnemonicParsing="false" onAction="#onBtnCMClick" prefHeight="25.0" prefWidth="120.0" text="Cañón Multiple" />
+      <Spinner fx:id="sbxC_Y" layoutX="1324.0" layoutY="162.0" prefHeight="25.0" prefWidth="52.0" />
+      <Button fx:id="btnC" layoutX="1390.0" layoutY="160.0" mnemonicParsing="false" onAction="#onBtnCClick" prefHeight="25.0" prefWidth="120.0" text="Cañón" />
+      <Spinner fx:id="sbxC_X" layoutX="1266.0" layoutY="162.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxCM_X" layoutX="1266.0" layoutY="211.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxBomb1_X" layoutX="1266.0" layoutY="256.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxBomb2_X" layoutX="1266.0" layoutY="289.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxBomb3_X" layoutX="1266.0" layoutY="322.0" prefHeight="25.0" prefWidth="52.0" />
+      <Line endX="100.0" layoutX="1369.0" layoutY="124.0" startX="-100.0" />
+      <Line endX="100.0" layoutX="1369.0" layoutY="133.0" startX="-100.0" />
+      <Line endX="100.0" layoutX="1369.0" layoutY="198.0" startX="-100.0" />
+      <Line endX="100.0" layoutX="1369.0" layoutY="246.0" startX="-100.0" />
+      <Line endX="100.0" layoutX="1369.0" layoutY="363.0" startX="-100.0" />
+      <Spinner fx:id="sbxCBR6_X" layoutX="1266.0" layoutY="542.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxCBR6_Y" layoutX="1324.0" layoutY="542.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxCBR7_X" layoutX="1266.0" layoutY="575.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxCBR7_Y" layoutX="1324.0" layoutY="575.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxCBR8_X" layoutX="1266.0" layoutY="608.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxCBR8_Y" layoutX="1324.0" layoutY="610.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxCBR9_X" layoutX="1266.0" layoutY="641.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxCBR9_Y" layoutX="1324.0" layoutY="641.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxCBR10_X" layoutX="1266.0" layoutY="674.0" prefHeight="25.0" prefWidth="52.0" />
+      <Spinner fx:id="sbxCBR10_Y" layoutX="1324.0" layoutY="674.0" prefHeight="25.0" prefWidth="52.0" />
+      <Text layoutX="1280.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="x" textAlignment="CENTER" wrappingWidth="23.87109375" />
+      <Text layoutX="1338.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="y" textAlignment="CENTER" wrappingWidth="23.87109375" />
+      <Label layoutX="13.0" layoutY="450.0" prefHeight="25.0" prefWidth="107.0" text="1:00" textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Text layoutX="16.0" layoutY="443.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Minas" wrappingWidth="61.33333333333337" />
+      <Text layoutX="12.0" layoutY="507.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comodín" wrappingWidth="61.33333333333337" />
+      <Label layoutX="13.0" layoutY="518.0" prefHeight="25.0" prefWidth="107.0" text="N/A" textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>
