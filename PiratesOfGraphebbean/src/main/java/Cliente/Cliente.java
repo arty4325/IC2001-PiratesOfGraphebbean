@@ -145,6 +145,18 @@ public class Cliente {
                         ofertaAceptada();
                         break;
                     } catch (Exception ex) {System.out.println("Error con caso ofertaAceptada en Cliente");}
+                case DEVOLVERGRAFO:
+                    try {
+                        salidaObjetos.writeObject(CasesEnThreadServidor.PONERENOBJETO);
+                        salidaObjetos.writeObject(pantallaMain.getMapaDelMar().serializar());
+                        //TODO, revisar que si sea eso
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso devolverGrafo en Cliente");}
+                case SETGRAFOENEMIGO:
+                    try {
+                        setGrafoEnemigo();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso setGrafoEnemigo en Cliente");}
             }
         }
     }
@@ -243,7 +255,10 @@ public class Cliente {
         pantallaMain.updateGUIDespuesDeOfertaOCompra();
     }
 
-
+    private void setGrafoEnemigo() throws Exception{
+        String grafoEnemigo = entradaDatos.readUTF();
+        Platform.runLater(() -> pantallaMain.recibeGrafoEnemigo(grafoEnemigo));
+    }
 
 
     public boolean tengoDineroSuficiente(int precio){
