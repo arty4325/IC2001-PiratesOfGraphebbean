@@ -285,6 +285,18 @@ public class Cliente {
         dinero += precio;
     }
 
+    public boolean tengoAceroSuficiente(int cantidad){
+        return acero - cantidad >= 0; //si la resta da más o igual que 0, puede comprar.
+    }
+
+    public void bajarAcero(int cantidad){
+        acero -= cantidad;
+    }
+
+    public void subirAcero(int cantidad){
+        acero += cantidad;
+    }
+
 
 
 
@@ -327,5 +339,53 @@ public class Cliente {
 
     public ObjectOutputStream getSalidaObjetos() {
         return salidaObjetos;
+    }
+
+    public void comprarCanon(){
+        canon++;
+    }
+
+    public void usarCanon(){
+        canon--;
+    }
+
+    public void comprarCanonMult() {
+        canonMult++;
+    }
+
+    public void usarCanonMult() {
+        canonMult--;
+    }
+
+    public void comprarBomba() {
+        bomba++;
+    }
+
+    public void usarBomba() {
+        bomba--;
+    }
+
+    public void comprarCanonBR() {
+        canonBR++;
+    }
+
+    public void usarCanonBR() {
+        canonBR--;
+    }
+
+    public int getCanon(){
+        return canon;
+    }
+
+    public int getCanonMult() {
+        return canonMult;
+    }
+
+    public int getBomba() {
+        return bomba;
+    }
+
+    public int getCanonBR() {
+        return canonBR;
     }
 }

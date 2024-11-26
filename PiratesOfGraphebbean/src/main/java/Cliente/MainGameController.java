@@ -2,6 +2,8 @@ package Cliente;
 
 import Cliente.Grafo.MapaDelMar;
 import Modelos.CasesEnThreadServidor;
+import Modelos.Random;
+import Modelos.Utilities;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -34,12 +37,21 @@ public class MainGameController {
     private String userName;
     private Cliente cliente;
     private MapaDelMar mapaDelMar;
+    private boolean comodinListo;
 
     private StoreController storeActual;
 
     static final HashMap<String, List<Integer>> hashPosItems = new HashMap<String, List<Integer>>();
 
     static final HashMap<List<Integer>, List<List<Integer>>> hashAllCoords = new HashMap<List<Integer>, List<List<Integer>>>();
+
+    @FXML private Label lblComodinTimer;
+
+    @FXML private Button btnEscudo;
+
+    @FXML private Button btnKraken;
+
+    @FXML private Label lblMinaTimer;
 
     @FXML private AnchorPane anchorPane;
 
@@ -469,9 +481,89 @@ public class MainGameController {
      * -> y eso
      */
 
+    private void cronoMina(){
+        while(true){
+            int sec = 0;
+            int min = 1;
+            while(sec != 0 || min != 0){
+                sec--;
+                if(sec<0){
+                    min--;
+                    sec = 59;
+                }
+                lblComodinTimer.setText(Utilities.formatearEnTimer(min) + ":" + Utilities.formatearEnTimer(sec));
+                try {Thread.sleep(1000);} catch (InterruptedException ignore) {}
+            }
+            generarAcero();
+        }
+    }
+
+    private void generarAcero(){
+        int minas = Collections.frequency(itemsInScreen,"Mina");
+        cliente.subirAcero(minas*100);
+    }
+
+    private void cronoComodin(){
+        while(true){
+            int sec = 0;
+            int min = 5;
+            lblComodinTimer.setText("N/A");
+            while(!itemsInScreen.contains("Templo")){
+                try {Thread.sleep(1000);} catch (InterruptedException ignore) {}
+            } //si no tiene templo, entonces a esperar
+
+            while(!comodinListo){
+                if(!itemsInScreen.contains("Templo")){break;}
+                sec--;
+                if(sec==0 && min ==0){
+                    comodinListo = true;
+                    lblComodinTimer.setText("Comodin Listo");
+                    comodinListo();
+                    continue;
+                } else if(sec<0 && min > 0){
+                    min--;
+                    sec = 59;
+                }
+                lblComodinTimer.setText(Utilities.formatearEnTimer(min) + ":" + Utilities.formatearEnTimer(sec));
+                try {Thread.sleep(1000);} catch (InterruptedException ignore) {}
+            }
+            while(comodinListo){
+                if(!itemsInScreen.contains("Templo")){
+                    btnEscudo.setDisable(true);
+                    btnKraken.setDisable(true);
+                    break;
+                }
+                try {Thread.sleep(1000);} catch (InterruptedException ignore) {}
+            }
+        }
+    }
+
+
+
+    private void comodinListo(){
+        if(Random.randomBoolean()){
+            btnEscudo.setDisable(false);
+        } else {
+            btnKraken.setDisable(false);
+        }
+    }
+
+    protected void onBtnEscudoClick(){
+        btnEscudo.setDisable(false);
+        //TODO
+    }
+
+    protected void onBtnKrakenClick(){
+        btnKraken.setDisable(false);
+        //TODO
+    }
+
     protected void onBtnCClick(){
+        //TODO: revisar turno, y que no he perdido, ESTO PARA LOS 4 ATAQUES
         String nombreEnemigo = cbxVerEnemy.getValue();
         if(nombreEnemigo==null){return;}
+        if(cliente.getCanon() <= 0){return;}
+        cliente.usarCanon();
 
         try {
             int[] coords = new int[2];
@@ -487,6 +579,8 @@ public class MainGameController {
     protected void onBtnCMClick(){
         String nombreEnemigo = cbxVerEnemy.getValue();
         if(nombreEnemigo==null){return;}
+        if(cliente.getCanonMult() <= 0){return;}
+        cliente.usarCanonMult();
 
         try {
             int[] coords = new int[2];
@@ -502,6 +596,8 @@ public class MainGameController {
     protected void onBtnBombClick(){
         String nombreEnemigo = cbxVerEnemy.getValue();
         if(nombreEnemigo==null){return;}
+        if(cliente.getBomba() <= 0){return;}
+        cliente.usarBomba();
 
         try {
             int[][] coords = new int[3][2];
@@ -519,6 +615,8 @@ public class MainGameController {
     protected void onBtnCBRClick(){
         String nombreEnemigo = cbxVerEnemy.getValue();
         if(nombreEnemigo==null){return;}
+        if(cliente.getCanonBR() <= 0){return;}
+        cliente.usarCanonBR();
 
         try {
             int[][] coords = new int[10][2];
