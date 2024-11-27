@@ -143,11 +143,11 @@ public class Cliente {
                         recibirMensaje();
                         break;
                     } catch (Exception ex) {System.out.println("Error con caso recibirMensaje en Cliente");}
-                case RECIBIRACCION:
+                case PONERENBITACORA:
                     try {
-                        recibirAccion();
+                        ponerEnBitacora();
                         break;
-                    } catch (Exception ex) {System.out.println("Error con caso recibirAccion en Cliente");}
+                    } catch (Exception ex) {System.out.println("Error con caso ponerEnBitacora en Cliente");}
                 case RECIBIROFERTA:
                     try {
                         recibirOferta();
@@ -185,6 +185,11 @@ public class Cliente {
                         serAtacado();
                         break;
                     } catch (Exception ex) {System.out.println("Error con caso serAtacado en Cliente");}
+                case CONSEGUIRFUENTE:
+                    try {
+                        listaItems.add("Energia");
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso serAtacado en Cliente");}
             }
         }
     }
@@ -203,7 +208,7 @@ public class Cliente {
         pantallaMain.getTxaChat().appendText(mensaje + "\n");
     }
 
-    private void recibirAccion() throws Exception{
+    private void ponerEnBitacora() throws Exception{
         String mensaje = entradaDatos.readUTF();
         pantallaMain.getTxaAcciones().appendText(mensaje + "\n");
     }
