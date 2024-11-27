@@ -37,6 +37,19 @@ public class StoreController {
     @FXML
     private Label lblDinero;
 
+    @FXML
+    private Label lblAcero;
+
+    @FXML
+    private ComboBox<String> cbxJugadores2;
+
+    @FXML
+    private Spinner<Integer> sbxPrecioAcero;
+
+    @FXML
+    private Spinner<Integer> sbxCantAcero;
+
+
     public void setGameController(Cliente _cliente, MapaDelMar mapaDelMar){ // De una ves en esta funcion voy a crear el grafo
         // Como esto se corre cuando se inicializa la aplicacion, aqui vamos a poner los items principales de la pantalla
         this.cliente = _cliente;
@@ -45,6 +58,7 @@ public class StoreController {
         setCbxJugadores();
         setSpinners();
         actualizarDinero();
+        actualizarAcero();
     }
 
 
@@ -59,13 +73,21 @@ public class StoreController {
         lblDinero.setText("" + cliente.getDinero());
     }
 
+    public void actualizarAcero(){
+        lblAcero.setText("" + cliente.getAcero());
+    }
+
     private void setCbxJugadores(){
         for (String nombreOponente : cliente.getNombresOponentes()) {
             cbxJugadores.getItems().add(nombreOponente);
+            cbxJugadores2.getItems().add(nombreOponente);
         }
+
     }
     private void setSpinners(){
-        sbxPrecioComponente.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(100, 3000, 100, 100));
+        sbxPrecioComponente.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(100, 10000, 100, 100));
+        sbxPrecioAcero.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(100, 10000, 100, 100));
+        sbxCantAcero.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(50, 10000, 50, 50));
     }
 
     //si no hay nada es null
@@ -93,32 +115,136 @@ public class StoreController {
         } catch (Exception e) {System.out.println("Error en tienda proponiendo venta");}
     }
 
+    @FXML
+    protected void onBtnVenderAceroClick(){
+        String selectedPlayer = cbxJugadores2.getValue();
+        int precio = sbxPrecioAcero.getValue();
+        int cant = sbxCantAcero.getValue();
+        if(selectedPlayer == null || cliente.getAcero() < cant){return;}
+        try {
+            cliente.getSalidaObjetos().writeObject(CasesEnThreadServidor.PROPONERVENTAACERO);
+            cliente.getSalidaDatos().writeUTF(selectedPlayer);
+            cliente.getSalidaDatos().writeInt(cant);
+            cliente.getSalidaDatos().writeInt(precio);
+        } catch (Exception e) {System.out.println("Error en tienda proponiendo venta");}
+    }
 
 
     @FXML
     protected void btnAddEnergy(){
-        // Primero hacemos una lista, despues en el boton de volver a la funcion llamamos ahi algo que actualice la lista
-        cliente.getListaItems().add("Energia");
+        int precio = getPriceComponente("Energia");
+        if(cliente.tengoDineroSuficiente(precio)){
+            cliente.bajarDinero(precio);
+            cliente.getListaItems().add("Energia");
+            actualizarDinero();
+        }
     }
 
     @FXML
     protected void btnAddStore(){
-        // Primero hacemos una lista, despues en el boton de volver a la funcion llamamos ahi algo que actualice la lista
-        cliente.getListaItems().add("Tienda");
+        int precio = getPriceComponente("Tienda");
+        if(cliente.tengoDineroSuficiente(precio)){
+            cliente.bajarDinero(precio);
+            cliente.getListaItems().add("Tienda");
+            actualizarDinero();
+        }
     }
 
     @FXML
     protected void btnAddConector(){
-        // Primero hacemos una lista, despues en el boton de volver a la funcion llamamos ahi algo que actualice la lista
-        cliente.getListaItems().add("Conector");
+        int precio = getPriceComponente("Conector");
+        if(cliente.tengoDineroSuficiente(precio)){
+            cliente.bajarDinero(precio);
+            cliente.getListaItems().add("Conector");
+            actualizarDinero();
+        }
+    }
+
+    @FXML
+    protected void btnAddTemplo(){
+        int precio = getPriceComponente("Templo");
+        if(cliente.tengoDineroSuficiente(precio)){
+            cliente.bajarDinero(precio);
+            cliente.getListaItems().add("Templo");
+            actualizarDinero();
+        }
+    }
+
+    @FXML
+    protected void btnAddMina(){
+        int precio = getPriceComponente("Mina");
+        if(cliente.tengoDineroSuficiente(precio)){
+            cliente.bajarDinero(precio);
+            cliente.getListaItems().add("Mina");
+            actualizarDinero();
+        }
+    }
+
+    @FXML
+    protected void btnAddCanon(){
+        int precio = 500;
+        if(cliente.tengoAceroSuficiente(precio)){
+            cliente.bajarAcero(precio);
+            cliente.comprarCanon();
+            actualizarAcero();
+        }
+    }
+
+    @FXML
+    protected void btnAddCanonMult(){
+        int precio = 1000;
+        if(cliente.tengoAceroSuficiente(precio)){
+            cliente.bajarAcero(precio);
+            cliente.comprarCanonMult();
+            actualizarAcero();
+        }
+    }
+
+    @FXML
+    protected void btnAddBomba(){
+        int precio = 2000;
+        if(cliente.tengoAceroSuficiente(precio)){
+            cliente.bajarAcero(precio);
+            cliente.comprarBomba();
+            actualizarAcero();
+        }
+    }
+
+    @FXML
+    protected void btnAddCanonBR(){
+        int precio = 5000;
+        if(cliente.tengoAceroSuficiente(precio)){
+            cliente.bajarAcero(precio);
+            cliente.comprarCanonBR();
+            actualizarAcero();
+        }
     }
 
     private int getSellingPriceComponente(String item) {
         System.out.println(item);
         int number = switch (item) {
-            case "Tienda" -> 100;
-            case "Energia" -> 400;
-            case "Conector" -> 500;
+            case "Energia" -> 6000;
+            case "Mina" -> 500;
+            case "Templo" -> 1500;
+            case "Tienda" -> 1000;
+            case "Conector" -> 50;
+            default -> {
+                System.out.println("Ítem no reconocido: " + item);
+                yield -1;
+            }
+        };
+        //TODO: los precios de ahorita son testing
+        return number;
+    }
+
+    private int getPriceComponente(String item){
+        System.out.println(item);
+        int number = switch (item) {
+            case "Energia" -> 12000;
+            case "Mina" -> 1000;
+            case "Templo" -> 3000;
+            case "Tienda" -> 2000;
+            case "Conector" -> 100;
             default -> {
                 System.out.println("Ítem no reconocido: " + item);
                 yield -1;

@@ -114,8 +114,10 @@ public class MainGameController {
     private static int getNumberFromString(String item) {
         System.out.println(item);
         int number = switch (item) {
-            case "Tienda" -> 4;
             case "Energia" -> 1;
+            case "Mina" -> 2;
+            case "Templo" -> 3;
+            case "Tienda" -> 4;
             case "Conector" -> 5;
             default -> {
                 System.out.println("Ítem no reconocido: " + item);
@@ -381,6 +383,7 @@ public class MainGameController {
         if(storeActual != null){
             Platform.runLater(() -> storeActual.actualizarComponentesCbx());
             Platform.runLater(() -> storeActual.actualizarDinero());
+            Platform.runLater(() -> storeActual.actualizarAcero());
         } else {
             Platform.runLater(() ->loadDataComboBox());
         }
@@ -485,15 +488,15 @@ public class MainGameController {
 
     private void cronoMina(){
         while(true){
-            int sec = 0;
-            int min = 1;
-            while(sec != 0 || min != 0){
-                sec--;
-                if(sec<0){
-                    min--;
-                    sec = 59;
+            int[] sec = {0};
+            int[] min = {1};
+            while(sec[0] != 0 || min[0] != 0){
+                sec[0]--;
+                if(sec[0]<0){
+                    min[0]--;
+                    sec[0] = 59;
                 }
-                lblComodinTimer.setText(Utilities.formatearEnTimer(min) + ":" + Utilities.formatearEnTimer(sec));
+                Platform.runLater(() -> lblMinaTimer.setText(Utilities.formatearEnTimer(min[0]) + ":" + Utilities.formatearEnTimer(sec[0])));
                 try {Thread.sleep(1000);} catch (InterruptedException ignore) {}
             }
             generarAcero();
@@ -507,26 +510,26 @@ public class MainGameController {
 
     private void cronoComodin(){
         while(true){
-            int sec = 0;
-            int min = 5;
-            lblComodinTimer.setText("N/A");
+            int[] sec = {0};
+            int[] min = {5};
+            Platform.runLater(()-> lblComodinTimer.setText("N/A"));
             while(!itemsInScreen.contains("Templo")){
                 try {Thread.sleep(1000);} catch (InterruptedException ignore) {}
             } //si no tiene templo, entonces a esperar
 
             while(!comodinListo){
                 if(!itemsInScreen.contains("Templo")){break;}
-                sec--;
-                if(sec==0 && min ==0){
+                sec[0]--;
+                if(sec[0]==0 && min[0] ==0){
                     comodinListo = true;
-                    lblComodinTimer.setText("Comodin Listo");
+                    Platform.runLater(()-> lblComodinTimer.setText("Comodín Listo"));
                     comodinListo();
                     continue;
-                } else if(sec<0 && min > 0){
-                    min--;
-                    sec = 59;
+                } else if(sec[0]<0 && min[0] > 0){
+                    min[0]--;
+                    sec[0] = 59;
                 }
-                lblComodinTimer.setText(Utilities.formatearEnTimer(min) + ":" + Utilities.formatearEnTimer(sec));
+                Platform.runLater(()-> lblComodinTimer.setText(Utilities.formatearEnTimer(min[0]) + ":" + Utilities.formatearEnTimer(sec[0])));
                 try {Thread.sleep(1000);} catch (InterruptedException ignore) {}
             }
             while(comodinListo){
@@ -550,16 +553,19 @@ public class MainGameController {
         }
     }
 
+    @FXML
     protected void onBtnEscudoClick(){
         btnEscudo.setDisable(false);
         //TODO
     }
 
+    @FXML
     protected void onBtnKrakenClick(){
         btnKraken.setDisable(false);
         //TODO
     }
 
+    @FXML
     protected void onBtnCClick(){
         //TODO: revisar turno, y que no he perdido, ESTO PARA LOS 4 ATAQUES
         String nombreEnemigo = cbxVerEnemy.getValue();
@@ -578,6 +584,7 @@ public class MainGameController {
         } catch (Exception e) {System.out.println("Error atacando con cañon");}
     }
 
+    @FXML
     protected void onBtnCMClick(){
         String nombreEnemigo = cbxVerEnemy.getValue();
         if(nombreEnemigo==null){return;}
@@ -595,6 +602,7 @@ public class MainGameController {
         } catch (Exception e) {System.out.println("Error atacando con cañon múltiple");}
     }
 
+    @FXML
     protected void onBtnBombClick(){
         String nombreEnemigo = cbxVerEnemy.getValue();
         if(nombreEnemigo==null){return;}
@@ -614,6 +622,7 @@ public class MainGameController {
         } catch (Exception e) {System.out.println("Error atacando con bomba");}
     }
 
+    @FXML
     protected void onBtnCBRClick(){
         String nombreEnemigo = cbxVerEnemy.getValue();
         if(nombreEnemigo==null){return;}

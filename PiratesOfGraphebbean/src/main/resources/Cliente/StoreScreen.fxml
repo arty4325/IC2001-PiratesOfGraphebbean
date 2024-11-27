@@ -15,14 +15,14 @@
             <Font size="48.0" />
          </font>
       </Text>
-      <Button layoutX="738.0" layoutY="150.0" mnemonicParsing="false" onAction="#btnAddEnergy" text="Energia" />
+      <Button layoutX="738.0" layoutY="225.0" mnemonicParsing="false" onAction="#btnAddEnergy" prefHeight="25.0" prefWidth="65.0" text="Energia" />
       <Text layoutX="794.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Items">
          <font>
             <Font size="36.0" />
          </font>
       </Text>
-      <Button layoutX="738.0" layoutY="200.0" mnemonicParsing="false" onAction="#btnAddStore" text="Tienda" />
-      <Button layoutX="881.0" layoutY="150.0" mnemonicParsing="false" onAction="#btnAddConector" text="Conector" />
+      <Button layoutX="738.0" layoutY="188.0" mnemonicParsing="false" onAction="#btnAddStore" prefHeight="25.0" prefWidth="65.0" text="Tienda" />
+      <Button layoutX="738.0" layoutY="295.0" mnemonicParsing="false" onAction="#btnAddConector" text="Conector" />
       <ComboBox fx:id="cbxComponentes" layoutX="14.0" layoutY="34.0" prefWidth="150.0" />
       <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Componente a vender:" wrappingWidth="141.7265625" />
       <Button fx:id="btnPrecioEspecifico" layoutX="14.0" layoutY="126.0" mnemonicParsing="false" onAction="#onBtnPrecioEspecificoClick" prefHeight="48.0" prefWidth="101.0" text="Vender a precio específico" wrapText="true" />
@@ -35,5 +35,31 @@
          </font>
       </Text>
       <Label fx:id="lblDinero" layoutX="267.0" layoutY="14.0" prefHeight="17.0" prefWidth="52.0" />
+      <Button layoutX="738.0" layoutY="259.0" mnemonicParsing="false" onAction="#btnAddTemplo" prefHeight="25.0" prefWidth="65.0" text="Templo" />
+      <Button layoutX="738.0" layoutY="150.0" mnemonicParsing="false" onAction="#btnAddMina" prefHeight="25.0" prefWidth="65.0" text="Mina" />
+      <Text layoutX="815.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1000 Dinero" />
+      <Text layoutX="815.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2000 Dinero" />
+      <Text layoutX="815.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="12000 Dinero" />
+      <Text layoutX="815.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3000 Dinero" />
+      <Text layoutX="815.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100 Dinero" />
+      <Button layoutX="899.0" layoutY="245.0" mnemonicParsing="false" onAction="#btnAddBomba" prefHeight="25.0" prefWidth="101.0" text="Bomba" />
+      <Button layoutX="899.0" layoutY="208.0" mnemonicParsing="false" onAction="#btnAddCanonMult" prefHeight="25.0" prefWidth="101.0" text="Cañón Mult" />
+      <Button layoutX="899.0" layoutY="279.0" mnemonicParsing="false" onAction="#btnAddCanonBR" prefHeight="25.0" prefWidth="101.0" text="Cañón de Barba Roja" />
+      <Button layoutX="899.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnAddCanon" prefHeight="25.0" prefWidth="101.0" text="Cañón" />
+      <Text layoutX="1014.0" layoutY="187.0" strokeType="OUTSIDE" strokeWidth="0.0" text="500 Acero" />
+      <Text layoutX="1014.0" layoutY="225.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1000 Acero" />
+      <Text layoutX="1014.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2000 Acero" />
+      <Text layoutX="1014.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5000 Acero" />
+      <Text layoutX="213.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ACERO:" wrappingWidth="56.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Label fx:id="lblAcero" layoutX="269.0" layoutY="38.0" prefHeight="17.0" prefWidth="52.0" />
+      <ComboBox fx:id="cbxJugadores2" layoutX="94.0" layoutY="278.0" prefWidth="150.0" />
+      <Button fx:id="btnVenderAcero" layoutX="101.0" layoutY="314.0" mnemonicParsing="false" onAction="#onBtnVenderAceroClick" prefHeight="48.0" prefWidth="101.0" text="Vender acero" wrapText="true" />
+      <Spinner fx:id="sbxPrecioAcero" layoutX="262.0" layoutY="278.0" prefHeight="25.0" prefWidth="79.0" />
+      <Spinner fx:id="sbxCantAcero" layoutX="215.0" layoutY="349.0" prefHeight="25.0" prefWidth="79.0" />
+      <Text layoutX="215.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cantidad:" />
    </children>
 </AnchorPane>

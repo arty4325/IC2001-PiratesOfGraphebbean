@@ -273,7 +273,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button disable="true" layoutX="17.0" layoutY="596.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Escudo" />
-      <Button disable="true" layoutX="17.0" layoutY="628.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Kraken" />
+      <Button fx:id="btnEscudo" disable="true" layoutX="17.0" layoutY="596.0" mnemonicParsing="false" onAction="#onBtnEscudoClick" prefHeight="25.0" prefWidth="107.0" text="Escudo" />
+      <Button fx:id="btnKraken" disable="true" layoutX="17.0" layoutY="628.0" mnemonicParsing="false" onAction="#onBtnKrakenClick" prefHeight="25.0" prefWidth="107.0" text="Kraken" />
     </children>
 </AnchorPane>

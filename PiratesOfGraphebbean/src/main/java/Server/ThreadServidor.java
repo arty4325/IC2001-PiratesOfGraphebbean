@@ -101,6 +101,12 @@ public class ThreadServidor extends Thread{
                         conseguirGrafoEnemigo();
                         break;
                     } catch (Exception ex) {System.out.println("Error con caso CONSEGUIRGRAFOENEMIGO en ThreadServidor");}
+                case PROPONERVENTAACERO:
+                    try {
+                        proponerVentaAcero();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso PROPONERVENTAACERO en ThreadServidor");}
+
             }
         }
     }
@@ -170,7 +176,27 @@ public class ThreadServidor extends Thread{
         salidaDatos.writeUTF(grafoEnemigo);
     }
 
+    private void proponerVentaAcero() throws Exception{
+        String selectedPlayer = entradaDatos.readUTF();
+        int precio = entradaDatos.readInt();
+        int cant = entradaDatos.readInt();
+        ThreadServidor ts = getEnemigoConNombre(selectedPlayer);
+        ts.getSalidaObjetos().writeObject(CasesEnCliente.RECIBIROFERTAACERO);
+        ts.getSalidaDatos().writeUTF(nombreCliente);
+        ts.getSalidaDatos().writeInt(precio);
+        ts.getSalidaDatos().writeInt(cant);
+        while(ts.getObjeto() == null){
+            sleep(500);
+        }
+        Boolean acepto = (Boolean)ts.getObjeto();
+        ts.setObjeto(null);
 
+        if(acepto){
+            salidaObjetos.writeObject(CasesEnCliente.OFERTAACEPTADAACERO);
+            salidaDatos.writeInt(cant);
+            salidaDatos.writeInt(precio);
+        }
+    }
 
 
 
