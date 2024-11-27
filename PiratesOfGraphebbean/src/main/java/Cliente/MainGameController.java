@@ -47,6 +47,8 @@ public class MainGameController {
 
     @FXML private GridPane PantallaJugador;
 
+    @FXML private GridPane PantallaEnemigo;
+
     @FXML private TextArea txaChat;
 
     @FXML private TextField txfMensaje;
@@ -284,7 +286,9 @@ public class MainGameController {
         // Tengo el grafo ahora tengo que procesarlo
         List<List<Integer>> listaAdyacencia = new ArrayList<>();
         int[][] matrizTipos;
+        int[][] matrizTiposCopia;
         boolean[][] matrizDestruccion;
+
 
         System.out.println(partes[0]);
         System.out.println(partes[1]);
@@ -292,6 +296,7 @@ public class MainGameController {
 
         listaAdyacencia = mapaDelMar.deserializeListaAdyacencia(partes[0]);
         matrizTipos = mapaDelMar.deserializeMatrix(partes[1]);
+        matrizTiposCopia =  mapaDelMar.deserializeMatrix(partes[1]);
         matrizDestruccion = mapaDelMar.deserializeBooleanMatrix(partes[2]);
 
         System.out.println(listaAdyacencia);
@@ -313,6 +318,18 @@ public class MainGameController {
         List<List<Integer>> conexionesFuente = new ArrayList<>();
         conexionesFuente = mapaDelMar.obtenerConexFuente(listaAdyacencia, matrizTipos);
         System.out.println(conexionesFuente);
+        for(int i = 0; i < conexionesFuente.size(); i++) {
+            System.out.println(conexionesFuente.get(i));
+            if(matrizTipos[conexionesFuente.get(i).get(1)][conexionesFuente.get(i).get(0)] == 2
+            || matrizTipos[conexionesFuente.get(i).get(1)][conexionesFuente.get(i).get(0)] == 3 ||
+                    matrizTipos[conexionesFuente.get(i).get(1)][conexionesFuente.get(i).get(0)] == 4){
+                matrizTiposCopia[conexionesFuente.get(i).get(1) + 1][conexionesFuente.get(i).get(0)] = 0;
+            }
+            matrizTiposCopia[conexionesFuente.get(i).get(1)][conexionesFuente.get(i).get(0)] = 0;
+        }
+        mapaDelMar.inicializarGridEnemgio(matrizTiposCopia, PantallaEnemigo);
+        // Lo que no esta conectado a la fuente tengo que mostrarlo :)
+
 
     }
 
@@ -469,6 +486,7 @@ public class MainGameController {
      * -> y eso
      */
 
+    @FXML
     protected void onBtnCClick(){
         String nombreEnemigo = cbxVerEnemy.getValue();
         if(nombreEnemigo==null){return;}
@@ -484,6 +502,7 @@ public class MainGameController {
         } catch (Exception e) {System.out.println("Error atacando con cañon");}
     }
 
+    @FXML
     protected void onBtnCMClick(){
         String nombreEnemigo = cbxVerEnemy.getValue();
         if(nombreEnemigo==null){return;}
@@ -499,6 +518,7 @@ public class MainGameController {
         } catch (Exception e) {System.out.println("Error atacando con cañon múltiple");}
     }
 
+    @FXML
     protected void onBtnBombClick(){
         String nombreEnemigo = cbxVerEnemy.getValue();
         if(nombreEnemigo==null){return;}
@@ -516,6 +536,7 @@ public class MainGameController {
         } catch (Exception e) {System.out.println("Error atacando con bomba");}
     }
 
+    @FXML
     protected void onBtnCBRClick(){
         String nombreEnemigo = cbxVerEnemy.getValue();
         if(nombreEnemigo==null){return;}

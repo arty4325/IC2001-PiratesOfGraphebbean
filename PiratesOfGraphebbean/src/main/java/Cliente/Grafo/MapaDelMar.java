@@ -99,6 +99,24 @@ public class MapaDelMar {
         }
     }
 
+    public void limpiarGridPane(GridPane gridPane, int rows, int cols) {
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                for (Node node : gridPane.getChildren()) {
+                    if (GridPane.getRowIndex(node) != null && GridPane.getColumnIndex(node) != null) {
+                        int rowIndex = GridPane.getRowIndex(node);
+                        int colIndex = GridPane.getColumnIndex(node);
+                        if (rowIndex == row && colIndex == col && node instanceof Label) {
+                            ((Label) node).setText("");
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+
 
     public void inicializarGrid() {
         limpiarCasillas();
@@ -109,6 +127,17 @@ public class MapaDelMar {
             }
         }
     }
+
+    public void inicializarGridEnemgio(int[][] matriz, GridPane gridPane) {
+        limpiarGridPane(gridPane, 20, 20);
+        for (int row = 0; row < matriz.length; row++) {
+            for (int col = 0; col < matriz[row].length; col++) {
+                Label label = new Label(String.valueOf(matriz[row][col]));
+                gridPane.add(label, col, row);
+            }
+        }
+    }
+
 
     public void recrearGrid(GridPane pantallaJugador) {
         this.gridPane = pantallaJugador;
