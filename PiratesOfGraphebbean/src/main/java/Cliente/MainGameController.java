@@ -242,7 +242,7 @@ public class MainGameController {
 
         for (Spinner<Integer>[] row : spinnersBomb) {
             for (Spinner<Integer> spinner : row) {
-                spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 19, 0, 1));
+                spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 18, 0, 1));
             }
         }
 
