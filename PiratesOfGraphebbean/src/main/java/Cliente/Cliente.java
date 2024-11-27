@@ -340,7 +340,9 @@ public class Cliente {
 
     private void serAtacado() throws Exception{
         int[] coords = (int[])entradaObjetos.readObject();
-        TiposAtaque tipoAtaqueRetornar = pantallaMain.getMapaDelMar().atacarIsla(coords[0],coords[1]);
+        // Estas son las coordenadas en las que me atacan
+        // Aqui es donde tengo que hacer cositas lindas
+        TiposAtaque tipoAtaqueRetornar = pantallaMain.getMapaDelMar().atacarIsla(coords[0],coords[1]); // Aqui es en donde llego yo y le mando el ataque a mi compa
         salidaObjetos.writeObject(CasesEnThreadServidor.PONERENOBJETO);
         salidaObjetos.writeObject(tipoAtaqueRetornar);
     }

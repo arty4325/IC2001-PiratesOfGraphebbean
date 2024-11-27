@@ -16,12 +16,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+
 
 //import javax.mail.Store; TODO DESCOMENTAR ESTO
 import java.awt.*;
@@ -106,7 +112,7 @@ public class MainGameController {
 
     private List<int[][]> coordenadas = new ArrayList<>();
     private List<List<Integer>> coordenadasConector = new ArrayList<>();
-    private List<String> itemsInScreen = new ArrayList<>();
+    //private List<String> itemsInScreen = new ArrayList<>();
     private Spinner<Integer>[] spinnersC;
     private Spinner<Integer>[] spinnersCM;
     private Spinner<Integer>[][] spinnersBomb;
@@ -295,6 +301,32 @@ public class MainGameController {
         anchorPane.getChildren().add(line);
     }
 
+
+    private void placeImage(AnchorPane anchorPane, int x, int y, String imagePath) {
+        // Calcula las coordenadas basadas en el formato de referencia
+        int posX = 252 + x * 24;
+        int posY = 100 + y * 24;
+
+        // Carga la imagen desde la ruta proporcionada
+        System.out.println(String.valueOf(getClass().getResource(imagePath)));
+        Image image = new Image(String.valueOf(getClass().getResource(imagePath)));
+
+        // Crea un ImageView para mostrar la imagen
+        ImageView imageView = new ImageView(image);
+
+        // Ajusta las dimensiones del ImageView (opcional, según tus necesidades)
+        imageView.setFitWidth(24); // Por ejemplo, el tamaño de un cuadro
+        imageView.setFitHeight(24);
+
+        // Posiciona el ImageView en el AnchorPane
+        imageView.setLayoutX(posX);
+        imageView.setLayoutY(posY);
+
+        // Añade el ImageView al AnchorPane
+        anchorPane.getChildren().add(imageView);
+    }
+
+
     public void recibeGrafoEnemigo(String grafo) {
         // Dibujar en pantalla
         System.out.println(grafo);
@@ -332,18 +364,21 @@ public class MainGameController {
         }
          */
         List<List<Integer>> conexionesFuente = new ArrayList<>();
-        conexionesFuente = mapaDelMar.obtenerConexFuente(listaAdyacencia, matrizTipos);
+        conexionesFuente = mapaDelMar.obtenerConexFuente(listaAdyacencia, matrizDestruccion, matrizTipos);
+        System.out.println("ADY" + listaAdyacencia);
         System.out.println(conexionesFuente);
         for(int i = 0; i < conexionesFuente.size(); i++) {
             System.out.println(conexionesFuente.get(i));
+
             if(matrizTipos[conexionesFuente.get(i).get(1)][conexionesFuente.get(i).get(0)] == 2
             || matrizTipos[conexionesFuente.get(i).get(1)][conexionesFuente.get(i).get(0)] == 3 ||
-                    matrizTipos[conexionesFuente.get(i).get(1)][conexionesFuente.get(i).get(0)] == 4){
+                    matrizTipos[conexionesFuente.get(i).get(1)][conexionesFuente.get(i).get(0)] == 4
+            ){
                 matrizTiposCopia[conexionesFuente.get(i).get(1) + 1][conexionesFuente.get(i).get(0)] = 0;
             }
             matrizTiposCopia[conexionesFuente.get(i).get(1)][conexionesFuente.get(i).get(0)] = 0;
         }
-        mapaDelMar.inicializarGridEnemgio(matrizTiposCopia, PantallaEnemigo);
+        mapaDelMar.inicializarGridEnemgio(matrizTiposCopia,  PantallaEnemigo);
         // Lo que no esta conectado a la fuente tengo que mostrarlo :)
 
 
@@ -414,7 +449,7 @@ public class MainGameController {
     }
 
     @FXML protected void btnGoStore() {
-        if(!itemsInScreen.contains("Tienda")){return;}
+        if(!mapaDelMar.getItemsInScreen().contains("Tienda")){return;}
 
         Platform.runLater(() -> {
             try {
@@ -475,7 +510,7 @@ public class MainGameController {
                 conectorComboBox.getItems().add(itemComboBox);
                 // Ahora, debo de registrar en el grafo que existe una liga
             } else {
-                itemsInScreen.add(selectedItem);
+                mapaDelMar.getItemsInScreen().add(selectedItem);
                 // El item es algo que puede ser conectado
                 // Hay que hacer el hash que guarda la informacion de conexcion
                 placeItemComboBox.getItems().add(selectedItem);
@@ -486,6 +521,7 @@ public class MainGameController {
                 // Voy a hacer otro hash que sea, coordInciialx, coordinicialy, (todo el resto de coordenadas)
                 colocarTodasCoordsHash(coordXInt, coordYInt, selectedInt); // Ya aqui deberian de estar todas las coordenadas de cada item
                 // Ahora tengo que asignar todos los cuadros en mapaDelMar
+                placeImage(anchorPane, coordXInt, coordYInt, "/Images/Conector.jpg");
             }
         } else {
             // Debe de haber un laben en pantalla en donde le muestro el error
@@ -521,7 +557,7 @@ public class MainGameController {
     }
 
     private void generarAcero(){
-        int minas = Collections.frequency(itemsInScreen,"Mina");
+        int minas = Collections.frequency(mapaDelMar.getItemsInScreen(),"Mina");
         cliente.subirAcero(minas*100);
     }
 
@@ -530,12 +566,12 @@ public class MainGameController {
             int[] sec = {0};
             int[] min = {5};
             Platform.runLater(()-> lblComodinTimer.setText("N/A"));
-            while(!itemsInScreen.contains("Templo")){
+            while(!mapaDelMar.getItemsInScreen().contains("Templo")){
                 try {Thread.sleep(1000);} catch (InterruptedException ignore) {}
             } //si no tiene templo, entonces a esperar
 
             while(!comodinListo){
-                if(!itemsInScreen.contains("Templo")){break;}
+                if(!mapaDelMar.getItemsInScreen().contains("Templo")){break;}
                 sec[0]--;
                 if(sec[0]==0 && min[0] ==0){
                     comodinListo = true;
@@ -550,7 +586,7 @@ public class MainGameController {
                 try {Thread.sleep(1000);} catch (InterruptedException ignore) {}
             }
             while(comodinListo){
-                if(!itemsInScreen.contains("Templo")){
+                if(!mapaDelMar.getItemsInScreen().contains("Templo")){
                     btnEscudo.setDisable(true);
                     btnKraken.setDisable(true);
                     break;
