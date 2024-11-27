@@ -6,14 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4fad49e6-0c16-4e50-a4c6-3768dd8e4274" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/MapaDelMar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/MapaDelMar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/MainGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/MainGameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/StoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/Cliente.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Modelos/CasesEnCliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Modelos/CasesEnCliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Modelos/CasesEnThreadServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Modelos/CasesEnThreadServidor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Server/ThreadServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/ThreadServidor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Cliente/MainWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Cliente/MainWindow.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Cliente/StoreScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Cliente/StoreScreen.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +57,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Ale",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/artur/AppData/Local/SceneBuilder/SceneBuilder.exe",
     "node.js.detected.package.eslint": "true",

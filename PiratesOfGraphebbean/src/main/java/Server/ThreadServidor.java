@@ -2,6 +2,8 @@ package Server;
 
 import Modelos.CasesEnCliente;
 import Modelos.CasesEnThreadServidor;
+import Modelos.Random;
+import Modelos.TiposAtaque;
 
 import java.io.*;
 import java.net.Socket;
@@ -106,6 +108,11 @@ public class ThreadServidor extends Thread{
                         proponerVentaAcero();
                         break;
                     } catch (Exception ex) {System.out.println("Error con caso PROPONERVENTAACERO en ThreadServidor");}
+                case ATACARCANON:
+                    try {
+                        atacarCanon();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso ATACARCANON en ThreadServidor");}
 
             }
         }
@@ -198,6 +205,43 @@ public class ThreadServidor extends Thread{
         }
     }
 
+    private void atacarCanon() throws Exception{
+        String nombreEnemigo = entradaDatos.readUTF();
+        int[] coords = (int[])entradaObjetos.readObject();
+        ThreadServidor ts = getEnemigoConNombre(nombreEnemigo);
+        //en otros ataques, ponerlo como un for de cada coords
+        ts.getSalidaObjetos().writeObject(CasesEnCliente.SERATACADO);
+        ts.getSalidaObjetos().writeObject(coords);
+        while(ts.getObjeto() == null){
+            sleep(500);
+        }
+        TiposAtaque tipoAtaque = (TiposAtaque)ts.getObjeto();
+        ts.setObjeto(null);
+        switch(tipoAtaque){
+            case FUENTEDEENERGIA:
+                salidaObjetos.writeObject(CasesEnCliente.CONSEGUIRFUENTE);
+                break;
+            case REMOLINO:
+                int[][] coordsRemolino = {{Random.randomInt(0,19),Random.randomInt(0,19)}, {Random.randomInt(0,19),Random.randomInt(0,19)},{Random.randomInt(0,19),Random.randomInt(0,19)}};
+                for (int[] cds : coordsRemolino) {
+                    salidaObjetos.writeObject(CasesEnCliente.SERATACADO);
+                    salidaObjetos.writeObject(cds);
+                    while(ts.getObjeto() == null){
+                        sleep(500);
+                    }
+                    ts.setObjeto(null);
+                }
+                break;
+            case HIT:
+                //TODO: en este caso realmente es solo el log
+                break;
+            case MISS:
+                //TODO: en este caso realmente es solo el log
+                break;
+        }
+
+
+    }
 
 
 

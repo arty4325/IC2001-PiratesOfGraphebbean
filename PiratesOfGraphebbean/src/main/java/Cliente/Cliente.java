@@ -2,6 +2,7 @@ package Cliente;
 
 import Modelos.CasesEnCliente;
 import Modelos.CasesEnThreadServidor;
+import Modelos.TiposAtaque;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -179,6 +180,11 @@ public class Cliente {
                         ofertaAceptadaAcero();
                         break;
                     } catch (Exception ex) {System.out.println("Error con caso ofertaAceptadaAcero en Cliente");}
+                case SERATACADO:
+                    try {
+                        serAtacado();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso serAtacado en Cliente");}
             }
         }
     }
@@ -327,6 +333,12 @@ public class Cliente {
         pantallaMain.updateGUIDespuesDeOfertaOCompra();
     }
 
+    private void serAtacado() throws Exception{
+        int[] coords = (int[])entradaObjetos.readObject();
+        TiposAtaque tipoAtaqueRetornar = pantallaMain.getMapaDelMar().atacarIsla(coords[0],coords[1]);
+        salidaObjetos.writeObject(CasesEnThreadServidor.PONERENOBJETO);
+        salidaObjetos.writeObject(tipoAtaqueRetornar);
+    }
 
     public boolean tengoDineroSuficiente(int precio){
         return dinero - precio >= 0; //si la resta da más o igual que 0, puede comprar.
