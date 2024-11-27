@@ -201,7 +201,7 @@ public class MainGameController {
         items.clear();
     }
 
-    private void loadDataComboBox() {
+    public void loadDataComboBox() {
         itemComboBox.getItems().clear();
         for(int i = 0; i < cliente.getListaItems().size(); i++) {
             itemComboBox.getItems().add(cliente.getListaItems().get(i));
