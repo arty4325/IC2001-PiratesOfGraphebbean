@@ -14,5 +14,6 @@ public enum CasesEnCliente implements Serializable {
     OFERTAACEPTADAACERO,
     SERATACADO,
     CONSEGUIRFUENTE,
+    PONERENBITACORA
 
 }

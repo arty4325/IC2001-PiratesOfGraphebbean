@@ -210,6 +210,10 @@ public class ThreadServidor extends Thread{
         int[] coords = (int[])entradaObjetos.readObject();
         ThreadServidor ts = getEnemigoConNombre(nombreEnemigo);
         //en otros ataques, ponerlo como un for de cada coords
+        salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
+        salidaDatos.writeUTF("Cañón: Disparaste a" + nombreEnemigo + "en (" + coords[0] + "," + coords[1] + ")");
+        ts.getSalidaObjetos().writeObject(CasesEnCliente.PONERENBITACORA);
+        ts.getSalidaDatos().writeUTF("Te disparó un Cañón en (" + coords[0] + "," + coords[1] + ")");
         ts.getSalidaObjetos().writeObject(CasesEnCliente.SERATACADO);
         ts.getSalidaObjetos().writeObject(coords);
         while(ts.getObjeto() == null){
@@ -219,9 +223,13 @@ public class ThreadServidor extends Thread{
         ts.setObjeto(null);
         switch(tipoAtaque){
             case FUENTEDEENERGIA:
+                salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
+                salidaDatos.writeUTF("Tu ataque le dió a una fuente de energía, consigues una fuente de energía.");
                 salidaObjetos.writeObject(CasesEnCliente.CONSEGUIRFUENTE);
                 break;
             case REMOLINO:
+                salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
+                salidaDatos.writeUTF("Tu ataque cayó en un remolino, se te devolverán 3 disparos en lugares random.");
                 int[][] coordsRemolino = {{Random.randomInt(0,19),Random.randomInt(0,19)}, {Random.randomInt(0,19),Random.randomInt(0,19)},{Random.randomInt(0,19),Random.randomInt(0,19)}};
                 for (int[] cds : coordsRemolino) {
                     salidaObjetos.writeObject(CasesEnCliente.SERATACADO);
@@ -230,13 +238,17 @@ public class ThreadServidor extends Thread{
                         sleep(500);
                     }
                     ts.setObjeto(null);
+                    salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
+                    salidaDatos.writeUTF("Una bala del remolino cayó en (" + cds[0] + "," + cds[1] + ")");
                 }
                 break;
             case HIT:
-                //TODO: en este caso realmente es solo el log
+                salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
+                salidaDatos.writeUTF("Tu ataque le dió a un componente en el campo de tu enemigo, bien hecho!");
                 break;
             case MISS:
-                //TODO: en este caso realmente es solo el log
+                salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
+                salidaDatos.writeUTF("Tu ataque no le dió a nada...");
                 break;
         }
 
