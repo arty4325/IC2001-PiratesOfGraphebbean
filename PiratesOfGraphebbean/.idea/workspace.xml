@@ -8,7 +8,12 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/MapaDelMar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/MapaDelMar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/MainGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/MainGameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/StoreController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modelos/CasesEnCliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Modelos/CasesEnCliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Modelos/CasesEnThreadServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Modelos/CasesEnThreadServidor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Server/ThreadServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/ThreadServidor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/Cliente/MainWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Cliente/MainWindow.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Cliente/StoreScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Cliente/StoreScreen.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +24,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="FxmlFile" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -170,7 +175,7 @@
       <workItem from="1731979516954" duration="20734000" />
       <workItem from="1732047788319" duration="9837000" />
       <workItem from="1732432480378" duration="11761000" />
-      <workItem from="1732640435210" duration="6569000" />
+      <workItem from="1732640435210" duration="19137000" />
     </task>
     <servers />
   </component>

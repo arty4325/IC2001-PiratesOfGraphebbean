@@ -11,5 +11,6 @@ public enum CasesEnThreadServidor {
     ATACARCANON,
     ATACARCANONMULT,
     ATACARBOMBA,
-    ATACARCBR
+    ATACARCBR,
+    PROPONERVENTAACERO
 }

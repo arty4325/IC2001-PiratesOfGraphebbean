@@ -43,8 +43,8 @@ public class Cliente {
 
     public Cliente(ClienteScreenController pantallaCliente) {
         this.pantallaCliente = pantallaCliente;
-        dinero = 100000;
-        acero = 0;
+        dinero = 1000000;
+        acero = 1000000; //tesitng values
         canon = 0;
         canonMult = 0;
         bomba = 0;
@@ -169,6 +169,16 @@ public class Cliente {
                         setGrafoEnemigo();
                         break;
                     } catch (Exception ex) {System.out.println("Error con caso setGrafoEnemigo en Cliente");}
+                case RECIBIROFERTAACERO:
+                    try {
+                        recibirOfertaAcero();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso recibirOfertaAcero en Cliente");}
+                case OFERTAACEPTADAACERO:
+                    try {
+                        ofertaAceptadaAcero();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso ofertaAceptadaAcero en Cliente");}
             }
         }
     }
@@ -272,6 +282,51 @@ public class Cliente {
         Platform.runLater(() -> pantallaMain.recibeGrafoEnemigo(grafoEnemigo));
     }
 
+    private void recibirOfertaAcero() throws Exception{
+        String jugadorProponiendo = entradaDatos.readUTF();
+        int cantidadPropuesta = entradaDatos.readInt();
+        int precio = entradaDatos.readInt();
+
+        Platform.runLater(() -> {
+            try {
+                ButtonType yesButton = new ButtonType("Sí");
+                ButtonType noButton = new ButtonType("No");
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, jugadorProponiendo + " te propone " + cantidadPropuesta + " de acero por el precio de " + precio + ". ¿Aceptas?", yesButton, noButton);
+                alert.setTitle("Confirmación");
+
+                Optional<ButtonType> result = alert.showAndWait();
+
+                if (result.isPresent() && result.get() == yesButton) {
+                    System.out.println("lo quiso");
+                    if(tengoDineroSuficiente(precio)){
+                        salidaObjetos.writeObject(CasesEnThreadServidor.PONERENOBJETO);
+                        salidaObjetos.writeObject(true);
+                        bajarDinero(precio);
+                        subirAcero(cantidadPropuesta);
+                        pantallaMain.updateGUIDespuesDeOfertaOCompra();
+                    } else{
+                        salidaObjetos.writeObject(CasesEnThreadServidor.PONERENOBJETO);
+                        salidaObjetos.writeObject(false);
+                    }
+                } else {
+                    System.out.println("no lo quiso");
+                    salidaObjetos.writeObject(CasesEnThreadServidor.PONERENOBJETO);
+                    salidaObjetos.writeObject(false);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private void ofertaAceptadaAcero() throws Exception{
+        int cant = entradaDatos.readInt();
+        bajarAcero(cant);
+        subirDinero(entradaDatos.readInt());
+        pantallaMain.updateGUIDespuesDeOfertaOCompra();
+    }
+
 
     public boolean tengoDineroSuficiente(int precio){
         return dinero - precio >= 0; //si la resta da más o igual que 0, puede comprar.
@@ -283,6 +338,18 @@ public class Cliente {
 
     public void subirDinero(int precio){
         dinero += precio;
+    }
+
+    public boolean tengoAceroSuficiente(int cantidad){
+        return acero - cantidad >= 0; //si la resta da más o igual que 0, puede comprar.
+    }
+
+    public void bajarAcero(int cantidad){
+        acero -= cantidad;
+    }
+
+    public void subirAcero(int cantidad){
+        acero += cantidad;
     }
 
 
@@ -328,4 +395,58 @@ public class Cliente {
     public ObjectOutputStream getSalidaObjetos() {
         return salidaObjetos;
     }
+
+    public int getAcero() {
+        return acero;
+    }
+
+    public void comprarCanon(){
+        canon++;
+    }
+
+    public void usarCanon(){
+        canon--;
+    }
+
+    public void comprarCanonMult() {
+        canonMult++;
+    }
+
+    public void usarCanonMult() {
+        canonMult--;
+    }
+
+    public void comprarBomba() {
+        bomba++;
+    }
+
+    public void usarBomba() {
+        bomba--;
+    }
+
+    public void comprarCanonBR() {
+        canonBR++;
+    }
+
+    public void usarCanonBR() {
+        canonBR--;
+    }
+
+    public int getCanon(){
+        return canon;
+    }
+
+    public int getCanonMult() {
+        return canonMult;
+    }
+
+    public int getBomba() {
+        return bomba;
+    }
+
+    public int getCanonBR() {
+        return canonBR;
+    }
+
+
 }
