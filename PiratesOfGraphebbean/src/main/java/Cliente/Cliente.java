@@ -29,6 +29,7 @@ public class Cliente {
     private ObjectOutputStream salidaObjetos;
     private Socket socket; //Socket del cliente.
     private String nombreCliente;
+    private int idCliente;
     private boolean canStart = false;
     private ArrayList<String> nombresOponentes;
     // Aqui voy a tener una lista de items que van a estar en pantalla
@@ -39,6 +40,8 @@ public class Cliente {
     private int canonMult;
     private int bomba;
     private int canonBR;
+    private int turnoActual;
+    private boolean jugando;
 
 
 
@@ -50,6 +53,7 @@ public class Cliente {
         canonMult = 0;
         bomba = 0;
         canonBR = 0;
+        jugando = true;
     }
 
     public List<String> getListaItems() {
@@ -61,13 +65,14 @@ public class Cliente {
         listaItems.add("Energia");
         try {
             conectar();
+            idCliente = entradaDatos.readInt();
         } catch (Exception ex) {System.out.println("Error conectando al servidor");}
 
         try {
             esperarStart();
         } catch (Exception ex) {System.out.println("Error esperando a start");}
         System.out.println("ya todos presionaron listo");
-
+        System.out.println(idCliente + " " + nombreCliente);
         try{
             conseguirNombresOponentes();
         } catch (Exception ex) {System.out.println("Error consiguiendo nombre de oponentes");}
@@ -138,6 +143,11 @@ public class Cliente {
                 System.out.println("Error con entrada de evento en threadCliente");
             }
             switch (evento) {
+                case SIGUIENTETURNO:
+                    try {
+                        turnoActual = entradaDatos.readInt();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso SIGUIENTETURNO");}
                 case RECIBIRMENSAJE:
                     try {
                         recibirMensaje();
@@ -188,8 +198,19 @@ public class Cliente {
                 case CONSEGUIRFUENTE:
                     try {
                         listaItems.add("Energia");
+                        pantallaMain.loadDataComboBox();
                         break;
                     } catch (Exception ex) {System.out.println("Error con caso serAtacado en Cliente");}
+                case ALGUIENGANO:
+                    try {
+                        alguienGano();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso alguienGano en Cliente");}
+                case YOGANE:
+                    try {
+                        yoGane();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso yoGane en Cliente");}
             }
         }
     }
@@ -341,9 +362,26 @@ public class Cliente {
     private void serAtacado() throws Exception{
         int[] coords = (int[])entradaObjetos.readObject();
         TiposAtaque tipoAtaqueRetornar = pantallaMain.getMapaDelMar().atacarIsla(coords[0],coords[1]);
+
+        if(false){ //TODO: CAMBIAR EL FALSE POR CONDICIONAL QUE REVISE SI YA PERDÍ
+            jugando = false;
+            salidaObjetos.writeObject(CasesEnThreadServidor.PERDER);
+        }
+
         salidaObjetos.writeObject(CasesEnThreadServidor.PONERENOBJETO);
         salidaObjetos.writeObject(tipoAtaqueRetornar);
     }
+
+    private void alguienGano() throws Exception{
+        int gano = entradaDatos.readInt();
+        Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "Ganó el jugador " + gano).showAndWait());
+    }
+
+    private void yoGane() throws Exception{
+        Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "¡Tu ganaste!").showAndWait());
+
+    }
+
 
     public boolean tengoDineroSuficiente(int precio){
         return dinero - precio >= 0; //si la resta da más o igual que 0, puede comprar.
@@ -465,5 +503,7 @@ public class Cliente {
         return canonBR;
     }
 
-
+    public int getIdCliente() {
+        return idCliente;
+    }
 }
