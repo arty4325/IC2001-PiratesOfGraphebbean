@@ -361,7 +361,11 @@ public class MainGameController {
         });
     }
 
-    private void placeEnemyImage(AnchorPane anchorPane, int x, int y, String item) {
+    private void placeEnemyImage(AnchorPane anchorPane, int[][] matrizTiposCopia, int x, int y, String item) {
+        if(matrizTiposCopia[y][x] == matrizTiposCopia[y - 1][x] || matrizTiposCopia[y][x] == matrizTiposCopia[y][x - 1]
+        || matrizTiposCopia[y][x] == matrizTiposCopia[y - 1][x - 1]){
+            return;
+        }
         Platform.runLater(() -> {
             int posX = 245 + (x + 22) * 24;
             int posY = 90 + y * 24;
@@ -453,7 +457,7 @@ public class MainGameController {
             for(int j = 0; j < matrizDestruccion[i].length; j++){
                 if(matrizDestruccion[i][j]){
                     System.out.println(i + " " + j + " ESTA DESTRUIU ");
-                    placeEnemyImage(anchorPane, j, i, "Destruccion");
+                    placeEnemyImage(anchorPane, matrizTiposCopia ,j, i, "Destruccion");
                 }
             }
         }
@@ -470,6 +474,13 @@ public class MainGameController {
             matrizTiposCopia[conexionesFuente.get(i).get(1)][conexionesFuente.get(i).get(0)] = 0;
         }
 
+        for(int y = 0; y < matrizTiposCopia.length; y++){
+            for(int x = 0; x < matrizTiposCopia[y].length; x++){
+                if(matrizTiposCopia[y][x] != 0) {
+                    placeEnemyImage(anchorPane, matrizTiposCopia, x, y, getStringFromNumber(matrizTiposCopia[y][x]));
+                }
+            }
+        }
         mapaDelMar.inicializarGridEnemgio(matrizTiposCopia,  PantallaEnemigo);
         // Lo que no esta conectado a la fuente tengo que mostrarlo :)
 
@@ -579,6 +590,7 @@ public class MainGameController {
     protected void btnProcessData(ActionEvent event){
         String selectedItem = itemComboBox.getValue();
         int selectedInt = getNumberFromString(selectedItem);
+        if(selectedItem == null){return;}
         /**
         int coordXInt = Integer.parseInt(coordX.getText());
         int coordYInt = Integer.parseInt(coordY.getText());
