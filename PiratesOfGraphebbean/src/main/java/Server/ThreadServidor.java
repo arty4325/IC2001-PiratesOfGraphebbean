@@ -288,14 +288,15 @@ public class ThreadServidor extends Thread{
                 salidaDatos.writeUTF("Tu ataque cayó en un remolino, se te devolverán 3 disparos en lugares random.");
                 ts.getSalidaObjetos().writeObject(CasesEnCliente.PONERENBITACORA);
                 ts.getSalidaDatos().writeUTF("El disparo enemigo cayó en tu remolino, se le devolverán 3 disparos al enemigo");
+                System.out.println(" aqui si llega");
                 int[][] coordsRemolino = {{Random.randomInt(0,19),Random.randomInt(0,19)}, {Random.randomInt(0,19),Random.randomInt(0,19)},{Random.randomInt(0,19),Random.randomInt(0,19)}};
+                System.out.println("Disparos a devolver: " + coordsRemolino.length);
                 for (int[] cds : coordsRemolino) {
-                    salidaObjetos.writeObject(CasesEnCliente.SERATACADO);
+                    System.out.println("Disparo devuelto: " + cds[0] + "," + cds[1]);
+                    salidaObjetos.writeObject(CasesEnCliente.SERATACADOPORREMOLINO);
                     salidaObjetos.writeObject(cds);
-                    while(ts.getObjeto() == null){
-                        sleep(500);
-                    }
-                    ts.setObjeto(null);
+
+                    entradaObjetos.readObject(); //ignorar
                     salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
                     salidaDatos.writeUTF("Una bala del remolino cayó en (" + cds[0] + "," + cds[1] + ")");
                     ts.getSalidaObjetos().writeObject(CasesEnCliente.PONERENBITACORA);
@@ -385,12 +386,10 @@ public class ThreadServidor extends Thread{
                 System.out.println("Balas que devuelve remolino: " + coordsRemolino.length);
                 for (int[] cds : coordsRemolino) {
                     System.out.println("BALA" + cds[0] + "," + cds[1]);
-                    salidaObjetos.writeObject(CasesEnCliente.SERATACADO);
+                    salidaObjetos.writeObject(CasesEnCliente.SERATACADOPORREMOLINO);
                     salidaObjetos.writeObject(cds);
-                    while(ts.getObjeto() == null){
-                        sleep(500);
-                    }
-                    ts.setObjeto(null);
+
+                    entradaObjetos.readObject(); //ignorar
                     salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
                     salidaDatos.writeUTF("Una bala del remolino cayó en (" + cds[0] + "," + cds[1] + ")");
                     ts.getSalidaObjetos().writeObject(CasesEnCliente.PONERENBITACORA);
@@ -482,12 +481,10 @@ public class ThreadServidor extends Thread{
                         ts.getSalidaDatos().writeUTF("El disparo enemigo cayó en tu remolino, se le devolverán 3 disparos al enemigo");
                         int[][] coordsRemolino = {{Random.randomInt(0,19),Random.randomInt(0,19)}, {Random.randomInt(0,19),Random.randomInt(0,19)},{Random.randomInt(0,19),Random.randomInt(0,19)}};
                         for (int[] cds : coordsRemolino) {
-                            salidaObjetos.writeObject(CasesEnCliente.SERATACADO);
+                            salidaObjetos.writeObject(CasesEnCliente.SERATACADOPORREMOLINO);
                             salidaObjetos.writeObject(cds);
-                            while(ts.getObjeto() == null){
-                                sleep(500);
-                            }
-                            ts.setObjeto(null);
+
+                            entradaObjetos.readObject(); //ignorar
                             salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
                             salidaDatos.writeUTF("Una bala del remolino cayó en (" + cds[0] + "," + cds[1] + ")");
                             ts.getSalidaObjetos().writeObject(CasesEnCliente.PONERENBITACORA);
@@ -564,12 +561,10 @@ public class ThreadServidor extends Thread{
                     ts.getSalidaDatos().writeUTF("El disparo enemigo cayó en tu remolino, se le devolverán 3 disparos al enemigo");
                     int[][] coordsRemolino = {{Random.randomInt(0, 19), Random.randomInt(0, 19)}, {Random.randomInt(0, 19), Random.randomInt(0, 19)}, {Random.randomInt(0, 19), Random.randomInt(0, 19)}};
                     for (int[] cds : coordsRemolino) {
-                        salidaObjetos.writeObject(CasesEnCliente.SERATACADO);
+                        salidaObjetos.writeObject(CasesEnCliente.SERATACADOPORREMOLINO);
                         salidaObjetos.writeObject(cds);
-                        while (ts.getObjeto() == null) {
-                            sleep(500);
-                        }
-                        ts.setObjeto(null);
+
+                        entradaObjetos.readObject(); //ignorar
                         salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
                         salidaDatos.writeUTF("Una bala del remolino cayó en (" + cds[0] + "," + cds[1] + ")");
                         ts.getSalidaObjetos().writeObject(CasesEnCliente.PONERENBITACORA);
@@ -657,12 +652,11 @@ public class ThreadServidor extends Thread{
                 ts.getSalidaDatos().writeUTF("El ataque enemigo cayó en tu remolino, se le devolverán 3 disparos al enemigo");
                 int[][] coordsRemolino = {{Random.randomInt(0,19),Random.randomInt(0,19)}, {Random.randomInt(0,19),Random.randomInt(0,19)},{Random.randomInt(0,19),Random.randomInt(0,19)}};
                 for (int[] cds : coordsRemolino) {
-                    salidaObjetos.writeObject(CasesEnCliente.SERATACADO);
+                    salidaObjetos.writeObject(CasesEnCliente.SERATACADOPORREMOLINO);
                     salidaObjetos.writeObject(cds);
-                    while(ts.getObjeto() == null){
-                        sleep(500);
-                    }
-                    ts.setObjeto(null);
+
+                    entradaObjetos.readObject(); //ignorar
+
                     salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
                     salidaDatos.writeUTF("Una bala del remolino cayó en (" + cds[0] + "," + cds[1] + ")");
                     ts.getSalidaObjetos().writeObject(CasesEnCliente.PONERENBITACORA);
