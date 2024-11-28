@@ -42,7 +42,7 @@ public class Cliente {
     private int canonBR;
     private int turnoActual;
     private boolean jugando;
-
+    private int escudo;
 
 
 
@@ -182,6 +182,11 @@ public class Cliente {
                         setGrafoEnemigo();
                         break;
                     } catch (Exception ex) {System.out.println("Error con caso setGrafoEnemigo en Cliente");}
+                case SETESCUDOENEMIGO:
+                    try {
+                        setEscudoEnemigo();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso setEscudoEnemigo en Cliente");}
                 case RECIBIROFERTAACERO:
                     try {
                         recibirOfertaAcero();
@@ -213,6 +218,22 @@ public class Cliente {
                         yoGane();
                         break;
                     } catch (Exception ex) {System.out.println("Error con caso yoGane en Cliente");}
+                case DEVOLVERESCUDO:
+                    try {
+                        salidaObjetos.writeObject(CasesEnThreadServidor.PONERENOBJETO);
+                        salidaObjetos.writeObject(escudo);
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso devolverEscudo en Cliente");}
+                case BAJARESCUDO:
+                    try {
+                        escudo--;
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso bajarEscudo en Cliente");}
+                case DEVOLVERCOORDSCOMP:
+                    try {
+                        devolverCoordsComp();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso devolverCoordsComp en Cliente");}
             }
         }
     }
@@ -316,6 +337,11 @@ public class Cliente {
         Platform.runLater(() -> pantallaMain.recibeGrafoEnemigo(grafoEnemigo));
     }
 
+    private void setEscudoEnemigo() throws Exception{
+        int escudo = entradaDatos.readInt();
+        Platform.runLater(() -> pantallaMain.recibeEscudoEnemigo(escudo));
+    }
+
     private void recibirOfertaAcero() throws Exception{
         String jugadorProponiendo = entradaDatos.readUTF();
         int cantidadPropuesta = entradaDatos.readInt();
@@ -377,9 +403,17 @@ public class Cliente {
         int gano = entradaDatos.readInt();
         Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "Ganó el jugador " + gano).showAndWait());
     }
+
     private void yoGane() throws Exception{
         Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "¡Tu ganaste!").showAndWait());
     }
+
+    private void devolverCoordsComp() throws Exception{
+        int[] coords = pantallaMain.getMapaDelMar().conseguirElementoRandom();
+        salidaObjetos.writeObject(CasesEnThreadServidor.PONERENOBJETO);
+        salidaObjetos.writeObject(coords);
+    }
+
     public boolean tengoDineroSuficiente(int precio){
         return dinero - precio >= 0; //si la resta da más o igual que 0, puede comprar.
     }
@@ -510,5 +544,9 @@ public class Cliente {
 
     public boolean isJugando() {
         return jugando;
+    }
+
+    public void setEscudo(int escudo) {
+        this.escudo = escudo;
     }
 }

@@ -58,6 +58,8 @@ public class MainGameController {
 
     @FXML private Label lblMinaTimer;
 
+    @FXML private Label lblEscudoEnemigo;
+
     @FXML private AnchorPane anchorPane;
 
     @FXML private Button btnSend;
@@ -83,6 +85,8 @@ public class MainGameController {
     @FXML private Spinner<Integer> coordY;
 
     @FXML private ComboBox<String> cbxVerEnemy;
+
+    @FXML private ComboBox<String> cbxKraken;
 
     @FXML private TextField coordX1;
 
@@ -230,6 +234,7 @@ public class MainGameController {
     private void loadEnemigosCbx(){
         for (String oponente : cliente.getNombresOponentes()) {
             cbxVerEnemy.getItems().add(oponente);
+            cbxKraken.getItems().add(oponente);
         }
     }
 
@@ -381,6 +386,10 @@ public class MainGameController {
         // Lo que no esta conectado a la fuente tengo que mostrarlo :)
 
 
+    }
+
+    public void recibeEscudoEnemigo(int escudo){
+        lblEscudoEnemigo.setText(escudo + "");
     }
 
     @FXML
@@ -608,27 +617,43 @@ public class MainGameController {
     @FXML
     protected void onBtnEscudoClick(){
         btnEscudo.setDisable(false);
-        //TODO
+        cliente.setEscudo(Random.randomInt(2,5));
+    }
+
+    private boolean validacionesAtaques(){
+        if(cliente.getTurnoActual() != cliente.getIdCliente()) {
+            Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "No es tu turno").showAndWait());
+            return true;
+        }
+        if(!cliente.isJugando()){
+            Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "Ya perdiste, no puedes jugar").showAndWait());
+            return true;
+        }
+        if(!cliente.getListaItems().isEmpty()){
+            Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "No puedes atacar hasta poner todos los objetos en tu inventario").showAndWait());
+            return true;
+        }
+        return false;
     }
 
     @FXML
     protected void onBtnKrakenClick(){
+        if(validacionesAtaques()){return;}
+
+        String nombreEnemigo = cbxKraken.getValue();
+        if(nombreEnemigo==null){return;}
+
         btnKraken.setDisable(false);
-        //TODO
+        try {
+            cliente.getSalidaObjetos().writeObject(CasesEnThreadServidor.ATACARKRAKEN);
+            cliente.getSalidaDatos().writeUTF(nombreEnemigo);
+        } catch (IOException e) {System.out.println("Error atacando con Kraken");}
     }
 
     @FXML
     protected void onBtnCClick(){
-        if(cliente.getTurnoActual() != cliente.getIdCliente()) {
-            Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "No es tu turno").showAndWait());
-            return;
-        }
-        if(!cliente.isJugando()){
-            Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "Ya perdiste, no puedes jugar").showAndWait());
-            return;
-        }
+        if(validacionesAtaques()){return;}
 
-        //TODO: revisar turno, y que no he perdido, ESTO PARA LOS 4 ATAQUES
         String nombreEnemigo = cbxVerEnemy.getValue();
         if(nombreEnemigo==null){return;}
         if(cliente.getCanon() <= 0){return;}
@@ -647,14 +672,7 @@ public class MainGameController {
 
     @FXML
     protected void onBtnCMClick(){
-        if(cliente.getTurnoActual() != cliente.getIdCliente()) {
-            Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "No es tu turno").showAndWait());
-            return;
-        }
-        if(!cliente.isJugando()){
-            Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "Ya perdiste, no puedes jugar").showAndWait());
-            return;
-        }
+        if(validacionesAtaques()){return;}
 
         String nombreEnemigo = cbxVerEnemy.getValue();
         if(nombreEnemigo==null){return;}
@@ -674,14 +692,7 @@ public class MainGameController {
 
     @FXML
     protected void onBtnBombClick(){
-        if(cliente.getTurnoActual() != cliente.getIdCliente()) {
-            Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "No es tu turno").showAndWait());
-            return;
-        }
-        if(!cliente.isJugando()){
-            Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "Ya perdiste, no puedes jugar").showAndWait());
-            return;
-        }
+        if(validacionesAtaques()){return;}
 
         String nombreEnemigo = cbxVerEnemy.getValue();
         if(nombreEnemigo==null){return;}
@@ -703,14 +714,7 @@ public class MainGameController {
 
     @FXML
     protected void onBtnCBRClick(){
-        if(cliente.getTurnoActual() != cliente.getIdCliente()) {
-            Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "No es tu turno").showAndWait());
-            return;
-        }
-        if(!cliente.isJugando()){
-            Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "Ya perdiste, no puedes jugar").showAndWait());
-            return;
-        }
+        if(validacionesAtaques()){return;}
 
         String nombreEnemigo = cbxVerEnemy.getValue();
         if(nombreEnemigo==null){return;}

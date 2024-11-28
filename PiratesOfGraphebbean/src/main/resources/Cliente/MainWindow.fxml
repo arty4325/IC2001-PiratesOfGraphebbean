@@ -273,7 +273,14 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button fx:id="btnEscudo" disable="true" layoutX="17.0" layoutY="596.0" mnemonicParsing="false" onAction="#onBtnEscudoClick" prefHeight="25.0" prefWidth="107.0" text="Escudo" />
-      <Button fx:id="btnKraken" disable="true" layoutX="17.0" layoutY="628.0" mnemonicParsing="false" onAction="#onBtnKrakenClick" prefHeight="25.0" prefWidth="107.0" text="Kraken" />
+      <Button fx:id="btnEscudo" layoutX="123.0" layoutY="594.0" mnemonicParsing="false" onAction="#onBtnEscudoClick" prefHeight="25.0" prefWidth="107.0" text="Escudo" />
+      <Button fx:id="btnKraken" layoutX="10.0" layoutY="594.0" mnemonicParsing="false" onAction="#onBtnKrakenClick" prefHeight="25.0" prefWidth="107.0" text="Kraken" />
+      <ComboBox fx:id="cbxKraken" layoutX="10.0" layoutY="627.0" prefHeight="25.0" prefWidth="107.0" />
+      <Label fx:id="lblEscudoEnemigo" layoutX="1271.0" layoutY="49.0" prefHeight="25.0" prefWidth="107.0" text="N/A" textAlignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Text layoutX="1271.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Escudo de Enemigo:" wrappingWidth="106.99999999999997" />
     </children>
 </AnchorPane>
