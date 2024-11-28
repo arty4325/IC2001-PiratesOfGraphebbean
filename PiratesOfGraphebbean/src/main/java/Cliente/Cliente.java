@@ -65,6 +65,7 @@ public class Cliente {
     public void run() {
         listaItems.add("Tienda");
         listaItems.add("Energia");
+        listaItems.add("Tornado");
         try {
             conectar();
             idCliente = entradaDatos.readInt();
@@ -201,7 +202,8 @@ public class Cliente {
                     try {
                         serAtacado();
                         break;
-                    } catch (Exception ex) {System.out.println("Error con caso serAtacado en Cliente");}
+                    } catch (Exception ex) {System.out.println("Error con caso serAtacado en Cliente");
+                    ex.printStackTrace();}
                 case CONSEGUIRFUENTE:
                     try {
                         listaItems.add("Energia");
@@ -388,10 +390,12 @@ public class Cliente {
     }
 
     private void serAtacado() throws Exception{
+        System.out.println("Test 1");
         int[] coords = (int[])entradaObjetos.readObject();
         // Estas son las coordenadas en las que me atacan
         // Aqui es donde tengo que hacer cositas lindas
-        TiposAtaque tipoAtaqueRetornar = pantallaMain.getMapaDelMar().atacarIsla(coords[0],coords[1]); // Aqui es en donde llego yo y le mando el ataque a mi compa
+        TiposAtaque tipoAtaqueRetornar = pantallaMain.atacarIsla(coords[0],coords[1]); // Aqui es en donde llego yo y le mando el ataque a mi compa
+        System.out.println("Test 2" + tipoAtaqueRetornar);
         if(false){ //TODO: CAMBIAR EL FALSE POR CONDICIONAL QUE REVISE SI YA PERDÍ
             jugando = false;
             salidaObjetos.writeObject(CasesEnThreadServidor.PERDER);

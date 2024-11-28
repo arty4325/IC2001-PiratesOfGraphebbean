@@ -10,6 +10,8 @@ public class TipoIsla {
     public static final int TEMPLO = 3;
     public static final int MERCADO = 4;
     public static final int CONECTOR = 5;
+    public static final int ARMERIA = 6;
+    public static final int TORNADO = 7;
     public static final int VACIA = 0;
 }
 
