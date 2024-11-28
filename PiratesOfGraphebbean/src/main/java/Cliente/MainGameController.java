@@ -887,6 +887,21 @@ public class MainGameController {
             } else if (mapaDelMar.getMatrizTipos()[y][x] == 7){
                 mapaDelMar.getItemsInScreen().remove("Tornado");
                 return TiposAtaque.REMOLINO;
+            } else if (mapaDelMar.getMatrizTipos()[y][x] == 5){
+                mapaDelMar.getItemsInScreen().remove("Conector");
+                // Quitar lo que es adyacente a el, en listaAdyacencia :)
+                System.out.println("ADY"  + mapaDelMar.getListaAdyacencia());
+                eliminarItem(x, y);
+                return TiposAtaque.HIT;
+            } else if (mapaDelMar.getMatrizTipos()[y][x] == 2){
+                mapaDelMar.getItemsInScreen().remove("Mina");
+                return TiposAtaque.HIT;
+            } else if (mapaDelMar.getMatrizTipos()[y][x] == 3){
+                mapaDelMar.getItemsInScreen().remove("Templo");
+                return TiposAtaque.HIT;
+            } else if (mapaDelMar.getMatrizTipos()[y][x] == 6){
+                mapaDelMar.getItemsInScreen().remove("Armeria");
+                return TiposAtaque.HIT;
             }
             placeImage(anchorPane, x, y, "Destruccion");
         }
@@ -906,4 +921,16 @@ public class MainGameController {
     public MapaDelMar getMapaDelMar() {
         return mapaDelMar;
     }
+
+    public void eliminarItem(int x, int y) {
+        Iterator<List<Integer>> iterador = mapaDelMar.getListaAdyacencia().iterator();
+        while (iterador.hasNext()) {
+            List<Integer> item = iterador.next();
+            if (item.get(0) == x && item.get(1) == y) {
+                iterador.remove();
+                break;
+            }
+        }
+    }
+
 }

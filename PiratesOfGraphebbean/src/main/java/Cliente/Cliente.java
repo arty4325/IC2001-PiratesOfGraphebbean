@@ -400,7 +400,7 @@ public class Cliente {
         // Aqui es donde tengo que hacer cositas lindas
         TiposAtaque tipoAtaqueRetornar = pantallaMain.atacarIsla(coords[0],coords[1]); // Aqui es en donde llego yo y le mando el ataque a mi compa
         System.out.println("Test 2 " + tipoAtaqueRetornar);
-        if(false){ //TODO: CAMBIAR EL FALSE POR CONDICIONAL QUE REVISE SI YA PERDÍ
+        if(pantallaMain.getMapaDelMar().perdi()){ //TODO: CAMBIAR EL FALSE POR CONDICIONAL QUE REVISE SI YA PERDÍ
             jugando = false;
             salidaObjetos.writeObject(CasesEnThreadServidor.PERDER);
         }
@@ -417,7 +417,7 @@ public class Cliente {
         // Aqui es donde tengo que hacer cositas lindas
         TiposAtaque tipoAtaqueRetornar = pantallaMain.atacarIsla(coords[0],coords[1]); // Aqui es en donde llego yo y le mando el ataque a mi compa
         System.out.println("Test 2 " + tipoAtaqueRetornar);
-        if(false){ //TODO: CAMBIAR EL FALSE POR CONDICIONAL QUE REVISE SI YA PERDÍ
+        if(pantallaMain.getMapaDelMar().perdi()){ //TODO: CAMBIAR EL FALSE POR CONDICIONAL QUE REVISE SI YA PERDÍ
             jugando = false;
             salidaObjetos.writeObject(CasesEnThreadServidor.PERDER);
         }
