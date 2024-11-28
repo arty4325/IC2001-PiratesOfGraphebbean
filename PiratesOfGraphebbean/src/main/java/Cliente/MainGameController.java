@@ -142,6 +142,23 @@ public class MainGameController {
         return number;
     }
 
+    private static String getStringFromNumber(int number) {
+
+        String val = switch (number) {
+            case 1 -> "Energia";
+            case 2 -> "Mina";
+            case 3 -> "Templo";
+            case 4 -> "Tienda";
+            case 5 -> "Conector";
+            case 7 -> "Tornado";
+            default -> {
+                System.out.println("Ítem no reconocido: " + number);
+                yield "";
+            }
+        };
+        return val;
+    }
+
     public static void colocarEnHash(String text, List<Integer> pos){
         hashPosItems.put(text, pos);
     }
@@ -447,6 +464,7 @@ public class MainGameController {
             || matrizTipos[conexionesFuente.get(i).get(1)][conexionesFuente.get(i).get(0)] == 3 ||
                     matrizTipos[conexionesFuente.get(i).get(1)][conexionesFuente.get(i).get(0)] == 4
             ){
+                placeEnemyImage(anchorPane, conexionesFuente.get(i).get(0), conexionesFuente.get(i).get(1), getStringFromNumber(matrizTipos[conexionesFuente.get(i).get(1)][conexionesFuente.get(i).get(0)]));
                 matrizTiposCopia[conexionesFuente.get(i).get(1) + 1][conexionesFuente.get(i).get(0)] = 0;
             }
             matrizTiposCopia[conexionesFuente.get(i).get(1)][conexionesFuente.get(i).get(0)] = 0;
@@ -850,6 +868,9 @@ public class MainGameController {
             } else if (mapaDelMar.getMatrizTipos()[y][x] == 4){
                 mapaDelMar.getItemsInScreen().remove("Tienda");
                 return TiposAtaque.HIT;
+            } else if (mapaDelMar.getMatrizTipos()[y][x] == 7){
+                mapaDelMar.getItemsInScreen().remove("Tornado");
+                return TiposAtaque.REMOLINO;
             }
             placeImage(anchorPane, x, y, "Destruccion");
         }

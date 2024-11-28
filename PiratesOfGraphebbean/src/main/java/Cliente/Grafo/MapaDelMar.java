@@ -262,12 +262,21 @@ public class MapaDelMar {
 
     // [x,y]
     public int[] conseguirElementoRandom(){
-        if(itemsInScreen.isEmpty()){return null;}
-        //coger un randomd e itemsinscreen,
-        //de ese mae meterlo al hash para buscar su coordenada en pantalla.
-        //esas coordenadas meterlas en un int[] = {x,y}
-        //retrnar ese int
-        return null; //TODO QUITAR
+        List<int[]> coordenadasValidas = new ArrayList<>();
+        for (int i = 0; i < matrizAdyacencia.length; i++) {
+            for (int j = 0; j < matrizAdyacencia[i].length; j++) {
+                if (matrizAdyacencia[i][j] != 0 && matrizDestruccion[i][j]) {
+                    coordenadasValidas.add(new int[]{i, j});
+                }
+            }
+        }
+        if (coordenadasValidas.isEmpty()) {
+            return null;
+        }
+        Random random = new Random();
+        int indiceAleatorio = random.nextInt(coordenadasValidas.size());
+
+        return coordenadasValidas.get(indiceAleatorio);
     }
 
 

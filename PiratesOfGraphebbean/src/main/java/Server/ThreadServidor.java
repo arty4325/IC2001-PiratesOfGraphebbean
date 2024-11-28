@@ -382,7 +382,9 @@ public class ThreadServidor extends Thread{
                 ts.getSalidaObjetos().writeObject(CasesEnCliente.PONERENBITACORA);
                 ts.getSalidaDatos().writeUTF("El disparo enemigo cayó en tu remolino, se le devolverán 3 disparos al enemigo");
                 int[][] coordsRemolino = {{Random.randomInt(0,19),Random.randomInt(0,19)}, {Random.randomInt(0,19),Random.randomInt(0,19)},{Random.randomInt(0,19),Random.randomInt(0,19)}};
+                System.out.println("Balas que devuelve remolino: " + coordsRemolino.length);
                 for (int[] cds : coordsRemolino) {
+                    System.out.println("BALA" + cds[0] + "," + cds[1]);
                     salidaObjetos.writeObject(CasesEnCliente.SERATACADO);
                     salidaObjetos.writeObject(cds);
                     while(ts.getObjeto() == null){
