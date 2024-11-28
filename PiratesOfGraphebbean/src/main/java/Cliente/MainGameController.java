@@ -93,6 +93,8 @@ public class MainGameController {
 
     @FXML private TextField coordY1;
 
+    private List<ImageView> enemyImageViews = new ArrayList<>();
+
     @FXML private Spinner<Integer> sbxC_X;      @FXML private Spinner<Integer> sbxC_Y;
 
     @FXML private Spinner<Integer> sbxCM_X;      @FXML private Spinner<Integer> sbxCM_Y;
@@ -309,40 +311,88 @@ public class MainGameController {
 
 
     private void placeImage(AnchorPane anchorPane, int x, int y, String item) {
-        int posX = 242 + x * 24;
-        int posY = 90 + y * 24;
-        String imagePath = "/Images/" + item + ".jpg";
+        Platform.runLater(() -> {
+            int posX = 242 + x * 24;
+            int posY = 90 + y * 24;
+            String imagePath = "/Images/" + item + ".jpg";
 
-        // Carga la imagen desde la ruta proporcionada
-        System.out.println(String.valueOf(getClass().getResource(imagePath)));
-        Image image = new Image(String.valueOf(getClass().getResource(imagePath)));
+            // Carga la imagen desde la ruta proporcionada
+            System.out.println(String.valueOf(getClass().getResource(imagePath)));
+            Image image = new Image(String.valueOf(getClass().getResource(imagePath)));
 
-        // Crea un ImageView para mostrar la imagen
-        ImageView imageView = new ImageView(image);
+            // Crea un ImageView para mostrar la imagen
+            ImageView imageView = new ImageView(image);
 
-        // Ajusta las dimensiones del ImageView (opcional, según tus necesidades)
-        if(item == "Conector" || item == "Tornado" || item == "Destruccion") {
-            imageView.setFitWidth(24);
-            imageView.setFitHeight(24);
-        } else if (item == "Tienda") {
-            imageView.setFitWidth(24);
-            imageView.setFitHeight(48);
-        } else if (item == "Energia") {
-            imageView.setFitWidth(48);
-            imageView.setFitHeight(48);
-        }
+            // Ajusta las dimensiones del ImageView (opcional, según tus necesidades)
+            if(item.equals("Conector") || item.equals("Tornado") || item.equals("Destruccion")) {
+                imageView.setFitWidth(24);
+                imageView.setFitHeight(24);
+            } else if (item.equals("Tienda")) {
+                imageView.setFitWidth(24);
+                imageView.setFitHeight(48);
+            } else if (item.equals("Energia")) {
+                imageView.setFitWidth(48);
+                imageView.setFitHeight(48);
+            }
 
-        // Posiciona el ImageView en el AnchorPane
-        imageView.setLayoutX(posX);
-        imageView.setLayoutY(posY);
+            // Posiciona el ImageView en el AnchorPane
+            imageView.setLayoutX(posX);
+            imageView.setLayoutY(posY);
 
-        // Añade el ImageView al AnchorPane
-        anchorPane.getChildren().add(imageView);
+            // Añade el ImageView al AnchorPane
+            anchorPane.getChildren().add(imageView);
+        });
     }
+
+    private void placeEnemyImage(AnchorPane anchorPane, int x, int y, String item) {
+        Platform.runLater(() -> {
+            int posX = 245 + (x + 22) * 24;
+            int posY = 90 + y * 24;
+            String imagePath = "/Images/" + item + ".jpg";
+
+            // Carga la imagen desde la ruta proporcionada
+            System.out.println(String.valueOf(getClass().getResource(imagePath)));
+            Image image = new Image(String.valueOf(getClass().getResource(imagePath)));
+
+            // Crea un ImageView para mostrar la imagen
+            ImageView imageView = new ImageView(image);
+
+            // Ajusta las dimensiones del ImageView según tus necesidades
+            if(item.equals("Conector") || item.equals("Tornado") || item.equals("Destruccion")) {
+                imageView.setFitWidth(24);
+                imageView.setFitHeight(24);
+            } else if (item.equals("Tienda")) {
+                imageView.setFitWidth(24);
+                imageView.setFitHeight(48);
+            } else if (item.equals("Energia")) {
+                imageView.setFitWidth(48);
+                imageView.setFitHeight(48);
+            }
+
+            // Posiciona el ImageView en el AnchorPane
+            imageView.setLayoutX(posX);
+            imageView.setLayoutY(posY);
+
+            // Añade el ImageView al AnchorPane
+            anchorPane.getChildren().add(imageView);
+
+            // Añade el ImageView a la lista para referencia futura
+            enemyImageViews.add(imageView);
+        });
+    }
+
+    private void removeAllEnemyImages(AnchorPane anchorPane) {
+        Platform.runLater(() -> {
+            anchorPane.getChildren().removeAll(enemyImageViews);
+            enemyImageViews.clear(); // Limpia la lista después de eliminar
+        });
+    }
+
 
 
     public void recibeGrafoEnemigo(String grafo) {
         // Dibujar en pantalla
+        removeAllEnemyImages(anchorPane);
         System.out.println(grafo);
         String[] partes = grafo.split("t=&");
         // Tengo el grafo ahora tengo que procesarlo
@@ -381,6 +431,15 @@ public class MainGameController {
         conexionesFuente = mapaDelMar.obtenerConexFuente(listaAdyacencia, matrizDestruccion, matrizTipos);
         System.out.println("ADY" + listaAdyacencia);
         System.out.println(conexionesFuente);
+        // Tengo que dibujar en todos los items de matrizEliminados sex
+        for(int i = 0; i < matrizDestruccion.length; i++){
+            for(int j = 0; j < matrizDestruccion[i].length; j++){
+                if(matrizDestruccion[i][j]){
+                    System.out.println(i + " " + j + " ESTA DESTRUIU ");
+                    placeEnemyImage(anchorPane, j, i, "Destruccion");
+                }
+            }
+        }
         for(int i = 0; i < conexionesFuente.size(); i++) {
             System.out.println(conexionesFuente.get(i));
 
@@ -751,7 +810,6 @@ public class MainGameController {
         System.out.println("Ataque " + x + " " + y);
         // Lo primero que vamos a hacer es poner el ataque en matriz destruccion
         mapaDelMar.getMatrizDestruccion()[y][x] = true; // Esta isla ya fue atacada :(
-        //placeImage(anchorPane, x, y, "Destruccion");
         System.out.println("Mta" + mapaDelMar.getMatrizTipos()[y][x]);
         if(mapaDelMar.getMatrizTipos()[y][x] == 1){
             // reviso al rededor
@@ -793,8 +851,10 @@ public class MainGameController {
                 mapaDelMar.getItemsInScreen().remove("Tienda");
                 return TiposAtaque.HIT;
             }
+            placeImage(anchorPane, x, y, "Destruccion");
         }
         // Lo ultimo es darle feedback al usuario de lo que paso :)
+        placeImage(anchorPane, x, y, "Destruccion");
         return TiposAtaque.MISS;
     }
 

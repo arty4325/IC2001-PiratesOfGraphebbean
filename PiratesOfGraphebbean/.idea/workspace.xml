@@ -6,13 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4fad49e6-0c16-4e50-a4c6-3768dd8e4274" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/Cliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/MapaDelMar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/MapaDelMar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/TipoIsla.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/TipoIsla.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/MainGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/MainGameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Images/Conector.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Images/Conector.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Images/FuenteEnergia.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Images/Tienda.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Images/Tienda.jpg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +87,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.SegundoUsuario">
+  <component name="RunManager" selected="Application.PrimerUsuario">
     <configuration name="CuartoUsuario" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Cliente.MainCliente" />
       <module name="PiratesOfGraphebbean" />
