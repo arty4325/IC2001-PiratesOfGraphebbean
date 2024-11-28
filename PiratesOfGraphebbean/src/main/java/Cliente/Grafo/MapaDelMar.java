@@ -51,6 +51,14 @@ public class MapaDelMar {
         }
     }
 
+    public boolean perdi() {
+        if(itemsInScreen.isEmpty()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public boolean estaDisponible(int x, int y){
         if(x < 20 && y < 20) {
             if (matrizTipos[x][y] == 0) {
@@ -138,6 +146,8 @@ public class MapaDelMar {
             }
         }
     }
+
+    // placeEnemyImage(anchorPane, conexionesFuente.get(i).get(0), conexionesFuente.get(i).get(1), getStringFromNumber(matrizTipos[conexionesFuente.get(i).get(1)][conexionesFuente.get(i).get(0)]))
 
     public void inicializarGridEnemgio(int[][] matriz,GridPane gridPane) {
         limpiarGridPane(gridPane, 20, 20);

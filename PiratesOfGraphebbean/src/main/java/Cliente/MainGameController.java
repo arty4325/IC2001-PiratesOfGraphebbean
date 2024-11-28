@@ -430,7 +430,7 @@ public class MainGameController {
 
         System.out.println(listaAdyacencia);
         //System.out.println(matrizTipos.toString());
-        System.out.println(Arrays.deepToString(matrizTipos));
+        System.out.println("MTIPOS " + Arrays.deepToString(matrizTipos));
         System.out.println(Arrays.deepToString(matrizDestruccion));
 
         /**
@@ -464,11 +464,12 @@ public class MainGameController {
             || matrizTipos[conexionesFuente.get(i).get(1)][conexionesFuente.get(i).get(0)] == 3 ||
                     matrizTipos[conexionesFuente.get(i).get(1)][conexionesFuente.get(i).get(0)] == 4
             ){
-                placeEnemyImage(anchorPane, conexionesFuente.get(i).get(0), conexionesFuente.get(i).get(1), getStringFromNumber(matrizTipos[conexionesFuente.get(i).get(1)][conexionesFuente.get(i).get(0)]));
+                //placeEnemyImage(anchorPane, conexionesFuente.get(i).get(0), conexionesFuente.get(i).get(1), getStringFromNumber(matrizTipos[conexionesFuente.get(i).get(1)][conexionesFuente.get(i).get(0)]));
                 matrizTiposCopia[conexionesFuente.get(i).get(1) + 1][conexionesFuente.get(i).get(0)] = 0;
             }
             matrizTiposCopia[conexionesFuente.get(i).get(1)][conexionesFuente.get(i).get(0)] = 0;
         }
+
         mapaDelMar.inicializarGridEnemgio(matrizTiposCopia,  PantallaEnemigo);
         // Lo que no esta conectado a la fuente tengo que mostrarlo :)
 
