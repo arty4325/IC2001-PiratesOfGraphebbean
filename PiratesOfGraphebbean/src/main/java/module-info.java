@@ -3,7 +3,6 @@ module org.example.piratesofgraphebbean {
     requires javafx.fxml;
     requires javafx.graphics;
     requires java.desktop;
-//    requires mail; TODO DESCOMENTAR ESTO
 
 
     opens org.example.piratesofgraphebbean to javafx.fxml;

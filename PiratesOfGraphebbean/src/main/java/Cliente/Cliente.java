@@ -175,7 +175,6 @@ public class Cliente {
                     try {
                         salidaObjetos.writeObject(CasesEnThreadServidor.PONERENOBJETO);
                         salidaObjetos.writeObject(pantallaMain.getMapaDelMar().serializar());
-                        //TODO, revisar que si sea eso
                         break;
                     } catch (Exception ex) {System.out.println("Error con caso devolverGrafo en Cliente" + ex);}
                 case SETGRAFOENEMIGO:
@@ -507,5 +506,9 @@ public class Cliente {
 
     public int getTurnoActual() {
         return turnoActual;
+    }
+
+    public boolean isJugando() {
+        return jugando;
     }
 }

@@ -29,7 +29,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 
-//import javax.mail.Store; TODO DESCOMENTAR ESTO
 import java.awt.*;
 import java.io.IOException;
 import java.util.*;
@@ -620,9 +619,12 @@ public class MainGameController {
 
     @FXML
     protected void onBtnCClick(){
-        System.out.println(cliente.getTurnoActual() + " " + cliente.getIdCliente());
         if(cliente.getTurnoActual() != cliente.getIdCliente()) {
-            System.out.println("NO VAS A ATACAR ");
+            Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "No es tu turno").showAndWait());
+            return;
+        }
+        if(!cliente.isJugando()){
+            Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "Ya perdiste, no puedes jugar").showAndWait());
             return;
         }
 
@@ -645,6 +647,15 @@ public class MainGameController {
 
     @FXML
     protected void onBtnCMClick(){
+        if(cliente.getTurnoActual() != cliente.getIdCliente()) {
+            Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "No es tu turno").showAndWait());
+            return;
+        }
+        if(!cliente.isJugando()){
+            Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "Ya perdiste, no puedes jugar").showAndWait());
+            return;
+        }
+
         String nombreEnemigo = cbxVerEnemy.getValue();
         if(nombreEnemigo==null){return;}
         if(cliente.getCanonMult() <= 0){return;}
@@ -663,6 +674,15 @@ public class MainGameController {
 
     @FXML
     protected void onBtnBombClick(){
+        if(cliente.getTurnoActual() != cliente.getIdCliente()) {
+            Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "No es tu turno").showAndWait());
+            return;
+        }
+        if(!cliente.isJugando()){
+            Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "Ya perdiste, no puedes jugar").showAndWait());
+            return;
+        }
+
         String nombreEnemigo = cbxVerEnemy.getValue();
         if(nombreEnemigo==null){return;}
         if(cliente.getBomba() <= 0){return;}
@@ -683,6 +703,15 @@ public class MainGameController {
 
     @FXML
     protected void onBtnCBRClick(){
+        if(cliente.getTurnoActual() != cliente.getIdCliente()) {
+            Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "No es tu turno").showAndWait());
+            return;
+        }
+        if(!cliente.isJugando()){
+            Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "Ya perdiste, no puedes jugar").showAndWait());
+            return;
+        }
+
         String nombreEnemigo = cbxVerEnemy.getValue();
         if(nombreEnemigo==null){return;}
         if(cliente.getCanonBR() <= 0){return;}

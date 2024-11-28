@@ -7,12 +7,10 @@
     <list default="true" id="4fad49e6-0c16-4e50-a4c6-3768dd8e4274" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/Cliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/ClienteScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/ClienteScreenController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/MainGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/MainGameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Modelos/CasesEnCliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Modelos/CasesEnCliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Modelos/CasesEnThreadServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Modelos/CasesEnThreadServidor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/StoreController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/StoreController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Server/ThreadServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/ThreadServidor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,18 +29,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "arty4325"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;arty4325&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/arty4325/IC2001-PiratesOfGraphebbean.git",
-    "accountId": "f254b057-4a32-4106-8544-2bb4e5141361"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/arty4325/IC2001-PiratesOfGraphebbean.git&quot;,
+    &quot;accountId&quot;: &quot;f254b057-4a32-4106-8544-2bb4e5141361&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -73,7 +71,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Ale",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/artur/AppData/Local/SceneBuilder/SceneBuilder.exe",
     "node.js.detected.package.eslint": "true",
