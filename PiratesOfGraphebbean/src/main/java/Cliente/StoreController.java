@@ -181,6 +181,16 @@ public class StoreController {
     }
 
     @FXML
+    protected void btnAddArmeria(){
+        int precio = getPriceComponente("Armeria");
+        if(cliente.tengoDineroSuficiente(precio)){
+            cliente.bajarDinero(precio);
+            cliente.getListaItems().add("Armeria");
+            actualizarDinero();
+        }
+    }
+
+    @FXML
     protected void btnAddCanon(){
         if(!tieneArmeria()){return;}
         int precio = 500;
@@ -225,9 +235,9 @@ public class StoreController {
     }
 
     private boolean tieneArmeria(){
-//        return mapaDelMar.getItemsInScreen().contains("Armeria");
+        return mapaDelMar.getItemsInScreen().contains("Armeria");
         //TODO: DESCMENTAR LO DE ARRIBA Y  QUITAR LOD E ABAJO
-        return true;
+//        return true;
     }
 
     private int getSellingPriceComponente(String item) {
@@ -238,6 +248,7 @@ public class StoreController {
             case "Templo" -> 1500;
             case "Tienda" -> 1000;
             case "Conector" -> 50;
+            case "Armeria" -> 1000;
             default -> {
                 System.out.println("Ítem no reconocido: " + item);
                 yield -1;
@@ -254,6 +265,7 @@ public class StoreController {
             case "Templo" -> 3000;
             case "Tienda" -> 2000;
             case "Conector" -> 100;
+            case "Armeria" -> 2000;
             default -> {
                 System.out.println("Ítem no reconocido: " + item);
                 yield -1;
