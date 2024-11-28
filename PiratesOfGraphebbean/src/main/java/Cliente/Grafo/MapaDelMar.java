@@ -261,8 +261,15 @@ public class MapaDelMar {
         return TiposAtaque.MISS;
     }
 
-
-
+    // [x,y]
+    public int[] conseguirElementoRandom(){
+        if(itemsInScreen.isEmpty()){return null;}
+        //coger un randomd e itemsinscreen,
+        //de ese mae meterlo al hash para buscar su coordenada en pantalla.
+        //esas coordenadas meterlas en un int[] = {x,y}
+        //retrnar ese int
+        return null; //TODO QUITAR
+    }
 
 
     public void mostrarAdyacencias() {

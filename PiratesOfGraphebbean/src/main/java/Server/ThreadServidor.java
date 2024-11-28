@@ -135,6 +135,11 @@ public class ThreadServidor extends Thread{
                         atacarCanonBR();
                         break;
                     } catch (Exception ex) {System.out.println("Error con caso ATACARCBR en ThreadServidor");}
+                case ATACARKRAKEN:
+                    try {
+                        atacarKraken();
+                        break;
+                    } catch (Exception ex) {System.out.println("Error con caso ATACARKRAKEN en ThreadServidor");}
                 case PERDER:
                     servidor.seRendioId(numeroCliente);
             }
@@ -202,8 +207,19 @@ public class ThreadServidor extends Thread{
         }
         String grafoEnemigo = (String)ts.getObjeto();
         ts.setObjeto(null);
+
+        ts.getSalidaObjetos().writeObject(CasesEnCliente.DEVOLVERESCUDO);
+        while(ts.getObjeto() == null){
+            sleep(500);
+        }
+        int escudo = (int)ts.getObjeto();
+        ts.setObjeto(null);
+
         salidaObjetos.writeObject(CasesEnCliente.SETGRAFOENEMIGO);
         salidaDatos.writeUTF(grafoEnemigo);
+
+        salidaObjetos.writeObject(CasesEnCliente.SETESCUDOENEMIGO);
+        salidaDatos.writeInt(escudo);
     }
 
     private void proponerVentaAcero() throws Exception{
@@ -232,6 +248,23 @@ public class ThreadServidor extends Thread{
         String nombreEnemigo = entradaDatos.readUTF();
         int[] coords = (int[])entradaObjetos.readObject();
         ThreadServidor ts = getEnemigoConNombre(nombreEnemigo);
+        //revisar si tiene escudo.
+        ts.getSalidaObjetos().writeObject(CasesEnCliente.DEVOLVERESCUDO);
+        while(ts.getObjeto() == null){
+            sleep(500);
+        }
+        int escudo = (Integer)ts.getObjeto();
+        ts.setObjeto(null);
+        if(escudo > 0){
+            System.out.println("Tiene escudo, exactamente " + escudo);
+            salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
+            salidaDatos.writeUTF("Cañón: Disparaste a " + nombreEnemigo + " pero tenía un escudo activo");
+            ts.getSalidaObjetos().writeObject(CasesEnCliente.PONERENBITACORA);
+            ts.getSalidaDatos().writeUTF("Te disparó un Cañón pero aún tenías escudo");
+            ts.getSalidaObjetos().writeObject(CasesEnCliente.BAJARESCUDO);
+            siguienteTurno();
+            return;
+        }
         //en otros ataques, ponerlo como un for de cada coords
         salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
         salidaDatos.writeUTF("Cañón: Disparaste a" + nombreEnemigo + "en (" + coords[0] + "," + coords[1] + ")");
@@ -286,20 +319,30 @@ public class ThreadServidor extends Thread{
             salidaObjetos.writeObject(CasesEnCliente.YOGANE);
             return;
         }
-        servidor.siguienteTurno();
-        salidaObjetos.writeObject(CasesEnCliente.SIGUIENTETURNO);
-        salidaDatos.writeInt(servidor.getTurnoActual());
-        for (ThreadServidor contrincante : contrincantes) {
-            contrincante.getSalidaObjetos().writeObject(CasesEnCliente.SIGUIENTETURNO);
-            contrincante.getSalidaDatos().writeInt(servidor.getTurnoActual());
-        }
-
+        siguienteTurno();
     }
 
     private void atacarCanonMult() throws Exception{
         String nombreEnemigo = entradaDatos.readUTF();
         int[] coords = (int[])entradaObjetos.readObject();
         ThreadServidor ts = getEnemigoConNombre(nombreEnemigo);
+
+        ts.getSalidaObjetos().writeObject(CasesEnCliente.DEVOLVERESCUDO);
+        while(ts.getObjeto() == null){
+            sleep(500);
+        }
+        int escudo = (Integer)ts.getObjeto();
+        ts.setObjeto(null);
+        if(escudo > 0){
+            System.out.println("Tiene escudo, exactamente " + escudo);
+            salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
+            salidaDatos.writeUTF("Cañón Múltiple: Disparaste a " + nombreEnemigo + " pero tenía un escudo activo");
+            ts.getSalidaObjetos().writeObject(CasesEnCliente.PONERENBITACORA);
+            ts.getSalidaDatos().writeUTF("Te disparó un Cañón Multiple pero aún tenías escudo");
+            ts.getSalidaObjetos().writeObject(CasesEnCliente.BAJARESCUDO);
+            siguienteTurno();
+            return;
+        }
         //en otros ataques, ponerlo como un for de cada coords
         salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
         salidaDatos.writeUTF("Cañón Multiple: Disparaste a" + nombreEnemigo + "en (" + coords[0] + "," + coords[1] + ")");
@@ -384,13 +427,7 @@ public class ThreadServidor extends Thread{
             salidaObjetos.writeObject(CasesEnCliente.YOGANE);
             return;
         }
-        servidor.siguienteTurno();
-        salidaObjetos.writeObject(CasesEnCliente.SIGUIENTETURNO);
-        salidaDatos.writeInt(servidor.getTurnoActual());
-        for (ThreadServidor contrincante : contrincantes) {
-            contrincante.getSalidaObjetos().writeObject(CasesEnCliente.SIGUIENTETURNO);
-            contrincante.getSalidaDatos().writeInt(servidor.getTurnoActual());
-        }
+        siguienteTurno();
     }
 
     private void atacarBomba() throws Exception{
@@ -399,6 +436,22 @@ public class ThreadServidor extends Thread{
         ThreadServidor ts = getEnemigoConNombre(nombreEnemigo);
         //en otros ataques, ponerlo como un for de cada coords
         for (int[] coords : fullCoords) {
+            ts.getSalidaObjetos().writeObject(CasesEnCliente.DEVOLVERESCUDO);
+            while(ts.getObjeto() == null){
+                sleep(500);
+            }
+            int escudo = (Integer)ts.getObjeto();
+            ts.setObjeto(null);
+            if(escudo > 0){
+                System.out.println("Tiene escudo, exactamente " + escudo);
+                salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
+                salidaDatos.writeUTF("Bomba: Disparaste a " + nombreEnemigo + " pero tenía un escudo activo");
+                ts.getSalidaObjetos().writeObject(CasesEnCliente.PONERENBITACORA);
+                ts.getSalidaDatos().writeUTF("Te disparó una Bomba pero aún tenías escudo");
+                ts.getSalidaObjetos().writeObject(CasesEnCliente.BAJARESCUDO);
+                siguienteTurno();
+                continue;
+            }
             for (int i = 0; i < 2; i++) {
                 if(i ==1){
                     coords[Random.randomInt(0,1)]++;
@@ -458,13 +511,7 @@ public class ThreadServidor extends Thread{
             salidaObjetos.writeObject(CasesEnCliente.YOGANE);
             return;
         }
-        servidor.siguienteTurno();
-        salidaObjetos.writeObject(CasesEnCliente.SIGUIENTETURNO);
-        salidaDatos.writeInt(servidor.getTurnoActual());
-        for (ThreadServidor contrincante : contrincantes) {
-            contrincante.getSalidaObjetos().writeObject(CasesEnCliente.SIGUIENTETURNO);
-            contrincante.getSalidaDatos().writeInt(servidor.getTurnoActual());
-        }
+        siguienteTurno();
     }
 
     private void atacarCanonBR() throws Exception{
@@ -473,6 +520,24 @@ public class ThreadServidor extends Thread{
         ThreadServidor ts = getEnemigoConNombre(nombreEnemigo);
         //en otros ataques, ponerlo como un for de cada coords
         for (int[] coords : fullCoords) {
+
+            ts.getSalidaObjetos().writeObject(CasesEnCliente.DEVOLVERESCUDO);
+            while(ts.getObjeto() == null){
+                sleep(500);
+            }
+            int escudo = (Integer)ts.getObjeto();
+            ts.setObjeto(null);
+            if(escudo > 0){
+                System.out.println("Tiene escudo, exactamente " + escudo);
+                salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
+                salidaDatos.writeUTF("Cañón de Barba Roja: Disparaste a " + nombreEnemigo + " pero tenía un escudo activo");
+                ts.getSalidaObjetos().writeObject(CasesEnCliente.PONERENBITACORA);
+                ts.getSalidaDatos().writeUTF("Te disparó un Cañón de Barba Roja pero aún tenías escudo");
+                ts.getSalidaObjetos().writeObject(CasesEnCliente.BAJARESCUDO);
+                siguienteTurno();
+                continue;
+            }
+
             salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
             salidaDatos.writeUTF("Cañón de Barba Roja: Disparaste a" + nombreEnemigo + "en (" + coords[0] + "," + coords[1] + ")");
             ts.getSalidaObjetos().writeObject(CasesEnCliente.PONERENBITACORA);
@@ -527,6 +592,102 @@ public class ThreadServidor extends Thread{
             salidaObjetos.writeObject(CasesEnCliente.YOGANE);
             return;
         }
+        siguienteTurno();
+    }
+
+    private void atacarKraken() throws Exception{
+        String nombreEnemigo = entradaDatos.readUTF();
+        ThreadServidor ts = getEnemigoConNombre(nombreEnemigo);
+        ts.getSalidaObjetos().writeObject(CasesEnCliente.DEVOLVERCOORDSCOMP);
+        while(ts.getObjeto() == null){
+            sleep(500);
+        }
+        int[] coords = (int[])ts.getObjeto();
+        ts.setObjeto(null);
+
+        if(coords == null){
+            salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
+            salidaDatos.writeUTF("Kraken: Atacaste a " + nombreEnemigo + " pero no tenía nada");
+            ts.getSalidaObjetos().writeObject(CasesEnCliente.PONERENBITACORA);
+            ts.getSalidaDatos().writeUTF("Te atacó un Kraken pero no tenías nada");
+            siguienteTurno();
+            return;
+        }
+        //revisar si tiene escudo.
+        ts.getSalidaObjetos().writeObject(CasesEnCliente.DEVOLVERESCUDO);
+        while(ts.getObjeto() == null){
+            sleep(500);
+        }
+        int escudo = (Integer)ts.getObjeto();
+        ts.setObjeto(null);
+        if(escudo > 0){
+            System.out.println("Tiene escudo, exactamente " + escudo);
+            salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
+            salidaDatos.writeUTF("Kraken: Atacaste a " + nombreEnemigo + " pero tenía un escudo activo");
+            ts.getSalidaObjetos().writeObject(CasesEnCliente.PONERENBITACORA);
+            ts.getSalidaDatos().writeUTF("Te atacó un Kraken pero aún tenías escudo");
+            ts.getSalidaObjetos().writeObject(CasesEnCliente.BAJARESCUDO);
+            siguienteTurno();
+            return;
+        }
+        //en otros ataques, ponerlo como un for de cada coords
+        salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
+        salidaDatos.writeUTF("Kraken: atacaste a" + nombreEnemigo + "en (" + coords[0] + "," + coords[1] + ")");
+        ts.getSalidaObjetos().writeObject(CasesEnCliente.PONERENBITACORA);
+        ts.getSalidaDatos().writeUTF("Te atacó un Kraken en (" + coords[0] + "," + coords[1] + ")");
+        ts.getSalidaObjetos().writeObject(CasesEnCliente.SERATACADO);
+        ts.getSalidaObjetos().writeObject(coords);
+        while(ts.getObjeto() == null){
+            sleep(500);
+        }
+        TiposAtaque tipoAtaque = (TiposAtaque)ts.getObjeto();
+        ts.setObjeto(null);
+        switch(tipoAtaque){
+            case FUENTEDEENERGIA:
+                salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
+                salidaDatos.writeUTF("Tu ataque le dió a una fuente de energía, consigues una fuente de energía.");
+                salidaObjetos.writeObject(CasesEnCliente.CONSEGUIRFUENTE);
+                break;
+            case REMOLINO:
+                salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
+                salidaDatos.writeUTF("Tu ataque le dió a un remolino, se te devolverán 3 disparos en lugares random.");
+                ts.getSalidaObjetos().writeObject(CasesEnCliente.PONERENBITACORA);
+                ts.getSalidaDatos().writeUTF("El ataque enemigo cayó en tu remolino, se le devolverán 3 disparos al enemigo");
+                int[][] coordsRemolino = {{Random.randomInt(0,19),Random.randomInt(0,19)}, {Random.randomInt(0,19),Random.randomInt(0,19)},{Random.randomInt(0,19),Random.randomInt(0,19)}};
+                for (int[] cds : coordsRemolino) {
+                    salidaObjetos.writeObject(CasesEnCliente.SERATACADO);
+                    salidaObjetos.writeObject(cds);
+                    while(ts.getObjeto() == null){
+                        sleep(500);
+                    }
+                    ts.setObjeto(null);
+                    salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
+                    salidaDatos.writeUTF("Una bala del remolino cayó en (" + cds[0] + "," + cds[1] + ")");
+                    ts.getSalidaObjetos().writeObject(CasesEnCliente.PONERENBITACORA);
+                    ts.getSalidaDatos().writeUTF("Una bala del remolino cayó en (" + cds[0] + "," + cds[1] + ")");
+                }
+                break;
+            case HIT:
+                salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
+                salidaDatos.writeUTF("Tu ataque le dió a un componente en el campo de tu enemigo, bien hecho!");
+                break;
+            case MISS:
+                salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
+                salidaDatos.writeUTF("Tu ataque no le dió a nada...");
+                break;
+        }
+        if(servidor.revisarGane()){
+            for (ThreadServidor contrincante : contrincantes) {
+                contrincante.getSalidaObjetos().writeObject(CasesEnCliente.ALGUIENGANO);
+                contrincante.getSalidaDatos().writeInt(servidor.getTurnoActual());
+            }
+            salidaObjetos.writeObject(CasesEnCliente.YOGANE);
+            return;
+        }
+        siguienteTurno();
+    }
+
+    private void siguienteTurno() throws Exception{
         servidor.siguienteTurno();
         salidaObjetos.writeObject(CasesEnCliente.SIGUIENTETURNO);
         salidaDatos.writeInt(servidor.getTurnoActual());
@@ -535,8 +696,6 @@ public class ThreadServidor extends Thread{
             contrincante.getSalidaDatos().writeInt(servidor.getTurnoActual());
         }
     }
-
-
 
 
 
