@@ -38,9 +38,16 @@ public class ThreadServidor extends Thread{
     }
 
     public void run(){
+        mandarIdCliente();
         recibirNombreCliente();
         recibirSiYaInicio();
         juegoEmpieza();
+    }
+
+    private void mandarIdCliente(){
+        try{
+            salidaDatos.writeInt(numeroCliente);
+        } catch (IOException ex) {System.out.println("Error mandando id del cliente");}
     }
 
     private void recibirNombreCliente(){
@@ -128,6 +135,8 @@ public class ThreadServidor extends Thread{
                         atacarCanonBR();
                         break;
                     } catch (Exception ex) {System.out.println("Error con caso ATACARCBR en ThreadServidor");}
+                case PERDER:
+                    servidor.seRendioId(numeroCliente);
             }
         }
     }
@@ -350,6 +359,22 @@ public class ThreadServidor extends Thread{
                 salidaObjetos.writeObject(CasesEnCliente.PONERENBITACORA);
                 salidaDatos.writeUTF("Tu ataque no le dió a nada...");
                 break;
+        }
+        if(servidor.revisarGane()){
+            for (ThreadServidor contrincante : contrincantes) {
+                contrincante.getSalidaObjetos().writeObject(CasesEnCliente.ALGUIENGANO);
+                contrincante.getSalidaDatos().writeInt(servidor.getTurnoActual());
+            }
+            salidaObjetos.writeObject(CasesEnCliente.YOGANE);
+            return;
+        }
+        //TODO: PONER ESTO DE ABAJO EN CADA ATAQUE, POR AHORA SOLO ESTÁ AQUI PARA TESTING
+        servidor.siguienteTurno();
+        salidaObjetos.writeObject(CasesEnCliente.SIGUIENTETURNO);
+        salidaDatos.writeInt(servidor.getTurnoActual());
+        for (ThreadServidor contrincante : contrincantes) {
+            contrincante.getSalidaObjetos().writeObject(CasesEnCliente.SIGUIENTETURNO);
+            contrincante.getSalidaDatos().writeInt(servidor.getTurnoActual());
         }
     }
 

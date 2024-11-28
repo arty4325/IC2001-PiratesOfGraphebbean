@@ -11,8 +11,9 @@ public class Server {
     private ServerSocket servidor;
     private ArrayList<Socket> clientes; //Sockets para cada usuario / cliente
     private ArrayList<ThreadServidor> threadsServidor;
+    private ArrayList<Boolean> jugadoresPerdieron;
     private int conectados;
-
+    private int turnoActual;
     private static Server singleton;
 
     private Server(ServerScreenController pantallaServidor){
@@ -20,6 +21,8 @@ public class Server {
         this.clientes = new ArrayList<Socket>();
         this.threadsServidor= new ArrayList<ThreadServidor>();
         this.conectados = 0;
+        this.turnoActual = 1;
+        this.jugadoresPerdieron = new ArrayList<Boolean>();
     }
 
     public static Server getInstance(ServerScreenController pantallaServidor) {
@@ -101,7 +104,38 @@ public class Server {
                     cliente.getContrincantes().add(enemigo);
                 }
             }
+            jugadoresPerdieron.add(false);
         }
+    }
+
+    public void siguienteTurno(){
+        do{
+            if(turnoActual == threadsServidor.size()){
+                turnoActual = 1;
+            } else {
+                turnoActual++;
+            }
+        }while(jugadoresPerdieron.get(turnoActual-1));
+        System.out.println("ES EL TURNO DE " + turnoActual);
+    }
+    public boolean seRendioId(int id){
+        if(jugadoresPerdieron.get(id-1)){
+            return false; //indicando que ya se había rendido o perdió antes
+        }
+        jugadoresPerdieron.set(id-1, true);
+        return true;
+    }
+    public boolean revisarGane(){
+        boolean gano = !jugadoresPerdieron.get(turnoActual-1); //es true si aún sigue vivo
+        for (int i = 1; i <= jugadoresPerdieron.size(); i++) {
+            if(i != turnoActual){
+                gano = gano && jugadoresPerdieron.get(i-1);
+            }
+        }
+        return gano;
+    }
+    public int getTurnoActual() {
+        return turnoActual;
     }
 
 }

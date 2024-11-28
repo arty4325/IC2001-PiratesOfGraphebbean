@@ -207,7 +207,7 @@ public class MainGameController {
         items.clear();
     }
 
-    private void loadDataComboBox() {
+    public void loadDataComboBox() {
         itemComboBox.getItems().clear();
         for(int i = 0; i < cliente.getListaItems().size(); i++) {
             itemComboBox.getItems().add(cliente.getListaItems().get(i));
@@ -620,6 +620,12 @@ public class MainGameController {
 
     @FXML
     protected void onBtnCClick(){
+        System.out.println(cliente.getTurnoActual() + " " + cliente.getIdCliente());
+        if(cliente.getTurnoActual() != cliente.getIdCliente()) {
+            System.out.println("NO VAS A ATACAR ");
+            return;
+        }
+
         //TODO: revisar turno, y que no he perdido, ESTO PARA LOS 4 ATAQUES
         String nombreEnemigo = cbxVerEnemy.getValue();
         if(nombreEnemigo==null){return;}
