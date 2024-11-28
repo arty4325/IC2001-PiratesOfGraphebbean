@@ -777,6 +777,7 @@ public class MainGameController {
         if(mapaDelMar.getMatrizTipos()[y][x] != 0){
             // Primer caso IMPORTANTE, cuando le doy a una fuente de energia :(
             // Tengo que ver cuales son el resto de coordenadas de esa fuente para destruirlas tambien
+            placeImage(anchorPane, x, y, "Destruccion");
             if(mapaDelMar.getMatrizTipos()[y][x] == 1){
                 // Tengo que darle al enemigo una fuente de energia y destuir la mia
                 // DESTRUCCION DE MI FUENTE DE ENERGIA

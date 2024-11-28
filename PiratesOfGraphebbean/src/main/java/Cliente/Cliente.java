@@ -367,7 +367,6 @@ public class Cliente {
         int[] coords = (int[])entradaObjetos.readObject();
         // Estas son las coordenadas en las que me atacan
         // Aqui es donde tengo que hacer cositas lindas
-        TiposAtaque tipoAtaqueRetornar = pantallaMain.getMapaDelMar().atacarIsla(coords[0],coords[1]); // Aqui es en donde llego yo y le mando el ataque a mi compa
         TiposAtaque tipoAtaqueRetornar = pantallaMain.atacarIsla(coords[0],coords[1]); // Aqui es en donde llego yo y le mando el ataque a mi compa
         if(false){ //TODO: CAMBIAR EL FALSE POR CONDICIONAL QUE REVISE SI YA PERDÍ
             jugando = false;
