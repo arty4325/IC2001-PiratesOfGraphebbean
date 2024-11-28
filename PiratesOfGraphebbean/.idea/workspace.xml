@@ -7,12 +7,12 @@
     <list default="true" id="4fad49e6-0c16-4e50-a4c6-3768dd8e4274" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/Cliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/ClienteScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/ClienteScreenController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/MapaDelMar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/MapaDelMar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/TipoIsla.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/Grafo/TipoIsla.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Cliente/MainGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Cliente/MainGameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Modelos/CasesEnCliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Modelos/CasesEnCliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Modelos/CasesEnThreadServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Modelos/CasesEnThreadServidor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Server/ThreadServidor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Server/ThreadServidor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Images/Conector.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Images/Conector.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Images/FuenteEnergia.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Images/Tienda.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Images/Tienda.jpg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +88,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.SegundoUsuario">
+  <component name="RunManager" selected="Application.PrimerUsuario">
     <configuration name="CuartoUsuario" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Cliente.MainCliente" />
       <module name="PiratesOfGraphebbean" />
@@ -195,8 +195,18 @@
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="2c77b4ff-3111-41b4-9cfc-2df42e090599" value="TOOL_WINDOW" />
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
+        <entry key="2c77b4ff-3111-41b4-9cfc-2df42e090599">
+          <value>
+            <State />
+          </value>
+        </entry>
         <entry key="MAIN">
           <value>
             <State />

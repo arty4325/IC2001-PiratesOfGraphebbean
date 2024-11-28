@@ -3,6 +3,7 @@ package Cliente;
 import Cliente.Grafo.MapaDelMar;
 import Modelos.CasesEnThreadServidor;
 import Modelos.Random;
+import Modelos.TiposAtaque;
 import Modelos.Utilities;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -127,6 +128,7 @@ public class MainGameController {
             case "Templo" -> 3;
             case "Tienda" -> 4;
             case "Conector" -> 5;
+            case "Tornado" -> 7;
             default -> {
                 System.out.println("Ítem no reconocido: " + item);
                 yield -1;
@@ -302,27 +304,28 @@ public class MainGameController {
     }
 
 
-    private void placeImage(AnchorPane anchorPane, int x, int y, String imagePath) {
-        // Calcula las coordenadas basadas en el formato de referencia
-        int posX = 252 + x * 24;
-        int posY = 100 + y * 24;
-
-        // Carga la imagen desde la ruta proporcionada
+    private void placeImage(AnchorPane anchorPane, int x, int y, String item) {
+        int posX = 242 + x * 24;
+        int posY = 90 + y * 24;
+        String imagePath = "/Images/" + item + ".jpg";
         System.out.println(String.valueOf(getClass().getResource(imagePath)));
         Image image = new Image(String.valueOf(getClass().getResource(imagePath)));
 
-        // Crea un ImageView para mostrar la imagen
         ImageView imageView = new ImageView(image);
+        if(item == "Conector" || item == "Tornado" || item == "Destruccion") {
+            imageView.setFitWidth(24);
+            imageView.setFitHeight(24);
+        } else if (item == "Tienda") {
+            imageView.setFitWidth(24);
+            imageView.setFitHeight(48);
+        } else if (item == "Energia") {
+            imageView.setFitWidth(48);
+            imageView.setFitHeight(48);
+        }
 
-        // Ajusta las dimensiones del ImageView (opcional, según tus necesidades)
-        imageView.setFitWidth(24); // Por ejemplo, el tamaño de un cuadro
-        imageView.setFitHeight(24);
 
-        // Posiciona el ImageView en el AnchorPane
         imageView.setLayoutX(posX);
         imageView.setLayoutY(posY);
-
-        // Añade el ImageView al AnchorPane
         anchorPane.getChildren().add(imageView);
     }
 
@@ -509,6 +512,7 @@ public class MainGameController {
                 coordenadasConector.add(coordenadasConect);
                 conectorComboBox.getItems().add(itemComboBox);
                 // Ahora, debo de registrar en el grafo que existe una liga
+                placeImage(anchorPane, coordXInt, coordYInt, "Conector");
             } else {
                 mapaDelMar.getItemsInScreen().add(selectedItem);
                 // El item es algo que puede ser conectado
@@ -520,8 +524,8 @@ public class MainGameController {
                 colocarEnHash(selectedItem, coordItem);
                 // Voy a hacer otro hash que sea, coordInciialx, coordinicialy, (todo el resto de coordenadas)
                 colocarTodasCoordsHash(coordXInt, coordYInt, selectedInt); // Ya aqui deberian de estar todas las coordenadas de cada item
+                placeImage(anchorPane, coordXInt, coordYInt, selectedItem);
                 // Ahora tengo que asignar todos los cuadros en mapaDelMar
-                placeImage(anchorPane, coordXInt, coordYInt, "/Images/Conector.jpg");
             }
         } else {
             // Debe de haber un laben en pantalla en donde le muestro el error
@@ -699,6 +703,59 @@ public class MainGameController {
             cliente.getSalidaDatos().writeUTF(nombreEnemigo);
             cliente.getSalidaObjetos().writeObject(coords);
         } catch (Exception e) {System.out.println("Error atacando con Cañón de Barba Roja");}
+    }
+
+    public TiposAtaque atacarIsla(int x, int y){
+        // Nunca se debe de retornar null
+        //return CasesEnCliente.NADA; // El caso de nothing
+        System.out.println("Ataque " + x + " " + y);
+        // Lo primero que vamos a hacer es poner el ataque en matriz destruccion
+        mapaDelMar.getMatrizDestruccion()[y][x] = true; // Esta isla ya fue atacada :(
+        placeImage(anchorPane, x, y, "Destruccion");
+        if(mapaDelMar.getMatrizTipos()[y][x] == 1){
+            // reviso al rededor
+            // arriba, abajo izquierda, derecha
+            if(mapaDelMar.getMatrizTipos()[y + 1][x] == 1) {
+                mapaDelMar.getMatrizDestruccion()[y + 1][x] = true;
+            }
+            if(mapaDelMar.getMatrizTipos()[y - 1][x] == 1) {
+                mapaDelMar.getMatrizDestruccion()[y - 1][x] = true;
+            }if(mapaDelMar.getMatrizTipos()[y][x + 1] == 1) {
+                mapaDelMar.getMatrizDestruccion()[y][x + 1] = true;
+            }if(mapaDelMar.getMatrizTipos()[y][x - 1] == 1) {
+                mapaDelMar.getMatrizDestruccion()[y][x - 1] = true;
+            }
+            // Diag arriba, diag abajo, diag izquierda, diag derecha
+            if(mapaDelMar.getMatrizTipos()[y + 1][x + 1] == 1) {
+                mapaDelMar.getMatrizDestruccion()[y + 1][x + 1]= true;
+            }if(mapaDelMar.getMatrizTipos()[y + 1][x - 1] == 1) {
+                mapaDelMar.getMatrizDestruccion()[y + 1][x - 1] = true;
+            }if(mapaDelMar.getMatrizTipos()[y - 1][x - 1] == 1) {
+                mapaDelMar.getMatrizDestruccion()[y - 1][x - 1] = true;
+            }if(mapaDelMar.getMatrizTipos()[y - 1][x + 1] == 1) {
+                mapaDelMar.getMatrizDestruccion()[y - 1][x + 1] = true;
+            }
+        }
+        // Ahora tengo que ver que esta en esa coordenada en la martiz, y en base a eso tomar una desicion :)
+        System.out.println("Ataque " + mapaDelMar.getMatrizTipos()[x][y]);
+        System.out.println("ITINSC" + mapaDelMar.getItemsInScreen());
+        if(mapaDelMar.getMatrizTipos()[y][x] != 0){
+            // Primer caso IMPORTANTE, cuando le doy a una fuente de energia :(
+            // Tengo que ver cuales son el resto de coordenadas de esa fuente para destruirlas tambien
+            if(mapaDelMar.getMatrizTipos()[y][x] == 1){
+                // Tengo que darle al enemigo una fuente de energia y destuir la mia
+                // DESTRUCCION DE MI FUENTE DE ENERGIA
+                mapaDelMar.getItemsInScreen().remove("Energia");
+                // Tengo que indicar que esta fuente de energia no esta, para que muestre lo que ahora es disconexo :P
+                return TiposAtaque.FUENTEDEENERGIA;
+            } else if (mapaDelMar.getMatrizTipos()[y][x] == 4){
+                mapaDelMar.getItemsInScreen().remove("Tienda");
+                return TiposAtaque.HIT;
+            }
+        }
+
+        // Lo ultimo es darle feedback al usuario de lo que paso :)
+        return TiposAtaque.MISS;
     }
 
 
