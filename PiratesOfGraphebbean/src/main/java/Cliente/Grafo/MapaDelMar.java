@@ -28,6 +28,14 @@ public class MapaDelMar {
         return matrizTipos;
     }
 
+    public static boolean[][] getMatrizDestruccion() {
+        return matrizDestruccion;
+    }
+
+    public int[][] getMatrizAdyacencia() {
+        return matrizAdyacencia;
+    }
+
     public MapaDelMar(GridPane gridPane, int numIslas) {
         /**
          * Se crea una matriz vacia
@@ -75,7 +83,7 @@ public class MapaDelMar {
         } else if (val == 4){
             boolean ret = (estaDisponible(x, y) && estaDisponible(x + 1, y));
             return ret;
-        } else if(val == 5){
+        } else if(val == 5 || val == 7){
             boolean ret = estaDisponible(x, y);
             return ret;
         }
@@ -189,7 +197,7 @@ public class MapaDelMar {
         } else if(tipo == 4){
             matrizTipos[coordx][coordy] = tipo;
             matrizTipos[coordx + 1][coordy] = tipo;
-        } else if(tipo == 5){
+        } else if(tipo == 5 || tipo == 7){
             matrizTipos[coordx][coordy] = tipo;
         }
     }

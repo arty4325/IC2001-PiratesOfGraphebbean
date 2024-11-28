@@ -182,7 +182,6 @@ public class StoreController {
 
     @FXML
     protected void btnAddCanon(){
-        if(!tieneArmeria()){return;}
         int precio = 500;
         if(cliente.tengoAceroSuficiente(precio)){
             cliente.bajarAcero(precio);
@@ -193,7 +192,6 @@ public class StoreController {
 
     @FXML
     protected void btnAddCanonMult(){
-        if(!tieneArmeria()){return;}
         int precio = 1000;
         if(cliente.tengoAceroSuficiente(precio)){
             cliente.bajarAcero(precio);
@@ -204,7 +202,6 @@ public class StoreController {
 
     @FXML
     protected void btnAddBomba(){
-        if(!tieneArmeria()){return;}
         int precio = 2000;
         if(cliente.tengoAceroSuficiente(precio)){
             cliente.bajarAcero(precio);
@@ -215,19 +212,12 @@ public class StoreController {
 
     @FXML
     protected void btnAddCanonBR(){
-        if(!tieneArmeria()){return;}
         int precio = 5000;
         if(cliente.tengoAceroSuficiente(precio)){
             cliente.bajarAcero(precio);
             cliente.comprarCanonBR();
             actualizarAcero();
         }
-    }
-
-    private boolean tieneArmeria(){
-//        return mapaDelMar.getItemsInScreen().contains("Armeria");
-        //TODO: DESCMENTAR LO DE ARRIBA Y  QUITAR LOD E ABAJO
-        return true;
     }
 
     private int getSellingPriceComponente(String item) {
@@ -243,6 +233,7 @@ public class StoreController {
                 yield -1;
             }
         };
+        //TODO: los precios de ahorita son testing
         return number;
     }
 
@@ -259,6 +250,7 @@ public class StoreController {
                 yield -1;
             }
         };
+        //TODO: los precios de ahorita son testing
         return number;
     }
 
