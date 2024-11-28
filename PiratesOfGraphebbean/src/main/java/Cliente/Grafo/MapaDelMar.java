@@ -275,7 +275,7 @@ public class MapaDelMar {
         List<int[]> coordenadasValidas = new ArrayList<>();
         for (int i = 0; i < matrizAdyacencia.length; i++) {
             for (int j = 0; j < matrizAdyacencia[i].length; j++) {
-                if (matrizAdyacencia[i][j] != 0 && matrizDestruccion[i][j]) {
+                if (matrizAdyacencia[i][j] != 0 && !matrizDestruccion[i][j]) {
                     coordenadasValidas.add(new int[]{i, j});
                 }
             }
