@@ -89,7 +89,7 @@ public class MapaDelMar {
         } else if (val == 4){
             boolean ret = (estaDisponible(x, y) && estaDisponible(x + 1, y));
             return ret;
-        } else if(val == 5 || val == 7){
+        } else if(val == 5 || val == 7 || val == 3 || val == 6){
             boolean ret = estaDisponible(x, y);
             return ret;
         }

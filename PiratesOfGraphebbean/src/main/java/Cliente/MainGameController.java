@@ -133,6 +133,7 @@ public class MainGameController {
             case "Templo" -> 3;
             case "Tienda" -> 4;
             case "Conector" -> 5;
+            case "Armeria" -> 6;
             case "Tornado" -> 7;
             default -> {
                 System.out.println("Ítem no reconocido: " + item);
@@ -150,6 +151,7 @@ public class MainGameController {
             case 3 -> "Templo";
             case 4 -> "Tienda";
             case 5 -> "Conector";
+            case 6 -> "Armeria";
             case 7 -> "Tornado";
             default -> {
                 System.out.println("Ítem no reconocido: " + number);
@@ -344,7 +346,7 @@ public class MainGameController {
             if(item.equals("Conector") || item.equals("Tornado") || item.equals("Destruccion")) {
                 imageView.setFitWidth(24);
                 imageView.setFitHeight(24);
-            } else if (item.equals("Tienda")) {
+            } else if (item.equals("Tienda") || item.equals("Mina") || item.equals("Armeria") || item.equals("Templo")) {
                 imageView.setFitWidth(24);
                 imageView.setFitHeight(48);
             } else if (item.equals("Energia")) {
@@ -379,10 +381,11 @@ public class MainGameController {
             ImageView imageView = new ImageView(image);
 
             // Ajusta las dimensiones del ImageView según tus necesidades
+            System.out.println("ITEM A DIB" + item);
             if(item.equals("Conector") || item.equals("Tornado") || item.equals("Destruccion")) {
                 imageView.setFitWidth(24);
                 imageView.setFitHeight(24);
-            } else if (item.equals("Tienda")) {
+            } else if (item.equals("Tienda") || item.equals("Mina") || item.equals("Armeria") || item.equals("Templo")) {
                 imageView.setFitWidth(24);
                 imageView.setFitHeight(48);
             } else if (item.equals("Energia")) {
