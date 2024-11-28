@@ -45,6 +45,7 @@ public class Cliente {
 
 
 
+
     public Cliente(ClienteScreenController pantallaCliente) {
         this.pantallaCliente = pantallaCliente;
         dinero = 1000000;
@@ -54,6 +55,7 @@ public class Cliente {
         bomba = 0;
         canonBR = 0;
         jugando = true;
+        turnoActual = 1;
     }
 
     public List<String> getListaItems() {
@@ -71,8 +73,9 @@ public class Cliente {
         try {
             esperarStart();
         } catch (Exception ex) {System.out.println("Error esperando a start");}
-        System.out.println("ya todos presionaron listo");
         System.out.println(idCliente + " " + nombreCliente);
+        System.out.println("ya todos presionaron listo");
+
         try{
             conseguirNombresOponentes();
         } catch (Exception ex) {System.out.println("Error consiguiendo nombre de oponentes");}
@@ -361,28 +364,23 @@ public class Cliente {
 
     private void serAtacado() throws Exception{
         int[] coords = (int[])entradaObjetos.readObject();
-        TiposAtaque tipoAtaqueRetornar = pantallaMain.getMapaDelMar().atacarIsla(coords[0],coords[1]);
-
+        // Estas son las coordenadas en las que me atacan
+        // Aqui es donde tengo que hacer cositas lindas
+        TiposAtaque tipoAtaqueRetornar = pantallaMain.getMapaDelMar().atacarIsla(coords[0],coords[1]); // Aqui es en donde llego yo y le mando el ataque a mi compa
         if(false){ //TODO: CAMBIAR EL FALSE POR CONDICIONAL QUE REVISE SI YA PERDÍ
             jugando = false;
             salidaObjetos.writeObject(CasesEnThreadServidor.PERDER);
         }
-
         salidaObjetos.writeObject(CasesEnThreadServidor.PONERENOBJETO);
         salidaObjetos.writeObject(tipoAtaqueRetornar);
     }
-
     private void alguienGano() throws Exception{
         int gano = entradaDatos.readInt();
         Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "Ganó el jugador " + gano).showAndWait());
     }
-
     private void yoGane() throws Exception{
         Platform.runLater(() -> new Alert(Alert.AlertType.INFORMATION, "¡Tu ganaste!").showAndWait());
-
     }
-
-
     public boolean tengoDineroSuficiente(int precio){
         return dinero - precio >= 0; //si la resta da más o igual que 0, puede comprar.
     }
@@ -505,5 +503,9 @@ public class Cliente {
 
     public int getIdCliente() {
         return idCliente;
+    }
+
+    public int getTurnoActual() {
+        return turnoActual;
     }
 }

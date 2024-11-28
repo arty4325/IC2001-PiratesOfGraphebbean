@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polygon;
 
+import javax.sound.midi.Soundbank;
 import java.util.*;
 
 
@@ -17,8 +18,12 @@ public class MapaDelMar {
     private int[][] matrizAdyacencia;
     private List<List<Integer>> listaAdyacencia = new ArrayList<>();
     private int[][] matrizTipos;
-    private boolean[][] matrizDestruccion;
+    private static boolean[][] matrizDestruccion;
+    private List<String> itemsInScreen = new ArrayList<>();
 
+    public List<String> getItemsInScreen() {
+        return itemsInScreen;
+    }
     public int[][] getMatrizTipos() {
         return matrizTipos;
     }
@@ -128,7 +133,7 @@ public class MapaDelMar {
         }
     }
 
-    public void inicializarGridEnemgio(int[][] matriz, GridPane gridPane) {
+    public void inicializarGridEnemgio(int[][] matriz,GridPane gridPane) {
         limpiarGridPane(gridPane, 20, 20);
         for (int row = 0; row < matriz.length; row++) {
             for (int col = 0; col < matriz[row].length; col++) {
@@ -200,7 +205,53 @@ public class MapaDelMar {
     public TiposAtaque atacarIsla(int x, int y){
         // Nunca se debe de retornar null
         //return CasesEnCliente.NADA; // El caso de nothing
-        return null;
+        System.out.println("Ataque " + x + " " + y);
+        // Lo primero que vamos a hacer es poner el ataque en matriz destruccion
+        matrizDestruccion[y][x] = true; // Esta isla ya fue atacada :(
+        if(matrizTipos[y][x] == 1){
+            // reviso al rededor
+            // arriba, abajo izquierda, derecha
+            if(matrizTipos[y + 1][x] == 1) {
+                matrizDestruccion[y + 1][x] = true;
+            }
+            if(matrizTipos[y - 1][x] == 1) {
+                matrizDestruccion[y - 1][x] = true;
+            }if(matrizTipos[y][x + 1] == 1) {
+                matrizDestruccion[y][x + 1] = true;
+            }if(matrizTipos[y][x - 1] == 1) {
+                matrizDestruccion[y][x - 1] = true;
+            }
+            // Diag arriba, diag abajo, diag izquierda, diag derecha
+            if(matrizTipos[y + 1][x + 1] == 1) {
+                matrizDestruccion[y + 1][x + 1]= true;
+            }if(matrizTipos[y + 1][x - 1] == 1) {
+                matrizDestruccion[y + 1][x - 1] = true;
+            }if(matrizTipos[y - 1][x - 1] == 1) {
+                matrizDestruccion[y - 1][x - 1] = true;
+            }if(matrizTipos[y - 1][x + 1] == 1) {
+                matrizDestruccion[y - 1][x + 1] = true;
+            }
+        }
+        // Ahora tengo que ver que esta en esa coordenada en la martiz, y en base a eso tomar una desicion :)
+        System.out.println("Ataque " + matrizTipos[x][y]);
+        System.out.println("ITINSC" + itemsInScreen);
+        if(matrizTipos[y][x] != 0){
+            // Primer caso IMPORTANTE, cuando le doy a una fuente de energia :(
+            // Tengo que ver cuales son el resto de coordenadas de esa fuente para destruirlas tambien
+            if(matrizTipos[y][x] == 1){
+                // Tengo que darle al enemigo una fuente de energia y destuir la mia
+                // DESTRUCCION DE MI FUENTE DE ENERGIA
+                itemsInScreen.remove("Energia");
+                // Tengo que indicar que esta fuente de energia no esta, para que muestre lo que ahora es disconexo :P
+                return TiposAtaque.FUENTEDEENERGIA;
+            } else if (matrizTipos[y][x] == 4){
+                itemsInScreen.remove("Tienda");
+                return TiposAtaque.HIT;
+            }
+        }
+
+        // Lo ultimo es darle feedback al usuario de lo que paso :)
+        return TiposAtaque.MISS;
     }
 
 
@@ -387,13 +438,13 @@ public class MapaDelMar {
     }
 
     // Método principal que encuentra todos los nodos conexos a un nodo con valor 1
-    public static List<List<Integer>> obtenerConexFuente(List<List<Integer>> listaAdyacencia, int[][] matrizTipos) {
+    public static List<List<Integer>> obtenerConexFuente(List<List<Integer>> listaAdyacencia, boolean[][] matrizDest,int[][] matrizTipos) {
         List<List<Integer>> coordenadasConexas = new ArrayList<>();
         Set<String> visitados = new HashSet<>();
         Map<String, List<String>> grafo = construirGrafo(listaAdyacencia);
         for (int y = 0; y < matrizTipos.length; y++) {
             for (int x = 0; x < matrizTipos[0].length; x++) {
-                if (matrizTipos[y][x] == 1) {
+                if (matrizTipos[y][x] == 1 && !matrizDest[y][x]) {
                     String nodoInicial = x + "," + y;
                     if (!visitados.contains(nodoInicial)) {
                         buscarConexiones(nodoInicial, grafo, visitados, coordenadasConexas);
